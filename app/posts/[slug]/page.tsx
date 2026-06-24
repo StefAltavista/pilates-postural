@@ -34,10 +34,10 @@ export default async function PostPage({
           <h1 className="text-4xl font-semibold">{post.title}</h1>
           {post.excerpt ? <p className="mt-4 text-lg text-zinc-600">{post.excerpt}</p> : null}
         </header>
-        {post.coverImage ? (
+        {post.media?.largeUrl || post.coverImage ? (
           <Image
-            src={post.coverImage}
-            alt=""
+            src={post.media?.largeUrl ?? post.coverImage!}
+            alt={post.media?.alt ?? ""}
             width={1200}
             height={700}
             className="mb-8 max-h-[480px] w-full rounded object-cover"

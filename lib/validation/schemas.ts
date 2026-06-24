@@ -18,6 +18,7 @@ export const postFormSchema = z.object({
   excerpt: z.string().trim().optional(),
   content: z.string().trim().min(1, "Content is required"),
   coverImage: z.string().trim().optional(),
+  mediaId: z.string().trim().optional(),
   published: z.boolean().default(false),
   categoryId: z.string().trim().min(1, "Category is required"),
 });
@@ -28,6 +29,7 @@ export const postSchema = postFormSchema
     slug: normalizeSlug(value.slug ?? "", value.title),
     excerpt: value.excerpt || null,
     coverImage: value.coverImage || null,
+    mediaId: value.mediaId || null,
   }))
   .pipe(
     z.object({
@@ -36,6 +38,7 @@ export const postSchema = postFormSchema
       excerpt: z.string().nullable(),
       content: z.string().min(1),
       coverImage: z.string().nullable(),
+      mediaId: z.string().uuid("The selected image is invalid.").nullable(),
       published: z.boolean(),
       categoryId: z.string().min(1),
     }),

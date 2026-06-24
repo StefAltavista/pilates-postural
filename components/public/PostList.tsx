@@ -8,6 +8,10 @@ type ListedPost = {
   slug: string;
   excerpt: string | null;
   coverImage: string | null;
+  media: {
+    thumbnailUrl: string;
+    alt: string | null;
+  } | null;
   createdAt: Date;
   category: {
     name: string;
@@ -30,10 +34,10 @@ export function PostList({
     <div className="grid gap-6">
       {posts.map((post) => (
         <article key={post.id} className="grid gap-3 border-b pb-6 sm:grid-cols-[180px_1fr]">
-          {post.coverImage ? (
+          {post.media?.thumbnailUrl || post.coverImage ? (
             <Image
-              src={post.coverImage}
-              alt=""
+              src={post.media?.thumbnailUrl ?? post.coverImage!}
+              alt={post.media?.alt ?? ""}
               width={360}
               height={220}
               className="h-36 w-full rounded object-cover sm:h-28"

@@ -13,15 +13,35 @@ model Post {
   excerpt    String?
   content    String
   coverImage String?
+  mediaId    String?
   published  Boolean  @default(false)
   categoryId String
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 
   category Category @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  media    Media?   @relation(fields: [mediaId], references: [id], onDelete: SetNull)
 
   @@index([categoryId])
   @@index([published, createdAt])
+  @@index([mediaId])
+}
+
+model Media {
+  id           String   @id @default(uuid())
+  originalUrl  String
+  largeUrl     String
+  mediumUrl    String
+  thumbnailUrl String
+  width        Int
+  height       Int
+  mimeType     String
+  sizeBytes    Int
+  alt          String?
+  caption      String?
+  createdAt    DateTime @default(now())
+
+  posts Post[]
 }
 
 model Category {

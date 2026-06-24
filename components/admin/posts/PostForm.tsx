@@ -8,6 +8,7 @@ import { createPostAction, updatePostAction, type PostActionState } from "@/lib/
 import { type PostFormInput, postFormSchema } from "@/lib/validation/schemas";
 import { slugify } from "@/lib/validation/slug";
 import { SubmitButton } from "@/components/admin/common/SubmitButton";
+import type { NormalizedMedia } from "@/lib/media/types";
 
 type CategoryOption = {
   id: string;
@@ -23,6 +24,8 @@ type PostFormProps = {
     excerpt: string | null;
     content: string;
     coverImage: string | null;
+    mediaId: string | null;
+    media: NormalizedMedia | null;
     published: boolean;
     categoryId: string;
   };
@@ -32,6 +35,7 @@ export function PostForm({ categories, post }: PostFormProps) {
   const [serverState, setServerState] = useState<PostActionState>({});
   const [uploadError, setUploadError] = useState("");
   const [isUploading, setIsUploading] = useState(false);
+  const [media, setMedia] = useState<NormalizedMedia | null>(post?.media ?? null);
   const [slugTouched, setSlugTouched] = useState(Boolean(post?.slug));
 
   const defaultValues = useMemo<PostFormInput>(
@@ -41,6 +45,7 @@ export function PostForm({ categories, post }: PostFormProps) {
       excerpt: post?.excerpt ?? "",
       content: post?.content ?? "",
       coverImage: post?.coverImage ?? "",
+      mediaId: post?.mediaId ?? "",
       published: post?.published ?? false,
       categoryId: post?.categoryId ?? categories[0]?.id ?? "",
     }),
@@ -60,6 +65,7 @@ export function PostForm({ categories, post }: PostFormProps) {
 
   const title = useWatch({ control, name: "title" });
   const coverImage = useWatch({ control, name: "coverImage" });
+  const previewUrl = media?.mediumUrl ?? coverImage;
 
   useEffect(() => {
     if (!slugTouched) {
@@ -90,17 +96,49 @@ export function PostForm({ categories, post }: PostFormProps) {
         method: "POST",
         body: formData,
       });
-      const data = (await response.json()) as { url?: string; error?: string };
+      const data = (await response.json()) as
+        | (Omit<NormalizedMedia, "createdAt"> & { createdAt: string })
+        | { error: string };
 
-      if (!response.ok || !data.url) {
-        setUploadError(data.error ?? "Upload failed.");
+      if (!response.ok || !("id" in data)) {
+        setUploadError("error" in data ? data.error : "Upload failed.");
         return;
       }
 
-      setValue("coverImage", data.url, { shouldDirty: true, shouldValidate: true });
+      const previousMediaId = media?.id;
+      const uploadedMedia = { ...data, createdAt: new Date(data.createdAt) };
+      setMedia(uploadedMedia);
+      setValue("mediaId", data.id, { shouldDirty: true, shouldValidate: true });
+      setValue("coverImage", "", { shouldDirty: true, shouldValidate: true });
+
+      if (previousMediaId && previousMediaId !== data.id) {
+        void removeUnreferencedMedia(previousMediaId);
+      }
+    } catch {
+      setUploadError("Upload failed. Please try again.");
     } finally {
       setIsUploading(false);
     }
+  }
+
+  async function removeUnreferencedMedia(id: string) {
+    try {
+      await fetch("/admin/api/upload", {
+        method: "DELETE",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ id }),
+      });
+    } catch {
+      // Saving the post performs the same reference-aware cleanup server-side.
+    }
+  }
+
+  function removeImage() {
+    const mediaId = media?.id;
+    setMedia(null);
+    setValue("mediaId", "", { shouldDirty: true, shouldValidate: true });
+    setValue("coverImage", "", { shouldDirty: true, shouldValidate: true });
+    if (mediaId) void removeUnreferencedMedia(mediaId);
   }
 
   return (
@@ -154,9 +192,9 @@ export function PostForm({ categories, post }: PostFormProps) {
 
       <div className="grid gap-2">
         <span className="text-sm font-medium">Featured image</span>
-        {coverImage ? (
+        {previewUrl ? (
           <Image
-            src={coverImage}
+            src={previewUrl}
             alt=""
             width={640}
             height={360}
@@ -164,6 +202,7 @@ export function PostForm({ categories, post }: PostFormProps) {
           />
         ) : null}
         <input type="hidden" {...register("coverImage")} />
+        <input type="hidden" {...register("mediaId")} />
         <input
           type="file"
           accept="image/jpeg,image/png,image/webp,image/avif"
@@ -176,6 +215,15 @@ export function PostForm({ categories, post }: PostFormProps) {
           className="text-sm"
         />
         <p className="text-xs text-zinc-500">JPEG, PNG, WebP, or AVIF. Max 5MB.</p>
+        {previewUrl ? (
+          <button
+            type="button"
+            onClick={removeImage}
+            className="w-fit text-sm font-medium text-red-700 underline"
+          >
+            Remove image
+          </button>
+        ) : null}
         <FieldError
           message={uploadError || errors.coverImage?.message || serverState.errors?.coverImage?.[0]}
         />

@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/auth/session";
 import { prisma } from "@/lib/prisma";
+import { deleteMediaIfUnreferenced } from "@/lib/media/service";
 import { postSchema, type PostFormInput } from "@/lib/validation/schemas";
 
 export type PostActionState = {
@@ -23,12 +24,27 @@ function revalidatePostPaths(slug?: string) {
   }
 }
 
+async function cleanUpMedia(mediaId: string | null | undefined) {
+  try {
+    await deleteMediaIfUnreferenced(mediaId);
+  } catch (error) {
+    console.error(`Failed to clean up media ${mediaId}.`, error);
+  }
+}
+
 function getPostError(error: unknown): PostActionState {
   if (
     error instanceof Prisma.PrismaClientKnownRequestError &&
     error.code === "P2002"
   ) {
     return { errors: { slug: ["That slug is already in use."] } };
+  }
+
+  if (
+    error instanceof Prisma.PrismaClientKnownRequestError &&
+    error.code === "P2003"
+  ) {
+    return { errors: { coverImage: ["The selected image no longer exists."] } };
   }
 
   return { errors: { form: ["Something went wrong. Please try again."] } };
@@ -47,6 +63,7 @@ export async function createPostAction(input: PostFormInput): Promise<PostAction
     const post = await prisma.post.create({ data: parsed.data });
     revalidatePostPaths(post.slug);
   } catch (error) {
+    await cleanUpMedia(parsed.data.mediaId);
     return getPostError(error);
   }
 
@@ -66,9 +83,13 @@ export async function updatePostAction(
   }
 
   try {
-    const previous = await prisma.post.findUnique({ where: { id }, select: { slug: true } });
+    const previous = await prisma.post.findUnique({
+      where: { id },
+      select: { slug: true, mediaId: true },
+    });
 
     if (!previous) {
+      await cleanUpMedia(parsed.data.mediaId);
       return { errors: { form: ["Post not found."] } };
     }
 
@@ -77,9 +98,14 @@ export async function updatePostAction(
       data: parsed.data,
     });
 
+    if (previous.mediaId !== post.mediaId) {
+      await cleanUpMedia(previous.mediaId);
+    }
+
     revalidatePostPaths(previous.slug);
     revalidatePostPaths(post.slug);
   } catch (error) {
+    await cleanUpMedia(parsed.data.mediaId);
     return getPostError(error);
   }
 
@@ -97,8 +123,10 @@ export async function deletePostAction(formData: FormData) {
 
   const post = await prisma.post.delete({
     where: { id },
-    select: { slug: true },
+    select: { slug: true, mediaId: true },
   });
+
+  await cleanUpMedia(post.mediaId);
 
   revalidatePostPaths(post.slug);
 }
