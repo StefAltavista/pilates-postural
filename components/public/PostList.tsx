@@ -1,5 +1,9 @@
-import Image from "next/image";
 import Link from "next/link";
+import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
+import { EmptyState } from "@/components/common/EmptyState";
+import { OptimizedImage } from "@/components/common/OptimizedImage";
 import { formatDate } from "@/lib/format";
 
 type ListedPost = {
@@ -27,38 +31,50 @@ export function PostList({
   emptyMessage: string;
 }) {
   if (posts.length === 0) {
-    return <p className="text-zinc-600">{emptyMessage}</p>;
+    return <EmptyState title="Nothing here yet" description={emptyMessage} />;
   }
 
   return (
-    <div className="grid gap-6">
+    <Stack spacing={3}>
       {posts.map((post) => (
-        <article key={post.id} className="grid gap-3 border-b pb-6 sm:grid-cols-[180px_1fr]">
+        <Box
+          component="article"
+          key={post.id}
+          sx={{
+            display: "grid",
+            gap: 2,
+            borderBottom: 1,
+            borderColor: "divider",
+            pb: 3,
+            gridTemplateColumns: { sm: "180px 1fr" },
+          }}
+        >
           {post.media?.thumbnailUrl || post.coverImage ? (
-            <Image
+            <OptimizedImage
               src={post.media?.thumbnailUrl ?? post.coverImage!}
               alt={post.media?.alt ?? ""}
               width={360}
               height={220}
-              className="h-36 w-full rounded object-cover sm:h-28"
+              sizes="(max-width: 600px) 100vw, 180px"
+              style={{ width: "100%", height: 112, borderRadius: 8, objectFit: "cover" }}
             />
           ) : (
-            <div className="hidden h-28 rounded bg-zinc-100 sm:block" />
+            <Box sx={{ display: { xs: "none", sm: "block" }, height: 112, borderRadius: 1, bgcolor: "surfaceAlt.main" }} />
           )}
-          <div>
-            <div className="mb-2 flex flex-wrap gap-2 text-sm text-zinc-500">
+          <Box>
+            <Stack direction="row" spacing={1} sx={{ mb: 1, color: "text.secondary", flexWrap: "wrap" }}>
               <Link href={`/category/${post.category.slug}`} className="font-medium underline">
                 {post.category.name}
               </Link>
-              <span>{formatDate(post.createdAt)}</span>
-            </div>
-            <h2 className="text-xl font-semibold">
+              <Typography component="span" variant="body2">{formatDate(post.createdAt)}</Typography>
+            </Stack>
+            <Typography component="h2" variant="h5">
               <Link href={`/posts/${post.slug}`}>{post.title}</Link>
-            </h2>
-            {post.excerpt ? <p className="mt-2 text-zinc-600">{post.excerpt}</p> : null}
-          </div>
-        </article>
+            </Typography>
+            {post.excerpt ? <Typography color="text.secondary" sx={{ mt: 1 }}>{post.excerpt}</Typography> : null}
+          </Box>
+        </Box>
       ))}
-    </div>
+    </Stack>
   );
 }

@@ -1,5 +1,8 @@
 import { redirect } from "next/navigation";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 import { LoginForm } from "@/components/admin/LoginForm";
+import { AppCard } from "@/components/common/AppCard";
 import { getAdminSession } from "@/lib/auth/session";
 
 export default async function AdminLoginPage() {
@@ -10,11 +13,11 @@ export default async function AdminLoginPage() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-zinc-50 px-4">
-      <section className="w-full max-w-sm rounded border bg-white p-6 shadow-sm">
-        <h1 className="mb-6 text-2xl font-semibold">Admin login</h1>
+    <Box component="main" sx={{ display: "grid", minHeight: "100vh", placeItems: "center", px: 2 }}>
+      <AppCard component="section" sx={{ width: "100%", maxWidth: 400, p: { xs: 2.5, sm: 3 } }}>
+        <Typography component="h1" variant="h4" sx={{ mb: 3 }}>Admin login</Typography>
         <LoginForm />
-      </section>
-    </main>
+      </AppCard>
+    </Box>
   );
 }

@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
+import { AppProviders } from "@/app/providers";
+import { siteConfig } from "@/seo/site.config";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "My CMS",
-  description: "A small custom CMS built with Next.js and Prisma.",
+  metadataBase: new URL(siteConfig.siteUrl),
+  title: siteConfig.defaultTitle,
+  description: siteConfig.defaultDescription,
 };
 
 export default function RootLayout({
@@ -13,7 +16,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="h-full antialiased">
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <AppProviders>{children}</AppProviders>
+      </body>
     </html>
   );
 }

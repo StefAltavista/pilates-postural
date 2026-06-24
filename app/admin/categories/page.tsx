@@ -1,4 +1,14 @@
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Typography from "@mui/material/Typography";
 import { AdminPage } from "@/components/admin/AdminPage";
+import { AppButton } from "@/components/common/AppButton";
 import { CategoryForm } from "@/components/admin/categories/CategoryForm";
 import { deleteCategoryAction } from "@/lib/actions/categories";
 import { requireAdmin } from "@/lib/auth/session";
@@ -13,52 +23,54 @@ export default async function AdminCategoriesPage() {
 
   return (
     <AdminPage>
-      <h1 className="mb-6 text-2xl font-semibold">Categories</h1>
-      <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
-        <div className="overflow-x-auto rounded border bg-white">
-          <table className="w-full min-w-[620px] text-left text-sm">
-            <thead className="border-b bg-zinc-50 text-zinc-600">
-              <tr>
-                <th className="px-4 py-3 font-medium">Name</th>
-                <th className="px-4 py-3 font-medium">Slug</th>
-                <th className="px-4 py-3 font-medium">Posts</th>
-                <th className="px-4 py-3 font-medium">Created</th>
-                <th className="px-4 py-3 font-medium">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
+      <Typography component="h1" variant="h4" sx={{ mb: 3 }}>Categories</Typography>
+      <Box sx={{ display: "grid", gap: 3, gridTemplateColumns: { lg: "1fr 320px" } }}>
+        <TableContainer component={Paper} variant="outlined">
+          <Table sx={{ minWidth: 620 }}>
+            <TableHead sx={{ bgcolor: "surfaceAlt.main" }}>
+              <TableRow>
+                <TableCell>Name</TableCell>
+                <TableCell>Slug</TableCell>
+                <TableCell>Posts</TableCell>
+                <TableCell>Created</TableCell>
+                <TableCell>Actions</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
               {categories.map((category) => (
-                <tr key={category.id} className="border-b last:border-0">
-                  <td className="px-4 py-3 font-medium">{category.name}</td>
-                  <td className="px-4 py-3">{category.slug}</td>
-                  <td className="px-4 py-3">{category._count.posts}</td>
-                  <td className="px-4 py-3">{formatDate(category.createdAt)}</td>
-                  <td className="px-4 py-3">
+                <TableRow key={category.id}>
+                  <TableCell sx={{ fontWeight: 600 }}>{category.name}</TableCell>
+                  <TableCell>{category.slug}</TableCell>
+                  <TableCell>{category._count.posts}</TableCell>
+                  <TableCell>{formatDate(category.createdAt)}</TableCell>
+                  <TableCell>
                     {category._count.posts > 0 ? (
-                      <span className="text-zinc-500">Remove posts first</span>
+                      <Typography color="text.secondary" variant="body2">
+                        Remove posts first
+                      </Typography>
                     ) : (
                       <form action={deleteCategoryAction}>
                         <input type="hidden" name="id" value={category.id} />
-                        <button type="submit" className="font-medium text-red-700 underline">
+                        <AppButton type="submit" color="error" variant="text" size="small">
                           Delete
-                        </button>
+                        </AppButton>
                       </form>
                     )}
-                  </td>
-                </tr>
+                  </TableCell>
+                </TableRow>
               ))}
               {categories.length === 0 ? (
-                <tr>
-                  <td colSpan={5} className="px-4 py-8 text-center text-zinc-500">
+                <TableRow>
+                  <TableCell colSpan={5} align="center" sx={{ color: "text.secondary", py: 5 }}>
                     No categories yet.
-                  </td>
-                </tr>
+                  </TableCell>
+                </TableRow>
               ) : null}
-            </tbody>
-          </table>
-        </div>
+            </TableBody>
+          </Table>
+        </TableContainer>
         <CategoryForm />
-      </div>
+      </Box>
     </AdminPage>
   );
 }

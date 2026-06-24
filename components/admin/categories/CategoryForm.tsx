@@ -3,6 +3,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
+import Alert from "@mui/material/Alert";
+import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
+import { AppCard } from "@/components/common/AppCard";
+import { AppTextField } from "@/components/common/AppTextField";
 import {
   createCategoryAction,
   type CategoryActionState,
@@ -45,43 +51,32 @@ export function CategoryForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4 rounded border p-4">
-      <h2 className="text-lg font-semibold">New category</h2>
+    <AppCard component="form" onSubmit={handleSubmit(onSubmit)} sx={{ p: 2 }}>
+      <Stack spacing={2}>
+      <Typography variant="h6">New category</Typography>
       {serverState.errors?.form ? (
-        <p className="rounded border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
-          {serverState.errors.form[0]}
-        </p>
+        <Alert severity="error">{serverState.errors.form[0]}</Alert>
       ) : null}
-      {serverState.message ? <p className="text-sm text-green-700">{serverState.message}</p> : null}
+      {serverState.message ? <Alert severity="success">{serverState.message}</Alert> : null}
 
-      <label className="grid gap-1 text-sm font-medium">
-        Name
-        <input className="rounded border px-3 py-2 font-normal" {...register("name")} />
-        <FieldError message={errors.name?.message ?? serverState.errors?.name?.[0]} />
-      </label>
+      <AppTextField
+        label="Name"
+        error={Boolean(errors.name || serverState.errors?.name)}
+        helperText={errors.name?.message ?? serverState.errors?.name?.[0]}
+        {...register("name")}
+      />
 
-      <label className="grid gap-1 text-sm font-medium">
-        Slug
-        <input
-          className="rounded border px-3 py-2 font-normal"
-          {...register("slug", {
-            onChange: () => setSlugTouched(true),
-          })}
-        />
-        <FieldError message={errors.slug?.message ?? serverState.errors?.slug?.[0]} />
-      </label>
+      <AppTextField
+        label="Slug"
+        error={Boolean(errors.slug || serverState.errors?.slug)}
+        helperText={errors.slug?.message ?? serverState.errors?.slug?.[0]}
+        {...register("slug", { onChange: () => setSlugTouched(true) })}
+      />
 
-      <div>
+      <Box>
         <SubmitButton pending={isSubmitting}>Create category</SubmitButton>
-      </div>
-    </form>
+      </Box>
+      </Stack>
+    </AppCard>
   );
-}
-
-function FieldError({ message }: { message?: string }) {
-  if (!message) {
-    return null;
-  }
-
-  return <p className="text-sm font-normal text-red-600">{message}</p>;
 }

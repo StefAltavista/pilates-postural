@@ -1,5 +1,6 @@
 import "server-only";
 
+import { cache } from "react";
 import { prisma } from "@/lib/prisma";
 
 export function getPublishedPosts() {
@@ -10,21 +11,12 @@ export function getPublishedPosts() {
   });
 }
 
-export function getLatestPublishedPosts(take = 5) {
-  return prisma.post.findMany({
-    where: { published: true },
-    include: { category: true, media: true },
-    orderBy: { createdAt: "desc" },
-    take,
-  });
-}
-
-export function getPublishedPostBySlug(slug: string) {
+export const getPublishedPostBySlug = cache(function getPublishedPostBySlug(slug: string) {
   return prisma.post.findFirst({
     where: { slug, published: true },
     include: { category: true, media: true },
   });
-}
+});
 
 export function getAdminPosts() {
   return prisma.post.findMany({
@@ -40,7 +32,9 @@ export function getPostForEdit(id: string) {
   });
 }
 
-export function getPublishedPostsByCategorySlug(slug: string) {
+export const getPublishedPostsByCategorySlug = cache(function getPublishedPostsByCategorySlug(
+  slug: string,
+) {
   return prisma.category.findUnique({
     where: { slug },
     include: {
@@ -51,4 +45,4 @@ export function getPublishedPostsByCategorySlug(slug: string) {
       },
     },
   });
-}
+});

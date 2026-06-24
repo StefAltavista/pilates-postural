@@ -1,13 +1,22 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
+import Alert from "@mui/material/Alert";
+import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
 import { createPostAction, updatePostAction, type PostActionState } from "@/lib/actions/posts";
 import { type PostFormInput, postFormSchema } from "@/lib/validation/schemas";
 import { slugify } from "@/lib/validation/slug";
 import { SubmitButton } from "@/components/admin/common/SubmitButton";
+import { AppButton } from "@/components/common/AppButton";
+import { AppCheckbox } from "@/components/common/AppCheckbox";
+import { AppSelect } from "@/components/common/AppSelect";
+import { AppTextArea } from "@/components/common/AppTextArea";
+import { AppTextField } from "@/components/common/AppTextField";
+import { OptimizedImage } from "@/components/common/OptimizedImage";
 import type { NormalizedMedia } from "@/lib/media/types";
 
 type CategoryOption = {
@@ -66,6 +75,10 @@ export function PostForm({ categories, post }: PostFormProps) {
   const title = useWatch({ control, name: "title" });
   const coverImage = useWatch({ control, name: "coverImage" });
   const previewUrl = media?.mediumUrl ?? coverImage;
+  const categoryOptions = categories.map((category) => ({
+    label: category.name,
+    value: category.id,
+  }));
 
   useEffect(() => {
     if (!slugTouched) {
@@ -123,13 +136,17 @@ export function PostForm({ categories, post }: PostFormProps) {
 
   async function removeUnreferencedMedia(id: string) {
     try {
-      await fetch("/admin/api/upload", {
+      const response = await fetch("/admin/api/upload", {
         method: "DELETE",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ id }),
       });
+
+      if (!response.ok) {
+        throw new Error("Media cleanup failed.");
+      }
     } catch {
-      // Saving the post performs the same reference-aware cleanup server-side.
+      // Cleanup is best-effort here; saved post changes repeat reference-aware cleanup server-side.
     }
   }
 
@@ -142,111 +159,105 @@ export function PostForm({ categories, post }: PostFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="grid gap-5">
+    <Stack component="form" onSubmit={handleSubmit(onSubmit)} spacing={2.5}>
       {serverState.errors?.form ? (
-        <p className="rounded border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
-          {serverState.errors.form[0]}
-        </p>
+        <Alert severity="error">{serverState.errors.form[0]}</Alert>
       ) : null}
 
-      <label className="grid gap-1 text-sm font-medium">
-        Title
-        <input className="rounded border px-3 py-2 font-normal" {...register("title")} />
-        <FieldError message={errors.title?.message ?? serverState.errors?.title?.[0]} />
-      </label>
+      <AppTextField
+        label="Title"
+        error={Boolean(errors.title || serverState.errors?.title)}
+        helperText={errors.title?.message ?? serverState.errors?.title?.[0]}
+        {...register("title")}
+      />
 
-      <label className="grid gap-1 text-sm font-medium">
-        Slug
-        <input
-          className="rounded border px-3 py-2 font-normal"
-          {...register("slug", {
-            onChange: () => setSlugTouched(true),
-          })}
-        />
-        <FieldError message={errors.slug?.message ?? serverState.errors?.slug?.[0]} />
-      </label>
+      <AppTextField
+        label="Slug"
+        error={Boolean(errors.slug || serverState.errors?.slug)}
+        helperText={errors.slug?.message ?? serverState.errors?.slug?.[0]}
+        {...register("slug", { onChange: () => setSlugTouched(true) })}
+      />
 
-      <label className="grid gap-1 text-sm font-medium">
-        Category
-        <select className="rounded border px-3 py-2 font-normal" {...register("categoryId")}>
-          {categories.map((category) => (
-            <option key={category.id} value={category.id}>
-              {category.name}
-            </option>
-          ))}
-        </select>
-        <FieldError message={errors.categoryId?.message ?? serverState.errors?.categoryId?.[0]} />
-      </label>
+      <AppSelect
+        label="Category"
+        options={categoryOptions}
+        error={Boolean(errors.categoryId || serverState.errors?.categoryId)}
+        helperText={errors.categoryId?.message ?? serverState.errors?.categoryId?.[0]}
+        {...register("categoryId")}
+      />
 
-      <label className="grid gap-1 text-sm font-medium">
-        Excerpt
-        <textarea className="min-h-24 rounded border px-3 py-2 font-normal" {...register("excerpt")} />
-        <FieldError message={errors.excerpt?.message ?? serverState.errors?.excerpt?.[0]} />
-      </label>
+      <AppTextArea
+        label="Excerpt"
+        minRows={3}
+        error={Boolean(errors.excerpt || serverState.errors?.excerpt)}
+        helperText={errors.excerpt?.message ?? serverState.errors?.excerpt?.[0]}
+        {...register("excerpt")}
+      />
 
-      <label className="grid gap-1 text-sm font-medium">
-        Content
-        <textarea className="min-h-72 rounded border px-3 py-2 font-normal" {...register("content")} />
-        <FieldError message={errors.content?.message ?? serverState.errors?.content?.[0]} />
-      </label>
+      <AppTextArea
+        label="Content"
+        minRows={12}
+        error={Boolean(errors.content || serverState.errors?.content)}
+        helperText={errors.content?.message ?? serverState.errors?.content?.[0]}
+        {...register("content")}
+      />
 
-      <div className="grid gap-2">
-        <span className="text-sm font-medium">Featured image</span>
+      <Stack spacing={1}>
+        <Typography variant="subtitle2">Featured image</Typography>
         {previewUrl ? (
-          <Image
+          <OptimizedImage
             src={previewUrl}
             alt=""
             width={640}
             height={360}
-            className="h-48 w-full rounded object-cover"
+            sizes="(max-width: 900px) 100vw, 640px"
+            style={{ width: "100%", height: 192, borderRadius: 8, objectFit: "cover" }}
           />
         ) : null}
         <input type="hidden" {...register("coverImage")} />
         <input type="hidden" {...register("mediaId")} />
-        <input
-          type="file"
-          accept="image/jpeg,image/png,image/webp,image/avif"
-          onChange={(event) => {
-            const file = event.target.files?.[0];
-            if (file) {
-              void uploadImage(file);
-            }
-          }}
-          className="text-sm"
-        />
-        <p className="text-xs text-zinc-500">JPEG, PNG, WebP, or AVIF. Max 5MB.</p>
+        <Box>
+          <AppButton component="label" variant="outlined">
+            {isUploading ? "Uploading…" : "Choose image"}
+            <input
+              hidden
+              type="file"
+              accept="image/jpeg,image/png,image/webp,image/avif"
+              onChange={(event) => {
+                const file = event.target.files?.[0];
+                if (file) void uploadImage(file);
+              }}
+            />
+          </AppButton>
+        </Box>
+        <Typography color="text.secondary" variant="caption">
+          JPEG, PNG, WebP, or AVIF. Max 5MB.
+        </Typography>
         {previewUrl ? (
-          <button
+          <AppButton
             type="button"
+            color="error"
+            variant="text"
             onClick={removeImage}
-            className="w-fit text-sm font-medium text-red-700 underline"
+            sx={{ alignSelf: "start" }}
           >
             Remove image
-          </button>
+          </AppButton>
         ) : null}
-        <FieldError
-          message={uploadError || errors.coverImage?.message || serverState.errors?.coverImage?.[0]}
-        />
-      </div>
+        {uploadError || errors.coverImage?.message || serverState.errors?.coverImage?.[0] ? (
+          <Alert severity="error">
+            {uploadError || errors.coverImage?.message || serverState.errors?.coverImage?.[0]}
+          </Alert>
+        ) : null}
+      </Stack>
 
-      <label className="flex items-center gap-2 text-sm font-medium">
-        <input type="checkbox" {...register("published")} />
-        Published
-      </label>
+      <AppCheckbox label="Published" {...register("published")} />
 
-      <div>
+      <Box>
         <SubmitButton pending={isSubmitting || isUploading}>
           {post ? "Update post" : "Create post"}
         </SubmitButton>
-      </div>
-    </form>
+      </Box>
+    </Stack>
   );
-}
-
-function FieldError({ message }: { message?: string }) {
-  if (!message) {
-    return null;
-  }
-
-  return <p className="text-sm font-normal text-red-600">{message}</p>;
 }

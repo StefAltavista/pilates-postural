@@ -11,7 +11,13 @@ export const runtime = "nodejs";
 export async function POST(request: Request) {
   await requireAdmin();
 
-  const formData = await request.formData();
+  let formData: FormData;
+  try {
+    formData = await request.formData();
+  } catch {
+    return NextResponse.json({ error: "The upload request is invalid." }, { status: 400 });
+  }
+
   const file = formData.get("file");
 
   if (!(file instanceof File) || !file.size) {
@@ -42,6 +48,9 @@ export async function DELETE(request: Request) {
     const deleted = await deleteMediaIfUnreferenced(body.id);
     return NextResponse.json({ deleted });
   } catch (error) {
+    if (error instanceof MediaError && error.code === "INVALID_MEDIA_ID") {
+      return NextResponse.json({ error: error.message }, { status: 400 });
+    }
     console.error(`Failed to remove media ${body.id}.`, error);
     return NextResponse.json({ error: "The media could not be removed." }, { status: 500 });
   }

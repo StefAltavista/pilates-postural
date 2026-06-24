@@ -1,23 +1,30 @@
 import Link from "next/link";
+import AppBar from "@mui/material/AppBar";
+import Stack from "@mui/material/Stack";
+import Toolbar from "@mui/material/Toolbar";
+import { AppButton } from "@/components/common/AppButton";
+import { AppContainer } from "@/components/common/AppContainer";
 import { logoutAction } from "@/lib/auth/actions";
 
 export function AdminHeader() {
   return (
-    <header className="border-b bg-white">
-      <div className="mx-auto flex w-full max-w-5xl items-center justify-between px-4 py-4">
-        <nav className="flex items-center gap-4 text-sm font-medium">
+    <AppBar position="static" color="inherit" elevation={0} sx={{ borderBottom: 1, borderColor: "divider" }}>
+      <AppContainer maxWidth="md">
+        <Toolbar disableGutters sx={{ justifyContent: "space-between", minHeight: 64 }}>
+        <Stack component="nav" direction="row" spacing={{ xs: 1.5, sm: 3 }} sx={{ typography: "subtitle2" }}>
           <Link href="/admin/posts">Posts</Link>
           <Link href="/admin/categories">Categories</Link>
           <Link href="/" target="_blank">
             View site
           </Link>
-        </nav>
+        </Stack>
         <form action={logoutAction}>
-          <button type="submit" className="text-sm font-medium text-zinc-600 hover:text-zinc-950">
+          <AppButton type="submit" variant="text" color="inherit">
             Logout
-          </button>
+          </AppButton>
         </form>
-      </div>
-    </header>
+        </Toolbar>
+      </AppContainer>
+    </AppBar>
   );
 }

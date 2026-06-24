@@ -1,10 +1,14 @@
+import Box from "@mui/material/Box";
 import { AdminHeader } from "@/components/admin/AdminHeader";
+import { AppContainer } from "@/components/common/AppContainer";
 
 export function AdminPage({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-zinc-50">
+    <Box sx={{ minHeight: "100vh", bgcolor: "background.default" }}>
       <AdminHeader />
-      <main className="mx-auto w-full max-w-5xl px-4 py-8">{children}</main>
-    </div>
+      <AppContainer component="main" maxWidth="md" sx={{ py: { xs: 3, md: 4 } }}>
+        {children}
+      </AppContainer>
+    </Box>
   );
 }

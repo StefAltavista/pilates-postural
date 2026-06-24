@@ -24,6 +24,7 @@ export class MediaError extends Error {
       | "MISSING_IMAGE"
       | "UNSUPPORTED_FILE_TYPE"
       | "FILE_TOO_LARGE"
+      | "INVALID_MEDIA_ID"
       | "PROCESSING_FAILED"
       | "WRITE_FAILED",
     message: string,
@@ -35,7 +36,7 @@ export class MediaError extends Error {
 
 function assertSafeMediaId(mediaId: string) {
   if (!/^[a-zA-Z0-9_-]+$/.test(mediaId)) {
-    throw new Error("Invalid media id.");
+    throw new MediaError("INVALID_MEDIA_ID", "The media id is invalid.");
   }
 }
 
@@ -108,6 +109,7 @@ export async function createMediaFromFile(file: File): Promise<NormalizedMedia> 
     if (error instanceof MediaError) {
       throw error;
     }
+    console.error(`Failed to process uploaded media ${mediaId}.`, error);
     throw new MediaError("PROCESSING_FAILED", "The image could not be processed.");
   }
 }
