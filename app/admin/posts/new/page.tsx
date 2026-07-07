@@ -4,6 +4,7 @@ import Typography from "@mui/material/Typography";
 import { AdminPage } from "@/components/admin/AdminPage";
 import { PostForm } from "@/components/admin/posts/PostForm";
 import { AppCard } from "@/components/common/AppCard";
+import { createAdminCsrfToken } from "@/lib/auth/csrf";
 import { requireAdmin } from "@/lib/auth/session";
 import { getCategories } from "@/lib/data/categories";
 
@@ -11,7 +12,7 @@ export const dynamic = "force-dynamic";
 
 export default async function NewPostPage() {
   await requireAdmin();
-  const categories = await getCategories();
+  const [categories, csrfToken] = await Promise.all([getCategories(), createAdminCsrfToken()]);
 
   return (
     <AdminPage>
@@ -23,7 +24,7 @@ export default async function NewPostPage() {
         <Alert severity="info" sx={{ mt: 3 }}>Create a category before writing posts.</Alert>
       ) : (
         <AppCard component="section" sx={{ mt: 3, p: { xs: 2, sm: 3 } }}>
-          <PostForm categories={categories} />
+          <PostForm categories={categories} csrfToken={csrfToken} />
         </AppCard>
       )}
     </AdminPage>

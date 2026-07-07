@@ -17,7 +17,7 @@ import { type CategoryFormInput, categoryFormSchema } from "@/lib/validation/sch
 import { slugify } from "@/lib/validation/slug";
 import { SubmitButton } from "@/components/admin/common/SubmitButton";
 
-export function CategoryForm() {
+export function CategoryForm({ csrfToken }: { csrfToken: string }) {
   const [serverState, setServerState] = useState<CategoryActionState>({});
   const [slugTouched, setSlugTouched] = useState(false);
   const {
@@ -29,7 +29,7 @@ export function CategoryForm() {
     formState: { errors, isSubmitting },
   } = useForm<CategoryFormInput>({
     resolver: zodResolver(categoryFormSchema),
-    defaultValues: { name: "", slug: "" },
+    defaultValues: { csrfToken, name: "", slug: "" },
   });
 
   const name = useWatch({ control, name: "name" });
@@ -54,6 +54,7 @@ export function CategoryForm() {
     <AppCard component="form" onSubmit={handleSubmit(onSubmit)} sx={{ p: 2 }}>
       <Stack spacing={2}>
       <Typography variant="h6">New category</Typography>
+      <input type="hidden" {...register("csrfToken")} />
       {serverState.errors?.form ? (
         <Alert severity="error">{serverState.errors.form[0]}</Alert>
       ) : null}

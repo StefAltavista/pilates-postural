@@ -8,7 +8,12 @@ export type NormalizedMedia = {
   height: number;
   mimeType: string;
   sizeBytes: number;
-  alt: string | null;
-  caption: string | null;
   createdAt: Date;
+};
+
+export type PostImage = {
+  id: string;
+  title: string;
+  position: number;
+  media: NormalizedMedia;
 };

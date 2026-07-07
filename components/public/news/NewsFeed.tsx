@@ -1,12 +1,9 @@
 import Link from "next/link";
 import Box from "@mui/material/Box";
-import Chip from "@mui/material/Chip";
-import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { AppButton } from "@/components/common/AppButton";
 import { AppCard } from "@/components/common/AppCard";
 import { EmptyState } from "@/components/common/EmptyState";
-import { OptimizedImage } from "@/components/common/OptimizedImage";
+import { ImageDotCarousel } from "@/components/public/ImageDotCarousel";
 import { formatDate } from "@/lib/format";
 
 export type NewsPost = {
@@ -14,15 +11,13 @@ export type NewsPost = {
   title: string;
   slug: string;
   excerpt: string | null;
-  content: string;
-  coverImage: string | null;
-  createdAt: Date;
-  category: { name: string };
-  media: {
-    largeUrl: string;
-    alt: string | null;
-    caption: string | null;
-  } | null;
+  postDate: Date;
+  category: { name: string; slug: string };
+  images: Array<{
+    id: string;
+    title: string;
+    media: { mediumUrl: string; width: number; height: number };
+  }>;
 };
 
 export function NewsFeed({ posts }: { posts: NewsPost[] }) {
@@ -31,61 +26,76 @@ export function NewsFeed({ posts }: { posts: NewsPost[] }) {
   }
 
   return (
-    <Stack spacing={4}>
+    <Box sx={{ display: "grid", gap: 6 }}>
       {posts.map((post) => {
-        const image = post.media?.largeUrl || post.coverImage;
+        const postHref = `/${post.category.slug}/${post.slug}`;
 
         return (
-          <AppCard component="article" key={post.id} sx={{ overflow: "hidden" }}>
-            <Stack spacing={2.5} sx={{ p: { xs: 2.5, sm: 3 } }}>
-              <Stack direction="row" sx={{ alignItems: "center", justifyContent: "space-between" }}>
-                <Chip label={post.category.name} size="small" />
-                <Typography color="text.secondary" variant="caption">
-                  {formatDate(post.createdAt)}
-                </Typography>
-              </Stack>
+          <AppCard
+            component="article"
+            key={post.id}
+            variant="elevation"
+            elevation={0}
+            sx={{ bgcolor: "transparent", border: 0, borderRadius: 0, boxShadow: "none", overflow: "hidden", width: "100%" }}
+          >
+            <Box
+              sx={{
+                display: "grid",
+                columnGap: { lg: 5 },
+                rowGap: 1.5,
+                gridTemplateAreas: {
+                  xs: '"info" "media" "excerpt"',
+                  lg: '"copy media"',
+                },
+                gridTemplateColumns: { xs: "minmax(0, 1fr)", lg: "minmax(240px, 3fr) minmax(0, 7fr)" },
+                alignItems: "start",
+              }}
+            >
+              <Box sx={{ display: { xs: "contents", lg: "block" }, gridArea: { lg: "copy" }, alignSelf: "start" }}>
+                <Box sx={{ gridArea: "info" }}>
+                  <Typography component="h2" variant="h3">
+                    <Link href={postHref} className="text-inherit no-underline">
+                      {post.title}
+                    </Link>
+                  </Typography>
+                  <Typography color="text.secondary" sx={{ mt: 0.5 }} variant="caption">
+                    {formatDate(post.postDate)}
+                  </Typography>
+                </Box>
 
-              <Box>
-                <Typography component="h2" variant="h3">
-                  <Link href={`/posts/${post.slug}`} className="text-inherit no-underline">
-                    {post.title}
-                  </Link>
-                </Typography>
                 {post.excerpt ? (
-                  <Typography color="text.secondary" sx={{ mt: 1 }} variant="subtitle1">
+                  <Typography
+                    component="p"
+                    color="text.secondary"
+                    variant="subtitle1"
+                    sx={{ gridArea: "excerpt", m: 0, mt: { lg: 2 } }}
+                  >
                     {post.excerpt}
                   </Typography>
                 ) : null}
               </Box>
 
-              {image ? (
-                <OptimizedImage
-                  src={image}
-                  alt={post.media?.alt ?? ""}
-                  width={1200}
-                  height={700}
-                  sizes="(max-width: 900px) 100vw, 900px"
-                  style={{ width: "100%", height: "auto", maxHeight: 520, objectFit: "cover" }}
-                />
+              {post.images.length ? (
+                <Box sx={{ gridArea: "media", minWidth: 0 }}>
+                  <ImageDotCarousel
+                    href={postHref}
+                    images={post.images.map(({ id, title, media }) => ({
+                      id,
+                      title,
+                      mediumUrl: media.mediumUrl,
+                      width: media.width,
+                      height: media.height,
+                    }))}
+                  />
+                </Box>
               ) : (
-                <Box aria-hidden="true" sx={{ aspectRatio: "16 / 9", bgcolor: "surfaceAlt.dark" }} />
+                <Box aria-hidden="true" sx={{ aspectRatio: "16 / 9", bgcolor: "surfaceAlt.dark", gridArea: "media" }} />
               )}
 
-              <Typography sx={{ whiteSpace: "pre-line" }}>{post.content}</Typography>
-              {post.media?.caption ? (
-                <Typography color="text.secondary" variant="caption">
-                  {post.media.caption}
-                </Typography>
-              ) : null}
-              <Box>
-                <AppButton href={`/posts/${post.slug}`} variant="outlined">
-                  Open post
-                </AppButton>
-              </Box>
-            </Stack>
+            </Box>
           </AppCard>
         );
       })}
-    </Stack>
+    </Box>
   );
 }

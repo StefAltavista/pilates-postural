@@ -4,6 +4,7 @@ export type SeoMetadataInput = {
   excerpt?: string | null;
   description?: string | null;
   image?: string | null;
+  imageAlt?: string | null;
   path?: string;
   noIndex?: boolean;
 };
@@ -12,9 +13,9 @@ export type PostSeoInput = {
   title: string;
   slug: string;
   excerpt?: string | null;
-  coverImage?: string | null;
-  media?: {
-    largeUrl: string;
-    caption?: string | null;
-  } | null;
+  category: { slug: string };
+  images?: Array<{
+    title: string;
+    media: { largeUrl: string };
+  }>;
 };

@@ -35,10 +35,10 @@ export const typography: TypographyVariantsOptions = {
   h4: { fontSize: "1.5rem", fontWeight: 650, lineHeight: 1.3 },
   h5: { fontSize: "1.25rem", fontWeight: 650, lineHeight: 1.35 },
   h6: { fontSize: "1rem", fontWeight: 650, lineHeight: 1.4 },
-  subtitle1: { fontSize: "1.125rem", fontWeight: 500, lineHeight: 1.55 },
+  subtitle1: { fontSize: "1.125rem", fontWeight: 500, lineHeight: 1.55, textAlign: "justify" },
   subtitle2: { fontSize: "0.875rem", fontWeight: 600, lineHeight: 1.5 },
-  body1: { fontSize: "1rem", fontWeight: 400, lineHeight: 1.65 },
-  body2: { fontSize: "0.875rem", fontWeight: 400, lineHeight: 1.6 },
+  body1: { fontSize: "1rem", fontWeight: 400, lineHeight: 1.65, textAlign: "justify" },
+  body2: { fontSize: "0.875rem", fontWeight: 400, lineHeight: 1.6, textAlign: "justify" },
   button: {
     fontSize: "0.875rem",
     fontWeight: 650,
@@ -63,6 +63,7 @@ export const typography: TypographyVariantsOptions = {
     fontSize: "clamp(1.125rem, 2vw, 1.375rem)",
     fontWeight: 400,
     lineHeight: 1.55,
+    textAlign: "justify",
   },
   quote: {
     fontSize: "clamp(1.125rem, 2vw, 1.5rem)",

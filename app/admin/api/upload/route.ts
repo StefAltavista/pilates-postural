@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { verifyAdminMutation } from "@/lib/auth/csrf";
 import { requireAdmin } from "@/lib/auth/session";
 import {
   createMediaFromFile,
@@ -10,6 +11,9 @@ export const runtime = "nodejs";
 
 export async function POST(request: Request) {
   await requireAdmin();
+  if (!(await verifyAdminMutation(request.headers.get("x-csrf-token")))) {
+    return NextResponse.json({ error: "The upload request could not be verified." }, { status: 403 });
+  }
 
   let formData: FormData;
   try {
@@ -39,6 +43,10 @@ export async function POST(request: Request) {
 
 export async function DELETE(request: Request) {
   await requireAdmin();
+  if (!(await verifyAdminMutation(request.headers.get("x-csrf-token")))) {
+    return NextResponse.json({ error: "The delete request could not be verified." }, { status: 403 });
+  }
+
   const body = (await request.json().catch(() => null)) as { id?: unknown } | null;
   if (!body || typeof body.id !== "string" || !body.id) {
     return NextResponse.json({ error: "A media id is required." }, { status: 400 });

@@ -8,6 +8,7 @@ import { siteConfig } from "@/seo/site.config";
 const navigation = [
   { href: "/", label: "Home" },
   { href: "/featured", label: "Featured" },
+  { href: "/news", label: "News" },
   { href: "/contact", label: "Contact" },
 ];
 

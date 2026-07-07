@@ -12,6 +12,7 @@ export function createSeoMetadata({
   excerpt,
   description,
   image,
+  imageAlt,
   path,
   noIndex = false,
 }: SeoMetadataInput): Metadata {
@@ -35,24 +36,25 @@ export function createSeoMetadata({
       siteName: siteConfig.siteName,
       locale: siteConfig.locale,
       url: canonicalUrl,
-      images: [{ url: resolvedImage, alt: title }],
+      images: [{ url: resolvedImage, alt: imageAlt || title }],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description: resolvedDescription,
-      images: [{ url: resolvedImage, alt: title }],
+      images: [{ url: resolvedImage, alt: imageAlt || title }],
     },
   };
 }
 
 export function createPostSeoMetadata(post: PostSeoInput): Metadata {
+  const firstImage = post.images?.[0];
   const metadata = createSeoMetadata({
     title: post.title,
-    description: post.media?.caption,
     excerpt: post.excerpt,
-    image: post.media?.largeUrl || post.coverImage,
-    path: `/posts/${post.slug}`,
+    image: firstImage?.media.largeUrl,
+    imageAlt: firstImage?.title,
+    path: `/${post.category.slug}/${post.slug}`,
   });
 
   return {

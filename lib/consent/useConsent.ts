@@ -11,14 +11,15 @@ import {
   subscribeToConsent,
 } from "@/lib/consent/consentStorage";
 
-const getServerConsent = () => null;
+const getServerConsent = () => undefined;
 
 export function useConsent() {
   const consent = useSyncExternalStore(subscribeToConsent, getConsent, getServerConsent);
 
   return {
     consent,
-    hasDecision: consent !== null,
+    isReady: consent !== undefined,
+    hasDecision: consent !== null && consent !== undefined,
     hasGoogleMapsConsent: consent?.googleMaps === true,
     setConsent,
     acceptAllConsent,

@@ -11,6 +11,7 @@ import { AdminPage } from "@/components/admin/AdminPage";
 import { AppButton } from "@/components/common/AppButton";
 import { CategoryForm } from "@/components/admin/categories/CategoryForm";
 import { deleteCategoryAction } from "@/lib/actions/categories";
+import { createAdminCsrfToken } from "@/lib/auth/csrf";
 import { requireAdmin } from "@/lib/auth/session";
 import { getCategoriesWithPostCount } from "@/lib/data/categories";
 import { formatDate } from "@/lib/format";
@@ -19,7 +20,10 @@ export const dynamic = "force-dynamic";
 
 export default async function AdminCategoriesPage() {
   await requireAdmin();
-  const categories = await getCategoriesWithPostCount();
+  const [categories, csrfToken] = await Promise.all([
+    getCategoriesWithPostCount(),
+    createAdminCsrfToken(),
+  ]);
 
   return (
     <AdminPage>
@@ -51,6 +55,7 @@ export default async function AdminCategoriesPage() {
                     ) : (
                       <form action={deleteCategoryAction}>
                         <input type="hidden" name="id" value={category.id} />
+                        <input type="hidden" name="csrfToken" value={csrfToken} />
                         <AppButton type="submit" color="error" variant="text" size="small">
                           Delete
                         </AppButton>
@@ -69,7 +74,7 @@ export default async function AdminCategoriesPage() {
             </TableBody>
           </Table>
         </TableContainer>
-        <CategoryForm />
+        <CategoryForm csrfToken={csrfToken} />
       </Box>
     </AdminPage>
   );

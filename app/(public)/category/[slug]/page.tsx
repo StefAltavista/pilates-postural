@@ -45,8 +45,8 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
           component="header"
           sx={{ mb: 5, borderBottom: 1, borderColor: "divider", pb: 3 }}
         >
-          <Link href="/posts" className="text-sm font-medium underline">
-            Posts
+          <Link href="/news" className="text-sm font-medium underline">
+            News
           </Link>
           <Typography component="h1" variant="h3" sx={{ mt: 2 }}>
             {category.name}

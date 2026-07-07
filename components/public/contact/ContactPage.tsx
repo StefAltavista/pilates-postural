@@ -23,40 +23,26 @@ export function ContactPage() {
           </Typography>
         </Stack>
 
-        <Box sx={{ display: "grid", gap: 3, gridTemplateColumns: { md: "0.8fr 1.2fr" } }}>
-          <AppCard sx={{ p: 3 }}>
-            <Stack spacing={3}>
-              <Box>
-                <Typography variant="subtitle2">Email</Typography>
-                <Typography color="text.secondary">hello@example.com</Typography>
-              </Box>
-              <Box>
-                <Typography variant="subtitle2">Phone</Typography>
-                <Typography color="text.secondary">+00 123 456 789</Typography>
-              </Box>
-              <Box>
-                <Typography variant="subtitle2">Studio</Typography>
-                <Typography color="text.secondary">
-                  Example Street 12
-                  <br />
-                  10000 Example City
-                </Typography>
-              </Box>
-            </Stack>
-          </AppCard>
-
-          <AppCard sx={{ display: "grid", minHeight: 320, placeItems: "center", p: 3 }}>
-            <Stack spacing={1.5} sx={{ maxWidth: 420, textAlign: "center" }}>
-              <Typography component="h2" variant="h5">
-                Contact form placeholder
+        <AppCard sx={{ p: 3 }}>
+          <Stack spacing={3}>
+            <Box>
+              <Typography variant="subtitle2">Email</Typography>
+              <Typography color="text.secondary">hello@example.com</Typography>
+            </Box>
+            <Box>
+              <Typography variant="subtitle2">Phone</Typography>
+              <Typography color="text.secondary">+00 123 456 789</Typography>
+            </Box>
+            <Box>
+              <Typography variant="subtitle2">Studio</Typography>
+              <Typography color="text.secondary">
+                Example Street 12
+                <br />
+                10000 Example City
               </Typography>
-              <Typography color="text.secondary" variant="body2">
-                Connect the preferred email or CRM service here when contact form handling is
-                configured. No inactive form is shown to visitors in the meantime.
-              </Typography>
-            </Stack>
-          </AppCard>
-        </Box>
+            </Box>
+          </Stack>
+        </AppCard>
 
         <Box sx={{ mt: 5 }}>
           <GoogleMapsEmbed

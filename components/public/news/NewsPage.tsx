@@ -7,7 +7,7 @@ import { NewsFeed, type NewsPost } from "@/components/public/news/NewsFeed";
 export function NewsPage({ posts }: { posts: NewsPost[] }) {
   return (
     <AppSection>
-      <AppContainer maxWidth="md">
+      <AppContainer maxWidth="lg">
         <Stack spacing={2} sx={{ mb: 5 }}>
           <Typography color="primary.main" variant="overline">
             News

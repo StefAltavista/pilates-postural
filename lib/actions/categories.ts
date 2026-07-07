@@ -2,6 +2,7 @@
 
 import { Prisma } from "@prisma/client";
 import { revalidatePath } from "next/cache";
+import { verifyAdminMutation } from "@/lib/auth/csrf";
 import { requireAdmin } from "@/lib/auth/session";
 import { prisma } from "@/lib/prisma";
 import { categorySchema, type CategoryFormInput } from "@/lib/validation/schemas";
@@ -14,7 +15,7 @@ export type CategoryActionState = {
 
 function revalidateCategoryPaths(slug?: string) {
   revalidatePath("/");
-  revalidatePath("/posts");
+  revalidatePath("/news");
   revalidatePath("/admin/categories");
   revalidatePath("/admin/posts");
 
@@ -39,6 +40,10 @@ export async function createCategoryAction(
 ): Promise<CategoryActionState> {
   await requireAdmin();
 
+  if (!(await verifyAdminMutation(input.csrfToken))) {
+    return { errors: { form: ["The category request could not be verified. Refresh and try again."] } };
+  }
+
   const parsed = categorySchema.safeParse(input);
 
   if (!parsed.success) {
@@ -57,6 +62,10 @@ export async function createCategoryAction(
 
 export async function deleteCategoryAction(formData: FormData) {
   await requireAdmin();
+
+  if (!(await verifyAdminMutation(formData.get("csrfToken")))) {
+    return;
+  }
 
   const id = String(formData.get("id") ?? "");
 

@@ -3,6 +3,7 @@
 import { Prisma } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { verifyAdminMutation } from "@/lib/auth/csrf";
 import { requireAdmin } from "@/lib/auth/session";
 import { prisma } from "@/lib/prisma";
 import { deleteMediaIfUnreferenced } from "@/lib/media/service";
@@ -14,22 +15,29 @@ export type PostActionState = {
   errors?: Partial<Record<keyof PostFormInput | "form", string[]>>;
 };
 
-function revalidatePostPaths(slug?: string) {
+function revalidatePostPaths(categorySlug?: string, slug?: string) {
   revalidatePath("/");
-  revalidatePath("/posts");
+  revalidatePath("/news");
   revalidatePath("/admin/posts");
 
-  if (slug) {
-    revalidatePath(`/posts/${slug}`);
+  if (categorySlug) {
+    revalidatePath(`/category/${categorySlug}`);
+  }
+  if (categorySlug && slug) {
+    revalidatePath(`/${categorySlug}/${slug}`);
   }
 }
 
-async function cleanUpMedia(mediaId: string | null | undefined) {
-  try {
-    await deleteMediaIfUnreferenced(mediaId);
-  } catch (error) {
-    console.error(`Failed to clean up media ${mediaId}.`, error);
-  }
+async function cleanUpMedia(mediaIds: Array<string | null | undefined>) {
+  await Promise.all(
+    [...new Set(mediaIds.filter((id): id is string => Boolean(id)))].map(async (mediaId) => {
+      try {
+        await deleteMediaIfUnreferenced(mediaId);
+      } catch (error) {
+        console.error(`Failed to clean up media ${mediaId}.`, error);
+      }
+    }),
+  );
 }
 
 function getPostError(error: unknown): PostActionState {
@@ -44,7 +52,7 @@ function getPostError(error: unknown): PostActionState {
     error instanceof Prisma.PrismaClientKnownRequestError &&
     error.code === "P2003"
   ) {
-    return { errors: { coverImage: ["The selected image no longer exists."] } };
+    return { errors: { images: ["One of the selected images no longer exists."] } };
   }
 
   return { errors: { form: ["Something went wrong. Please try again."] } };
@@ -53,17 +61,37 @@ function getPostError(error: unknown): PostActionState {
 export async function createPostAction(input: PostFormInput): Promise<PostActionState> {
   await requireAdmin();
 
-  const parsed = postSchema.safeParse(input);
+  if (!(await verifyAdminMutation(input.csrfToken))) {
+    return { errors: { form: ["The post request could not be verified. Refresh and try again."] } };
+  }
 
+  const parsed = postSchema.safeParse(input);
   if (!parsed.success) {
     return { errors: parsed.error.flatten().fieldErrors };
   }
 
+  const { images, ...postData } = parsed.data;
+  const duplicate = await prisma.post.findUnique({
+    where: { slug: postData.slug },
+    select: { id: true },
+  });
+  if (duplicate) {
+    return { errors: { slug: ["That slug is already in use."] } };
+  }
+
   try {
-    const post = await prisma.post.create({ data: parsed.data });
-    revalidatePostPaths(post.slug);
+    const post = await prisma.post.create({
+      data: {
+        ...postData,
+        images: {
+          create: images.map((image, position) => ({ ...image, position })),
+        },
+      },
+      include: { category: { select: { slug: true } } },
+    });
+    revalidatePostPaths(post.category.slug, post.slug);
   } catch (error) {
-    await cleanUpMedia(parsed.data.mediaId);
+    await cleanUpMedia(images.map((image) => image.mediaId));
     return getPostError(error);
   }
 
@@ -76,36 +104,70 @@ export async function updatePostAction(
 ): Promise<PostActionState> {
   await requireAdmin();
 
-  const parsed = postSchema.safeParse(input);
+  if (!(await verifyAdminMutation(input.csrfToken))) {
+    return { errors: { form: ["The post request could not be verified. Refresh and try again."] } };
+  }
 
+  const parsed = postSchema.safeParse(input);
   if (!parsed.success) {
     return { errors: parsed.error.flatten().fieldErrors };
   }
 
+  const { images, ...postData } = parsed.data;
+  const duplicate = await prisma.post.findFirst({
+    where: { slug: postData.slug, NOT: { id } },
+    select: { id: true },
+  });
+  if (duplicate) {
+    return { errors: { slug: ["That slug is already in use."] } };
+  }
+
+  const previous = await prisma.post.findUnique({
+    where: { id },
+    select: {
+      slug: true,
+      category: { select: { slug: true } },
+      images: { select: { mediaId: true } },
+    },
+  });
+
+  if (!previous) {
+    await cleanUpMedia(images.map((image) => image.mediaId));
+    return { errors: { form: ["Post not found."] } };
+  }
+
   try {
-    const previous = await prisma.post.findUnique({
-      where: { id },
-      select: { slug: true, mediaId: true },
+    const post = await prisma.$transaction(async (tx) => {
+      await tx.postImage.deleteMany({ where: { postId: id } });
+      const updated = await tx.post.update({
+        where: { id },
+        data: postData,
+        include: { category: { select: { slug: true } } },
+      });
+      if (images.length) {
+        await tx.postImage.createMany({
+          data: images.map((image, position) => ({
+            postId: id,
+            mediaId: image.mediaId,
+            title: image.title,
+            position,
+          })),
+        });
+      }
+      return updated;
     });
 
-    if (!previous) {
-      await cleanUpMedia(parsed.data.mediaId);
-      return { errors: { form: ["Post not found."] } };
-    }
+    const currentIds = new Set(images.map((image) => image.mediaId));
+    await cleanUpMedia(
+      previous.images
+        .map((image) => image.mediaId)
+        .filter((mediaId) => !currentIds.has(mediaId)),
+    );
 
-    const post = await prisma.post.update({
-      where: { id },
-      data: parsed.data,
-    });
-
-    if (previous.mediaId !== post.mediaId) {
-      await cleanUpMedia(previous.mediaId);
-    }
-
-    revalidatePostPaths(previous.slug);
-    revalidatePostPaths(post.slug);
+    revalidatePostPaths(previous.category.slug, previous.slug);
+    revalidatePostPaths(post.category.slug, post.slug);
   } catch (error) {
-    await cleanUpMedia(parsed.data.mediaId);
+    await cleanUpMedia(images.map((image) => image.mediaId));
     return getPostError(error);
   }
 
@@ -114,19 +176,22 @@ export async function updatePostAction(
 
 export async function deletePostAction(formData: FormData) {
   await requireAdmin();
-
-  const id = String(formData.get("id") ?? "");
-
-  if (!id) {
+  if (!(await verifyAdminMutation(formData.get("csrfToken")))) {
     return;
   }
 
+  const id = String(formData.get("id") ?? "");
+  if (!id) return;
+
   const post = await prisma.post.delete({
     where: { id },
-    select: { slug: true, mediaId: true },
+    select: {
+      slug: true,
+      category: { select: { slug: true } },
+      images: { select: { mediaId: true } },
+    },
   });
 
-  await cleanUpMedia(post.mediaId);
-
-  revalidatePostPaths(post.slug);
+  await cleanUpMedia(post.images.map((image) => image.mediaId));
+  revalidatePostPaths(post.category.slug, post.slug);
 }

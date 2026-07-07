@@ -2,6 +2,13 @@
 
 import bcrypt from "bcryptjs";
 import { redirect } from "next/navigation";
+import { verifyAdminMutation, verifySameOriginRequest } from "@/lib/auth/csrf";
+import {
+  checkLoginRateLimit,
+  getLoginRateLimitKey,
+  recordFailedLogin,
+  resetLoginRateLimit,
+} from "@/lib/auth/rateLimit";
 import { clearAdminSession, createAdminSession } from "./session";
 import { loginSchema } from "@/lib/validation/schemas";
 
@@ -19,6 +26,10 @@ export async function loginAction(
   _previousState: LoginState,
   formData: FormData,
 ): Promise<LoginState> {
+  if (!(await verifySameOriginRequest())) {
+    return { errors: { form: ["The login request could not be verified."] } };
+  }
+
   const parsed = loginSchema.safeParse({
     email: formData.get("email"),
     password: formData.get("password"),
@@ -26,6 +37,18 @@ export async function loginAction(
 
   if (!parsed.success) {
     return { errors: parsed.error.flatten().fieldErrors };
+  }
+
+  const rateLimitKey = await getLoginRateLimitKey(parsed.data.email);
+  const rateLimit = checkLoginRateLimit(rateLimitKey);
+  if (rateLimit.limited) {
+    return {
+      errors: {
+        form: [
+          `Too many failed login attempts. Try again in ${Math.ceil(rateLimit.retryAfterSeconds / 60)} minutes.`,
+        ],
+      },
+    };
   }
 
   const adminEmail = process.env.ADMIN_EMAIL;
@@ -47,14 +70,20 @@ export async function loginAction(
   );
 
   if (!emailMatches || !passwordMatches) {
+    recordFailedLogin(rateLimitKey);
     return { errors: { form: ["Invalid username or password."] } };
   }
 
+  resetLoginRateLimit(rateLimitKey);
   await createAdminSession(adminEmail);
   redirect("/admin/posts");
 }
 
-export async function logoutAction() {
+export async function logoutAction(formData: FormData) {
+  if (!(await verifyAdminMutation(formData.get("csrfToken")))) {
+    return;
+  }
+
   await clearAdminSession();
   redirect("/admin/login");
 }

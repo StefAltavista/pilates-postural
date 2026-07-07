@@ -17,13 +17,16 @@ import { useConsent } from "@/lib/consent/useConsent";
 export function CookieBanner() {
   const {
     consent,
+    isReady,
     hasDecision,
     setConsent,
     acceptAllConsent,
     rejectOptionalConsent,
+    clearConsent,
   } = useConsent();
   const [managing, setManaging] = useState(false);
   const [googleMapsEnabled, setGoogleMapsEnabled] = useState(true);
+  const showDevControls = process.env.NODE_ENV === "development";
 
   function openSettings() {
     setGoogleMapsEnabled(consent?.googleMaps ?? true);
@@ -33,6 +36,16 @@ export function CookieBanner() {
   function saveSettings() {
     setConsent({ googleMaps: googleMapsEnabled });
     setManaging(false);
+  }
+
+  function clearSavedChoice() {
+    clearConsent();
+    setGoogleMapsEnabled(true);
+    setManaging(false);
+  }
+
+  if (!isReady) {
+    return null;
   }
 
   return (
@@ -67,29 +80,32 @@ export function CookieBanner() {
             </Stack>
           </AppCard>
         </Box>
-      ) : (
+      ) : null}
+
+      {hasDecision ? (
         <IconButton
-          aria-label="Review cookie and external service preferences"
-          title="Review privacy preferences"
+          aria-label="Open cookie preferences"
           onClick={openSettings}
           sx={{
-            position: "fixed",
-            zIndex: "snackbar",
-            right: { xs: 16, sm: 24 },
-            bottom: { xs: 16, sm: 24 },
-            width: 44,
-            height: 44,
-            border: 1,
-            borderColor: "border.main",
             bgcolor: "background.paper",
+            border: "1px solid",
+            borderColor: "divider",
+            bottom: { xs: 16, sm: 24 },
             boxShadow: 3,
-            fontSize: 22,
-            "&:hover": { bgcolor: "surfaceAlt.main" },
+            fontSize: 20,
+            height: 44,
+            position: "fixed",
+            right: { xs: 16, sm: 24 },
+            width: 44,
+            zIndex: "snackbar",
+            "&:hover": { bgcolor: "background.paper", boxShadow: 6 },
           }}
         >
-          <span aria-hidden="true">🍪</span>
+          <Box component="span" aria-hidden="true" sx={{ lineHeight: 1 }}>
+            🍪
+          </Box>
         </IconButton>
-      )}
+      ) : null}
 
       <Dialog open={managing} onClose={() => setManaging(false)} fullWidth maxWidth="xs">
         <DialogTitle>Manage external services</DialogTitle>
@@ -105,6 +121,13 @@ export function CookieBanner() {
             helperText="Allows embedded maps provided by Google to load."
             onChange={(event) => setGoogleMapsEnabled(event.target.checked)}
           />
+          {showDevControls ? (
+            <Box sx={{ borderTop: "1px solid", borderColor: "divider", mt: 2.5, pt: 2 }}>
+              <AppButton color="warning" size="small" variant="outlined" onClick={clearSavedChoice}>
+                ONLY DEV: clear cookies
+              </AppButton>
+            </Box>
+          ) : null}
         </DialogContent>
         <DialogActions sx={{ px: 3, pb: 2.5 }}>
           <AppButton variant="text" color="inherit" onClick={() => setManaging(false)}>

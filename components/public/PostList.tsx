@@ -11,12 +11,11 @@ type ListedPost = {
   title: string;
   slug: string;
   excerpt: string | null;
-  coverImage: string | null;
-  media: {
-    thumbnailUrl: string;
-    alt: string | null;
-  } | null;
-  createdAt: Date;
+  images: Array<{
+    title: string;
+    media: { thumbnailUrl: string };
+  }>;
+  postDate: Date;
   category: {
     name: string;
     slug: string;
@@ -36,7 +35,9 @@ export function PostList({
 
   return (
     <Stack spacing={3}>
-      {posts.map((post) => (
+      {posts.map((post) => {
+        const preview = post.images[0];
+        return (
         <Box
           component="article"
           key={post.id}
@@ -49,10 +50,10 @@ export function PostList({
             gridTemplateColumns: { sm: "180px 1fr" },
           }}
         >
-          {post.media?.thumbnailUrl || post.coverImage ? (
+          {preview?.media.thumbnailUrl ? (
             <OptimizedImage
-              src={post.media?.thumbnailUrl ?? post.coverImage!}
-              alt={post.media?.alt ?? ""}
+              src={preview.media.thumbnailUrl}
+              alt={preview.title}
               width={360}
               height={220}
               sizes="(max-width: 600px) 100vw, 180px"
@@ -66,15 +67,16 @@ export function PostList({
               <Link href={`/category/${post.category.slug}`} className="font-medium underline">
                 {post.category.name}
               </Link>
-              <Typography component="span" variant="body2">{formatDate(post.createdAt)}</Typography>
+              <Typography component="span" variant="body2">{formatDate(post.postDate)}</Typography>
             </Stack>
             <Typography component="h2" variant="h5">
-              <Link href={`/posts/${post.slug}`}>{post.title}</Link>
+              <Link href={`/${post.category.slug}/${post.slug}`}>{post.title}</Link>
             </Typography>
             {post.excerpt ? <Typography color="text.secondary" sx={{ mt: 1 }}>{post.excerpt}</Typography> : null}
           </Box>
         </Box>
-      ))}
+        );
+      })}
     </Stack>
   );
 }

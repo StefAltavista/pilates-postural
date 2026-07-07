@@ -12,6 +12,7 @@ import Typography from "@mui/material/Typography";
 import { AdminPage } from "@/components/admin/AdminPage";
 import { AppButton } from "@/components/common/AppButton";
 import { deletePostAction } from "@/lib/actions/posts";
+import { createAdminCsrfToken } from "@/lib/auth/csrf";
 import { requireAdmin } from "@/lib/auth/session";
 import { getAdminPosts } from "@/lib/data/posts";
 import { formatDate } from "@/lib/format";
@@ -20,7 +21,7 @@ export const dynamic = "force-dynamic";
 
 export default async function AdminPostsPage() {
   await requireAdmin();
-  const posts = await getAdminPosts();
+  const [posts, csrfToken] = await Promise.all([getAdminPosts(), createAdminCsrfToken()]);
 
   return (
     <AdminPage>
@@ -36,7 +37,7 @@ export default async function AdminPostsPage() {
               <TableCell>Title</TableCell>
               <TableCell>Category</TableCell>
               <TableCell>Status</TableCell>
-              <TableCell>Created</TableCell>
+              <TableCell>Date</TableCell>
               <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
@@ -46,7 +47,7 @@ export default async function AdminPostsPage() {
                 <TableCell sx={{ fontWeight: 600 }}>{post.title}</TableCell>
                 <TableCell>{post.category.name}</TableCell>
                 <TableCell>{post.published ? "Published" : "Draft"}</TableCell>
-                <TableCell>{formatDate(post.createdAt)}</TableCell>
+                <TableCell>{formatDate(post.postDate)}</TableCell>
                 <TableCell>
                   <Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>
                     <Link href={`/admin/posts/${post.id}/edit`} className="font-medium underline">
@@ -54,6 +55,7 @@ export default async function AdminPostsPage() {
                     </Link>
                     <form action={deletePostAction}>
                       <input type="hidden" name="id" value={post.id} />
+                      <input type="hidden" name="csrfToken" value={csrfToken} />
                       <AppButton type="submit" color="error" variant="text" size="small">
                         Delete
                       </AppButton>

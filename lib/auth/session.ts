@@ -4,7 +4,7 @@ import { createHmac, randomBytes, timingSafeEqual } from "node:crypto";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-const COOKIE_NAME = "admin_session";
+export const ADMIN_SESSION_COOKIE_NAME = "admin_session";
 const SESSION_MAX_AGE_SECONDS = 60 * 60 * 24 * 7;
 
 type SessionPayload = {
@@ -13,7 +13,7 @@ type SessionPayload = {
   nonce: string;
 };
 
-function getSessionSecret() {
+export function getSessionSecret() {
   const secret = process.env.SESSION_SECRET;
 
   if (!secret || secret.length < 32) {
@@ -77,7 +77,7 @@ export async function createAdminSession(email: string) {
   const token = `${payload}.${sign(payload)}`;
   const cookieStore = await cookies();
 
-  cookieStore.set(COOKIE_NAME, token, {
+  cookieStore.set(ADMIN_SESSION_COOKIE_NAME, token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
@@ -88,12 +88,12 @@ export async function createAdminSession(email: string) {
 
 export async function clearAdminSession() {
   const cookieStore = await cookies();
-  cookieStore.delete(COOKIE_NAME);
+  cookieStore.delete(ADMIN_SESSION_COOKIE_NAME);
 }
 
 export async function getAdminSession() {
   const cookieStore = await cookies();
-  const token = cookieStore.get(COOKIE_NAME)?.value;
+  const token = cookieStore.get(ADMIN_SESSION_COOKIE_NAME)?.value;
 
   if (!token) {
     return null;

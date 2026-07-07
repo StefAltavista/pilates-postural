@@ -12,19 +12,17 @@ model Post {
   slug       String   @unique
   excerpt    String?
   content    String
-  coverImage String?
-  mediaId    String?
+  postDate   DateTime
   published  Boolean  @default(false)
   categoryId String
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 
-  category Category @relation(fields: [categoryId], references: [id], onDelete: Restrict)
-  media    Media?   @relation(fields: [mediaId], references: [id], onDelete: SetNull)
+  category Category    @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  images   PostImage[]
 
   @@index([categoryId])
-  @@index([published, createdAt])
-  @@index([mediaId])
+  @@index([published, postDate])
 }
 
 model Media {
@@ -37,11 +35,25 @@ model Media {
   height       Int
   mimeType     String
   sizeBytes    Int
-  alt          String?
-  caption      String?
   createdAt    DateTime @default(now())
 
-  posts Post[]
+  postImages PostImage[]
+}
+
+model PostImage {
+  id        String   @id @default(cuid())
+  postId    String
+  mediaId   String
+  title     String
+  position  Int
+  createdAt DateTime @default(now())
+
+  post  Post  @relation(fields: [postId], references: [id], onDelete: Cascade)
+  media Media @relation(fields: [mediaId], references: [id], onDelete: Restrict)
+
+  @@unique([postId, mediaId])
+  @@unique([postId, position])
+  @@index([mediaId])
 }
 
 model Category {

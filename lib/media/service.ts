@@ -132,7 +132,7 @@ export async function deleteMediaIfUnreferenced(mediaId: string | null | undefin
   assertSafeMediaId(mediaId);
 
   const deleted = await prisma.media.deleteMany({
-    where: { id: mediaId, posts: { none: {} } },
+    where: { id: mediaId, postImages: { none: {} } },
   });
   if (deleted.count === 0) return false;
 

@@ -6,21 +6,33 @@ import { prisma } from "@/lib/prisma";
 export function getPublishedPosts() {
   return prisma.post.findMany({
     where: { published: true },
-    include: { category: true, media: true },
-    orderBy: { createdAt: "desc" },
+    include: {
+      category: true,
+      images: { include: { media: true }, orderBy: { position: "asc" } },
+    },
+    orderBy: { postDate: "desc" },
   });
 }
 
-export const getPublishedPostBySlug = cache(function getPublishedPostBySlug(slug: string) {
+export const getPublishedPostByPath = cache(function getPublishedPostByPath(
+  categorySlug: string,
+  postSlug: string,
+) {
   return prisma.post.findFirst({
-    where: { slug, published: true },
-    include: { category: true, media: true },
+    where: { slug: postSlug, published: true, category: { slug: categorySlug } },
+    include: {
+      category: true,
+      images: { include: { media: true }, orderBy: { position: "asc" } },
+    },
   });
 });
 
 export function getAdminPosts() {
   return prisma.post.findMany({
-    include: { category: true, media: true },
+    include: {
+      category: true,
+      images: { include: { media: true }, orderBy: { position: "asc" } },
+    },
     orderBy: { createdAt: "desc" },
   });
 }
@@ -28,7 +40,9 @@ export function getAdminPosts() {
 export function getPostForEdit(id: string) {
   return prisma.post.findUnique({
     where: { id },
-    include: { media: true },
+    include: {
+      images: { include: { media: true }, orderBy: { position: "asc" } },
+    },
   });
 }
 
@@ -40,8 +54,11 @@ export const getPublishedPostsByCategorySlug = cache(function getPublishedPostsB
     include: {
       posts: {
         where: { published: true },
-        include: { category: true, media: true },
-        orderBy: { createdAt: "desc" },
+        include: {
+          category: true,
+          images: { include: { media: true }, orderBy: { position: "asc" } },
+        },
+        orderBy: { postDate: "desc" },
       },
     },
   });
