@@ -10,14 +10,14 @@ export function NewsPage({ posts }: { posts: NewsPost[] }) {
       <AppContainer maxWidth="lg">
         <Stack spacing={2} sx={{ mb: 5 }}>
           <Typography color="primary.main" variant="overline">
-            News
+            Novita
           </Typography>
           <Typography component="h1" variant="h2">
-            Stories, updates, and recent work.
+            Movimento, Pilates e aggiornamenti dallo studio.
           </Typography>
           <Typography color="text.secondary" variant="secondarySubtitle">
-            Follow the complete stream of published posts and open any story for its dedicated
-            page.
+            Qui trovi comunicazioni, approfondimenti e piccoli spunti dedicati a benessere e
+            pratica.
           </Typography>
         </Stack>
         <NewsFeed posts={posts} />

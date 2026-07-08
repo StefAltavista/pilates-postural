@@ -1,6 +1,5 @@
 "use server";
 
-import { Prisma } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { verifyAdminMutation } from "@/lib/auth/csrf";
 import { requireAdmin } from "@/lib/auth/session";
@@ -24,11 +23,17 @@ function revalidateCategoryPaths(slug?: string) {
   }
 }
 
+function hasPrismaErrorCode(error: unknown, code: string) {
+  return (
+    typeof error === "object" &&
+    error !== null &&
+    "code" in error &&
+    (error as { code?: unknown }).code === code
+  );
+}
+
 function getCategoryError(error: unknown): CategoryActionState {
-  if (
-    error instanceof Prisma.PrismaClientKnownRequestError &&
-    error.code === "P2002"
-  ) {
+  if (hasPrismaErrorCode(error, "P2002")) {
     return { errors: { slug: ["That slug is already in use."] } };
   }
 

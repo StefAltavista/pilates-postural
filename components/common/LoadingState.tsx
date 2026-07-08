@@ -2,7 +2,7 @@ import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
 
-export function LoadingState({ label = "Loading…" }: { label?: string }) {
+export function LoadingState({ label = "Caricamento..." }: { label?: string }) {
   return (
     <Box
       aria-live="polite"

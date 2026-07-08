@@ -3,9 +3,9 @@ import { getPublishedPosts } from "@/lib/data/posts";
 import { createSeoMetadata } from "@/seo/createSeoMetadata";
 
 export const metadata = createSeoMetadata({
-  title: "News",
-  subtitle: "The latest stories, updates, and published work.",
-  excerpt: "Browse all published posts in an expanded, easy-to-read news feed.",
+  title: "Novita",
+  subtitle: "Aggiornamenti dallo studio.",
+  excerpt: "Leggi aggiornamenti, notizie e spunti su Pilates, movimento e benessere.",
   path: "/news",
 });
 

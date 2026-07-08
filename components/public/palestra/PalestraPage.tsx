@@ -5,49 +5,49 @@ import { AppCard } from "@/components/common/AppCard";
 import { AppContainer } from "@/components/common/AppContainer";
 import { AppSection } from "@/components/common/AppSection";
 
-const featuredItems = [
+const palestraItems = [
   {
-    eyebrow: "Identity",
-    title: "A visual language for a new idea",
+    eyebrow: "Pilates",
+    title: "Reformer e lavoro posturale",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.",
+      "Lezioni individuali o in piccoli gruppi per migliorare allineamento, tono e controllo del movimento.",
     color: "primary.light",
   },
   {
-    eyebrow: "Digital",
-    title: "A quieter kind of digital experience",
+    eyebrow: "Attrezzi",
+    title: "Barrel e Cadillac",
     description:
-      "Nullam id dolor id nibh ultricies vehicula ut id elit. Aenean eu leo quam pellentesque ornare sem lacinia.",
+      "Supporti versatili per mobilizzare la colonna, aprire il respiro e accompagnare esercizi piu precisi.",
     color: "secondary.light",
   },
   {
-    eyebrow: "Campaign",
-    title: "Turning a small moment into a story",
+    eyebrow: "Gyrotonic",
+    title: "Movimento fluido e tridimensionale",
     description:
-      "Cras mattis consectetur purus sit amet fermentum. Donec ullamcorper nulla non metus auctor fringilla.",
+      "Sequenze circolari per lavorare su coordinazione, elasticita e sensazione di spazio nel corpo.",
     color: "accent.light",
   },
 ];
 
-export function FeaturedPage() {
+export function PalestraPage() {
   return (
     <AppSection>
       <AppContainer>
-        <Stack spacing={2} sx={{ maxWidth: 760, mb: { xs: 5, md: 7 } }}>
+        <Stack spacing={2} sx={{ maxWidth: 780, mb: { xs: 5, md: 7 } }}>
           <Typography color="primary.main" variant="overline">
-            Featured
+            Palestra
           </Typography>
           <Typography component="h1" variant="h2">
-            A selection of work worth spending time with.
+            Pilates, attrezzi e Gyrotonic per il movimento quotidiano.
           </Typography>
           <Typography color="text.secondary" variant="secondarySubtitle">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. These neutral project blocks
-            can be replaced with client imagery and final case-study copy.
+            Uno spazio raccolto dove il corpo viene accompagnato con attenzione: dal respiro alla
+            postura, dalla forza profonda alla mobilita.
           </Typography>
         </Stack>
 
         <Stack spacing={{ xs: 4, md: 6 }}>
-          {featuredItems.map((item, index) => (
+          {palestraItems.map((item, index) => (
             <AppCard key={item.title} sx={{ overflow: "hidden" }}>
               <Box
                 sx={{
@@ -58,7 +58,7 @@ export function FeaturedPage() {
                 <Box
                   aria-hidden="true"
                   sx={{
-                    minHeight: { xs: 260, md: 420 },
+                    minHeight: { xs: 240, md: 360 },
                     bgcolor: item.color,
                     order: { md: index % 2 === 0 ? 0 : 1 },
                   }}
@@ -80,3 +80,4 @@ export function FeaturedPage() {
     </AppSection>
   );
 }
+

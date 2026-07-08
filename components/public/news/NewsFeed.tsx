@@ -22,7 +22,7 @@ export type NewsPost = {
 
 export function NewsFeed({ posts }: { posts: NewsPost[] }) {
   if (posts.length === 0) {
-    return <EmptyState title="No news yet" description="Published posts will appear here." />;
+    return <EmptyState title="Nessuna novita" description="I prossimi aggiornamenti appariranno qui." />;
   }
 
   return (

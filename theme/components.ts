@@ -6,30 +6,34 @@ export const components: Components<Theme> = {
       "*, *::before, *::after": { boxSizing: "border-box" },
       html: { scrollBehavior: "smooth" },
       body: { minHeight: "100vh" },
-      "::selection": { backgroundColor: "rgba(29, 78, 216, 0.2)" },
+      "::selection": { backgroundColor: "rgba(19, 124, 107, 0.22)" },
     },
   },
   MuiButton: {
     defaultProps: { disableElevation: true },
     styleOverrides: {
       root: {
-        minHeight: 42,
+        minHeight: 40,
         borderRadius: 8,
-        paddingInline: 20,
+        paddingInline: 18,
       },
-      sizeSmall: { minHeight: 36, paddingInline: 14 },
-      sizeLarge: { minHeight: 48, paddingInline: 24 },
+      sizeSmall: { minHeight: 34, paddingInline: 14 },
+      sizeLarge: { minHeight: 46, paddingInline: 22 },
     },
   },
   MuiContainer: {
     defaultProps: { maxWidth: "lg" },
     styleOverrides: {
       root: ({ theme }) => ({
-        paddingLeft: theme.spacing(2),
-        paddingRight: theme.spacing(2),
+        paddingLeft: theme.spacing(3),
+        paddingRight: theme.spacing(3),
         [theme.breakpoints.up("sm")]: {
-          paddingLeft: theme.spacing(3),
-          paddingRight: theme.spacing(3),
+          paddingLeft: theme.spacing(4),
+          paddingRight: theme.spacing(4),
+        },
+        [theme.breakpoints.up("md")]: {
+          paddingLeft: theme.spacing(5),
+          paddingRight: theme.spacing(5),
         },
         [theme.breakpoints.up("lg")]: {
           paddingLeft: theme.spacing(4),
@@ -45,6 +49,8 @@ export const components: Components<Theme> = {
         border: `1px solid ${theme.palette.border.main}`,
         borderRadius: 12,
         backgroundImage: "none",
+        backgroundColor: theme.palette.background.paper,
+        color: theme.palette.text.light,
       }),
     },
   },

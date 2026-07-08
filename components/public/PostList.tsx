@@ -30,7 +30,7 @@ export function PostList({
   emptyMessage: string;
 }) {
   if (posts.length === 0) {
-    return <EmptyState title="Nothing here yet" description={emptyMessage} />;
+    return <EmptyState title="Ancora nessun contenuto" description={emptyMessage} />;
   }
 
   return (

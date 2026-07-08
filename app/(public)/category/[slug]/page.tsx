@@ -20,12 +20,12 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
   const category = await getPublishedPostsByCategorySlug(slug);
 
   if (!category) {
-    return createSeoMetadata({ title: "Category not found", noIndex: true });
+    return createSeoMetadata({ title: "Categoria non trovata", noIndex: true });
   }
 
   return createSeoMetadata({
     title: category.name,
-    excerpt: `Browse published posts in ${category.name}.`,
+    excerpt: `Leggi gli articoli pubblicati in ${category.name}.`,
     path: `/category/${slug}`,
   });
 }
@@ -46,13 +46,13 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
           sx={{ mb: 5, borderBottom: 1, borderColor: "divider", pb: 3 }}
         >
           <Link href="/news" className="text-sm font-medium underline">
-            News
+            Novita
           </Link>
           <Typography component="h1" variant="h3" sx={{ mt: 2 }}>
             {category.name}
           </Typography>
         </Box>
-        <PostList posts={category.posts} emptyMessage="No published posts in this category." />
+        <PostList posts={category.posts} emptyMessage="Nessun articolo pubblicato in questa categoria." />
       </AppContainer>
     </AppSection>
   );

@@ -18,6 +18,14 @@ import { formatDate } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
 
+type AdminCategoryRow = {
+  id: string;
+  name: string;
+  slug: string;
+  createdAt: Date;
+  _count: { posts: number };
+};
+
 export default async function AdminCategoriesPage() {
   await requireAdmin();
   const [categories, csrfToken] = await Promise.all([
@@ -41,7 +49,7 @@ export default async function AdminCategoriesPage() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {categories.map((category) => (
+              {categories.map((category: AdminCategoryRow) => (
                 <TableRow key={category.id}>
                   <TableCell sx={{ fontWeight: 600 }}>{category.name}</TableCell>
                   <TableCell>{category.slug}</TableCell>

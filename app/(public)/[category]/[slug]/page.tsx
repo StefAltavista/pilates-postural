@@ -17,11 +17,22 @@ type PostPageProps = {
   params: Promise<{ category: string; slug: string }>;
 };
 
+type PublishedPostImage = {
+  id: string;
+  title: string;
+  media: {
+    mediumUrl: string;
+    largeUrl: string;
+    width: number;
+    height: number;
+  };
+};
+
 export async function generateMetadata({ params }: PostPageProps): Promise<Metadata> {
   const { category, slug } = await params;
   const post = await getPublishedPostByPath(category, slug);
 
-  if (!post) return createSeoMetadata({ title: "Post not found", noIndex: true });
+  if (!post) return createSeoMetadata({ title: "Articolo non trovato", noIndex: true });
   return createPostSeoMetadata(post);
 }
 
@@ -30,7 +41,7 @@ export default async function PostPage({ params }: PostPageProps) {
   const post = await getPublishedPostByPath(category, slug);
   if (!post) notFound();
 
-  const images: PostDisplayImage[] = post.images.map(({ id, title, media }) => ({
+  const images: PostDisplayImage[] = post.images.map(({ id, title, media }: PublishedPostImage) => ({
     id,
     title,
     mediumUrl: media.mediumUrl,
@@ -44,7 +55,7 @@ export default async function PostPage({ params }: PostPageProps) {
   return (
     <AppSection>
       <AppContainer maxWidth="lg">
-        <Link href="/news" className="text-sm font-medium underline">News</Link>
+        <Link href="/news" className="text-sm font-medium underline">Novita</Link>
         <Box component="article" sx={{ mt: 3 }}>
           <Box component="header" sx={{ mb: 4 }}>
             <Typography component="h1" variant="h2">{post.title}</Typography>
@@ -81,7 +92,7 @@ export default async function PostPage({ params }: PostPageProps) {
           </Box>
 
           {remainingImages.length ? (
-            <Box component="section" aria-label="More post images" sx={{ mt: 5, mx: { lg: "auto" }, width: { xs: "100%", lg: "70%" } }}>
+            <Box component="section" aria-label="Altre immagini dell'articolo" sx={{ mt: 5, mx: { lg: "auto" }, width: { xs: "100%", lg: "70%" } }}>
               <ImageDotCarousel images={remainingImages} showActiveTitle />
             </Box>
           ) : null}

@@ -1,5 +1,8 @@
-import type { CSSProperties } from "react";
-import type { PaletteColor, SimplePaletteColorOptions } from "@mui/material/styles";
+import type {
+  CSSObject,
+  PaletteColor,
+  SimplePaletteColorOptions,
+} from "@mui/material/styles";
 
 declare module "@mui/material/styles" {
   interface Palette {
@@ -23,17 +26,23 @@ declare module "@mui/material/styles" {
   }
 
   interface TypographyVariants {
-    primaryTitle: CSSProperties;
-    secondarySubtitle: CSSProperties;
-    quote: CSSProperties;
-    link: CSSProperties;
+    primaryTitle: CSSObject;
+    secondarySubtitle: CSSObject;
+    quote: CSSObject;
+    link: CSSObject;
   }
 
   interface TypographyVariantsOptions {
-    primaryTitle?: CSSProperties;
-    secondarySubtitle?: CSSProperties;
-    quote?: CSSProperties;
-    link?: CSSProperties;
+    primaryTitle?: CSSObject;
+    secondarySubtitle?: CSSObject;
+    quote?: CSSObject;
+    link?: CSSObject;
+  }
+}
+
+declare module "@mui/material/styles/createPalette" {
+  interface TypeText {
+    light: string;
   }
 }
 

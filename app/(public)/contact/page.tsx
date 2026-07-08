@@ -2,9 +2,9 @@ import { ContactPage as ContactPageContent } from "@/components/public/contact/C
 import { createSeoMetadata } from "@/seo/createSeoMetadata";
 
 export const metadata = createSeoMetadata({
-  title: "Contact",
-  subtitle: "Get in touch",
-  excerpt: "Contact the studio for collaborations, projects, and general inquiries.",
+  title: "Contatti",
+  subtitle: "Pilates Postural Studio a Rapallo",
+  excerpt: "Contatta lo studio per Pilates, Gyrotonic, massaggi e informazioni.",
   path: "/contact",
 });
 

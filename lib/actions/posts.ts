@@ -1,6 +1,5 @@
 "use server";
 
-import { Prisma } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { verifyAdminMutation } from "@/lib/auth/csrf";
@@ -13,6 +12,15 @@ export type PostActionState = {
   ok?: boolean;
   message?: string;
   errors?: Partial<Record<keyof PostFormInput | "form", string[]>>;
+};
+
+type PostTransactionClient = {
+  post: Pick<typeof prisma.post, "update">;
+  postImage: Pick<typeof prisma.postImage, "createMany" | "deleteMany">;
+};
+
+type PostImageMediaRef = {
+  mediaId: string;
 };
 
 function revalidatePostPaths(categorySlug?: string, slug?: string) {
@@ -40,18 +48,21 @@ async function cleanUpMedia(mediaIds: Array<string | null | undefined>) {
   );
 }
 
+function hasPrismaErrorCode(error: unknown, code: string) {
+  return (
+    typeof error === "object" &&
+    error !== null &&
+    "code" in error &&
+    (error as { code?: unknown }).code === code
+  );
+}
+
 function getPostError(error: unknown): PostActionState {
-  if (
-    error instanceof Prisma.PrismaClientKnownRequestError &&
-    error.code === "P2002"
-  ) {
+  if (hasPrismaErrorCode(error, "P2002")) {
     return { errors: { slug: ["That slug is already in use."] } };
   }
 
-  if (
-    error instanceof Prisma.PrismaClientKnownRequestError &&
-    error.code === "P2003"
-  ) {
+  if (hasPrismaErrorCode(error, "P2003")) {
     return { errors: { images: ["One of the selected images no longer exists."] } };
   }
 
@@ -137,7 +148,7 @@ export async function updatePostAction(
   }
 
   try {
-    const post = await prisma.$transaction(async (tx) => {
+    const post = await prisma.$transaction(async (tx: PostTransactionClient) => {
       await tx.postImage.deleteMany({ where: { postId: id } });
       const updated = await tx.post.update({
         where: { id },
@@ -159,7 +170,7 @@ export async function updatePostAction(
 
     const currentIds = new Set(images.map((image) => image.mediaId));
     await cleanUpMedia(
-      previous.images
+      (previous.images as PostImageMediaRef[])
         .map((image) => image.mediaId)
         .filter((mediaId) => !currentIds.has(mediaId)),
     );
@@ -192,6 +203,6 @@ export async function deletePostAction(formData: FormData) {
     },
   });
 
-  await cleanUpMedia(post.images.map((image) => image.mediaId));
+  await cleanUpMedia((post.images as PostImageMediaRef[]).map((image) => image.mediaId));
   revalidatePostPaths(post.category.slug, post.slug);
 }

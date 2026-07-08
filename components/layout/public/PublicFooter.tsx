@@ -6,8 +6,8 @@ import { AppContainer } from "@/components/common/AppContainer";
 import { siteConfig } from "@/seo/site.config";
 
 const legalLinks = [
-  { href: "/privacy-policy", label: "Privacy Policy" },
-  { href: "/cookie-policy", label: "Cookie Policy" },
+  { href: "/privacy-policy", label: "Privacy" },
+  { href: "/cookie-policy", label: "Cookie" },
   { href: "/impressum", label: "Impressum" },
 ];
 
@@ -27,7 +27,8 @@ export function PublicFooter() {
           }}
         >
           <Typography color="text.secondary" variant="body2">
-            {siteConfig.siteName} © {new Date().getFullYear()}
+            {siteConfig.siteName} © {new Date().getFullYear()} - Vicolo del Ghiaccio 9,
+            Rapallo - +39 349 174 7713
           </Typography>
           <Stack
             component="nav"
