@@ -325,9 +325,9 @@ export function HomePage() {
       <AppSection
         sx={{
           bgcolor: "background.paper",
-          color: "text.light",
+          color: "surfaceAlt.light",
           py: { xs: 4, sm: 5, md: 7 },
-          "& .MuiTypography-root": { color: "text.light" },
+          "& .MuiTypography-root": { color: "surfaceAlt.light" },
         }}
       >
         <FadeInOnScroll>
@@ -343,19 +343,19 @@ export function HomePage() {
               <Stack spacing={{ xs: 2, md: 3 }} sx={{ maxWidth: 700 }}>
                 <Typography
                   component="h2"
-                  color="text.light"
+                  sx={{ color: "surfaceAlt.light" }}
                   variant="primaryTitle"
                 >
                   Every body is welcome
                 </Typography>
-                <Typography color="text.light" variant="overline">
+                <Typography sx={{ color: "surfaceAlt.light" }} variant="overline">
                   Consapevolezza del corpo
                 </Typography>
-                <Typography color="text.light" variant="body1">
+                <Typography sx={{ color: "surfaceAlt.light" }} variant="body1">
                   Imparare ad ascoltare il corpo, riconoscerne i segnali e
                   ritrovare un movimento più consapevole, naturale e presente.
                 </Typography>
-                <Typography color="text.light" variant="body1">
+                <Typography sx={{ color: "surfaceAlt.light" }} variant="body1">
                   Le lezioni e i trattamenti sono pensati per persone diverse:
                   chi vuole muoversi meglio, chi cerca sostegno dopo periodi di
                   tensione, chi desidera migliorare tono, equilibrio e

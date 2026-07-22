@@ -42,7 +42,7 @@ export function PublicHeader() {
           aria-current={isActive ? "page" : undefined}
           onClick={() => setMenuOpen(false)}
           sx={{
-            color: "text.light",
+            color: "surfaceAlt.light",
             display: "inline-flex",
             pb: 0.5,
             position: "relative",
@@ -82,7 +82,7 @@ export function PublicHeader() {
         bgcolor: "background.paper",
         borderBottom: 1,
         borderColor: "rgba(238, 250, 249, 0.24)",
-        color: "text.light",
+        color: "surfaceAlt.light",
       }}
     >
       <AppContainer>
@@ -98,13 +98,17 @@ export function PublicHeader() {
             textAlign: { xs: "left", md: "center" },
           }}
         >
-          <Box sx={{ color: "text.light" }}>
-            <Typography color="text.light" component="div" variant="h4">
+          <Box sx={{ color: "surfaceAlt.light" }}>
+            <Typography
+              component="div"
+              sx={{ color: "surfaceAlt.light" }}
+              variant="h4"
+            >
               <Link href="/" className="text-inherit no-underline">
                 {siteConfig.siteName}
               </Link>
             </Typography>
-            <Typography color="text.light" variant="caption">
+            <Typography sx={{ color: "surfaceAlt.light" }} variant="caption">
               Pilates, Gyrotonic e massaggi a Rapallo
             </Typography>
           </Box>
@@ -117,7 +121,7 @@ export function PublicHeader() {
               border: 1,
               borderColor: "currentColor",
               borderRadius: 5,
-              color: "text.light",
+              color: "surfaceAlt.light",
               display: { xs: "inline-flex", md: "none" },
               height: 35,
               position: "absolute",
@@ -187,7 +191,7 @@ export function PublicHeader() {
           sx={{
             borderTop: 1,
             borderColor: "rgba(238, 250, 249, 0.24)",
-            color: "text.light",
+            color: "surfaceAlt.light",
             display: { xs: "none", md: "flex" },
             flexWrap: "wrap",
             gap: { xs: 2, sm: 3 },
@@ -210,7 +214,7 @@ export function PublicHeader() {
             sx={{
               borderTop: 1,
               borderColor: "rgba(238, 250, 249, 0.24)",
-              color: "text.light",
+              color: "surfaceAlt.light",
               pb: { xs: 1.75, sm: 2 },
               pt: { xs: 1.25, sm: 1.5 },
             }}

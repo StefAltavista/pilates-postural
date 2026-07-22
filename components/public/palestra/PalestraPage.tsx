@@ -353,7 +353,7 @@ export function PalestraPage() {
         </AppContainer>
       </AppSection>
 
-      <AppSection sx={{ bgcolor: "background.paper", color: "text.light" }}>
+      <AppSection sx={{ bgcolor: "background.paper", color: "surfaceAlt.light" }}>
         <FadeInOnScroll>
           <AppContainer>
             <Box
@@ -364,14 +364,14 @@ export function PalestraPage() {
               }}
             >
               <Stack spacing={1.5} sx={{ maxWidth: 520 }}>
-                <Typography color="text.light" variant="overline">
+                <Typography sx={{ color: "surfaceAlt.light" }} variant="overline">
                   Metodo in sala
                 </Typography>
                 <Typography component="h2" variant="h3">
                   Il lavoro sugli attrezzi resta concreto, progressivo e
                   personale.
                 </Typography>
-                <Typography color="text.light" sx={{ opacity: 0.86 }}>
+                <Typography sx={{ color: "surfaceAlt.light", opacity: 0.86 }}>
                   La palestra non e pensata come una sequenza standard, ma come
                   un laboratorio sul gesto: ogni esercizio viene scelto per dare
                   una risposta al corpo che arriva in studio.
@@ -392,7 +392,7 @@ export function PalestraPage() {
                         bgcolor: "rgba(238, 250, 249, 0.08)",
                         borderColor: "rgba(238, 250, 249, 0.28)",
                         borderRadius: 2,
-                        color: "text.light",
+                        color: "surfaceAlt.light",
                         height: "100%",
                         p: { xs: 2.5, md: 3 },
                       }}
@@ -401,7 +401,7 @@ export function PalestraPage() {
                         <Typography component="h3" variant="h4">
                           {item.title}
                         </Typography>
-                        <Typography color="text.light" sx={{ opacity: 0.82 }}>
+                        <Typography sx={{ color: "surfaceAlt.light", opacity: 0.82 }}>
                           {item.text}
                         </Typography>
                       </Stack>

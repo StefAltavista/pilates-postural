@@ -92,7 +92,7 @@ export function CookieBanner() {
             borderColor: "divider",
             bottom: { xs: 16, sm: 24 },
             boxShadow: 3,
-            color: "text.light",
+            color: "surfaceAlt.light",
             fontSize: 20,
             height: 44,
             position: "fixed",

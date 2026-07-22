@@ -122,7 +122,7 @@ export function MassaggiPage() {
         </FadeInOnScroll>
       </AppSection>
 
-      <AppSection sx={{ bgcolor: "background.paper", color: "text.light" }}>
+      <AppSection sx={{ bgcolor: "background.paper", color: "surfaceAlt.light" }}>
         <FadeInOnScroll>
           <AppContainer>
             <Box
@@ -133,13 +133,13 @@ export function MassaggiPage() {
               }}
             >
               <Stack spacing={1.5} sx={{ maxWidth: 500 }}>
-                <Typography color="text.light" variant="overline">
+                <Typography sx={{ color: "surfaceAlt.light" }} variant="overline">
                   Percorsi manuali
                 </Typography>
                 <Typography component="h2" variant="h3">
                   Tre modi diversi di accompagnare rilascio e recupero.
                 </Typography>
-                <Typography color="text.light" sx={{ opacity: 0.86 }}>
+                <Typography sx={{ color: "surfaceAlt.light", opacity: 0.86 }}>
                   Il trattamento puo essere piu profondo, piu distensivo o
                   integrato al lavoro posturale. Si sceglie insieme in base a
                   tensioni, obiettivi e sensibilita del momento.
@@ -160,7 +160,7 @@ export function MassaggiPage() {
                         bgcolor: "rgba(238, 250, 249, 0.08)",
                         borderColor: "rgba(238, 250, 249, 0.28)",
                         borderRadius: 2,
-                        color: "text.light",
+                        color: "surfaceAlt.light",
                         display: "flex",
                         flexDirection: "column",
                         height: "100%",
@@ -170,19 +170,22 @@ export function MassaggiPage() {
                       }}
                     >
                       <Stack spacing={1.4}>
-                        <Typography color="text.light" variant="overline">
+                        <Typography sx={{ color: "surfaceAlt.light" }} variant="overline">
                           {item.eyebrow}
                         </Typography>
                         <Typography component="h3" variant="h4">
                           {item.title}
                         </Typography>
-                        <Typography color="text.light" sx={{ opacity: 0.82 }}>
+                        <Typography sx={{ color: "surfaceAlt.light", opacity: 0.82 }}>
                           {item.description}
                         </Typography>
                       </Stack>
                       <Typography
-                        color="text.light"
-                        sx={{ mt: { xs: 3, md: 4 }, opacity: 0.72 }}
+                        sx={{
+                          color: "surfaceAlt.light",
+                          mt: { xs: 3, md: 4 },
+                          opacity: 0.72,
+                        }}
                         variant="body2"
                       >
                         {item.detail}
