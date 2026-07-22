@@ -9,10 +9,9 @@ import {
   recordFailedLogin,
   resetLoginRateLimit,
 } from "@/lib/auth/rateLimit";
+import { getAdminCredentials } from "@/lib/auth/config";
 import { clearAdminSession, createAdminSession } from "./session";
 import { loginSchema } from "@/lib/validation/schemas";
-
-const BCRYPT_HASH_PATTERN = /^\$2[aby]\$\d{2}\$[./A-Za-z0-9]{53}$/;
 
 export type LoginState = {
   errors?: {
@@ -51,22 +50,30 @@ export async function loginAction(
     };
   }
 
-  const adminEmail = process.env.ADMIN_EMAIL;
-  const adminPasswordHash = process.env.ADMIN_PASSWORD_HASH;
+  const adminCredentials = getAdminCredentials();
 
-  if (
-    !adminEmail ||
-    !adminPasswordHash ||
-    !BCRYPT_HASH_PATTERN.test(adminPasswordHash)
-  ) {
-    return { errors: { form: ["Admin credentials are not configured."] } };
+  if (!adminCredentials.isConfigured) {
+    console.error("Admin credentials are not configured correctly.", {
+      hasAdminEmail: adminCredentials.hasAdminEmail,
+      hasAdminPasswordHash: adminCredentials.hasAdminPasswordHash,
+      hasValidAdminPasswordHash: adminCredentials.hasValidAdminPasswordHash,
+    });
+
+    return {
+      errors: {
+        form: [
+          "Admin credentials are not configured correctly. Check ADMIN_EMAIL and ADMIN_PASSWORD_HASH.",
+        ],
+      },
+    };
   }
 
   const emailMatches =
-    parsed.data.email.toLowerCase() === adminEmail.toLowerCase();
+    parsed.data.email.toLowerCase() ===
+    adminCredentials.adminEmail.toLowerCase();
   const passwordMatches = await bcrypt.compare(
     parsed.data.password,
-    adminPasswordHash,
+    adminCredentials.adminPasswordHash,
   );
 
   if (!emailMatches || !passwordMatches) {
@@ -75,7 +82,7 @@ export async function loginAction(
   }
 
   resetLoginRateLimit(rateLimitKey);
-  await createAdminSession(adminEmail);
+  await createAdminSession(adminCredentials.adminEmail);
   redirect("/admin/posts");
 }
 

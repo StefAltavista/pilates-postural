@@ -3,6 +3,7 @@ import "server-only";
 import { createHmac, randomBytes, timingSafeEqual } from "node:crypto";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { getAdminCredentials, getSessionSecretValue } from "@/lib/auth/config";
 
 export const ADMIN_SESSION_COOKIE_NAME = "admin_session";
 const SESSION_MAX_AGE_SECONDS = 60 * 60 * 24 * 7;
@@ -14,7 +15,7 @@ type SessionPayload = {
 };
 
 export function getSessionSecret() {
-  const secret = process.env.SESSION_SECRET;
+  const secret = getSessionSecretValue();
 
   if (!secret || secret.length < 32) {
     throw new Error("SESSION_SECRET must be set to at least 32 characters.");
@@ -100,7 +101,7 @@ export async function getAdminSession() {
   }
 
   const session = verifySessionToken(token);
-  const adminEmail = process.env.ADMIN_EMAIL;
+  const { adminEmail } = getAdminCredentials();
 
   if (!session || !adminEmail || session.email !== adminEmail) {
     return null;

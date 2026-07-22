@@ -79,6 +79,14 @@ the bcrypt hash starts with `$2b$12$` and is 60 characters long.
 
 `ADMIN_EMAIL` is the admin login identifier. It can be a username such as `admin`; it does not need to be an email address.
 
+For Vercel environment variables, paste the bcrypt hash without `.env` escaping:
+
+```env
+ADMIN_PASSWORD_HASH="$2b$12$paste-the-complete-generated-hash-here"
+```
+
+Do not include backslashes in the Vercel dashboard value. After changing Vercel environment variables, redeploy the project so the new values are available to the server.
+
 ### Local Starter Login
 
 The local `.env` included in this workspace is configured with:
