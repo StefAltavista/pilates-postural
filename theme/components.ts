@@ -50,7 +50,7 @@ export const components: Components<Theme> = {
         borderRadius: 12,
         backgroundImage: "none",
         backgroundColor: theme.palette.background.paper,
-        color: theme.palette.text.light,
+        color: theme.palette.surfaceAlt.light,
       }),
     },
   },
