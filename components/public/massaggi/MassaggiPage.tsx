@@ -157,10 +157,10 @@ export function MassaggiPage() {
                   <FadeInOnScroll delayMs={index * 90} key={item.title}>
                     <AppCard
                       sx={{
-                        bgcolor: "surface.light",
-                        borderColor: "border.light",
+                        bgcolor: "rgba(238, 250, 249, 0.08)",
+                        borderColor: "rgba(238, 250, 249, 0.28)",
                         borderRadius: 2,
-                        color: "text.primary",
+                        color: "text.light",
                         display: "flex",
                         flexDirection: "column",
                         height: "100%",
@@ -170,19 +170,19 @@ export function MassaggiPage() {
                       }}
                     >
                       <Stack spacing={1.4}>
-                        <Typography color="primary.main" variant="overline">
+                        <Typography color="text.light" variant="overline">
                           {item.eyebrow}
                         </Typography>
                         <Typography component="h3" variant="h4">
                           {item.title}
                         </Typography>
-                        <Typography color="text.secondary">
+                        <Typography color="text.light" sx={{ opacity: 0.82 }}>
                           {item.description}
                         </Typography>
                       </Stack>
                       <Typography
-                        color="primary.dark"
-                        sx={{ mt: { xs: 3, md: 4 } }}
+                        color="text.light"
+                        sx={{ mt: { xs: 3, md: 4 }, opacity: 0.72 }}
                         variant="body2"
                       >
                         {item.detail}

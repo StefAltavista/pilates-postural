@@ -42,7 +42,7 @@ export function PublicHeader() {
           aria-current={isActive ? "page" : undefined}
           onClick={() => setMenuOpen(false)}
           sx={{
-            color: "inherit",
+            color: "text.light",
             display: "inline-flex",
             pb: 0.5,
             position: "relative",
@@ -81,7 +81,7 @@ export function PublicHeader() {
       sx={{
         bgcolor: "background.paper",
         borderBottom: 1,
-        borderColor: "divider",
+        borderColor: "rgba(238, 250, 249, 0.24)",
         color: "text.light",
       }}
     >
@@ -98,8 +98,8 @@ export function PublicHeader() {
             textAlign: { xs: "left", md: "center" },
           }}
         >
-          <Box>
-            <Typography component="div" variant="h4">
+          <Box sx={{ color: "text.light" }}>
+            <Typography color="text.light" component="div" variant="h4">
               <Link href="/" className="text-inherit no-underline">
                 {siteConfig.siteName}
               </Link>
@@ -186,7 +186,8 @@ export function PublicHeader() {
           aria-label="Primary navigation"
           sx={{
             borderTop: 1,
-            borderColor: "divider",
+            borderColor: "rgba(238, 250, 249, 0.24)",
+            color: "text.light",
             display: { xs: "none", md: "flex" },
             flexWrap: "wrap",
             gap: { xs: 2, sm: 3 },
@@ -208,7 +209,8 @@ export function PublicHeader() {
             aria-label="Mobile primary navigation"
             sx={{
               borderTop: 1,
-              borderColor: "divider",
+              borderColor: "rgba(238, 250, 249, 0.24)",
+              color: "text.light",
               pb: { xs: 1.75, sm: 2 },
               pt: { xs: 1.25, sm: 1.5 },
             }}

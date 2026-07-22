@@ -30,6 +30,7 @@ export const palette: PaletteOptions = {
     primary: "#26585c",
     secondary: "#436B66",
     disabled: "#87A6A0",
+    light: "#eefaf9",
   },
   divider: "#BFE3DC",
   brand: {

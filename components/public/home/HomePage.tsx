@@ -26,8 +26,6 @@ const highlights = [
   },
 ];
 
-const apparatus = ["Reformer", "Barrel", "Gyrotonic machine", "Cadillac"];
-
 export function HomePage() {
   return (
     <>
@@ -60,9 +58,12 @@ export function HomePage() {
                 <Typography color="text.secondary" variant="secondarySubtitle">
                   Uno spazio dedicato a Pilates, Gyrotonic, postura e massaggi.
                   Qui il movimento diventa ascolto, respiro e cura del corpo.
+                  Le proposte si adattano a esigenze diverse, dal lavoro sugli
+                  attrezzi ai trattamenti manuali, per accompagnare ogni persona
+                  con attenzione e gradualità.
                 </Typography>
                 <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5}>
-                  <AppButton href="/news">Leggi le notvità</AppButton>
+                  <AppButton href="/news">Leggi le novità</AppButton>
                   <AppButton
                     href="/prenotazioni"
                     color="inherit"
@@ -175,27 +176,6 @@ export function HomePage() {
                   permettono un lavoro preciso sulla colonna, sul centro, sulla
                   mobilita articolare e sulla qualita del gesto.
                 </Typography>
-                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
-                  {apparatus.map((item) => (
-                    <Box
-                      component="span"
-                      key={item}
-                      sx={{
-                        bgcolor: "surfaceAlt.main",
-                        border: 1,
-                        borderColor: "border.main",
-                        borderRadius: 999,
-                        color: "primary.dark",
-                        px: 2,
-                        py: 0.75,
-                      }}
-                    >
-                      <Typography component="span" variant="subtitle2">
-                        {item}
-                      </Typography>
-                    </Box>
-                  ))}
-                </Box>
               </Stack>
             </Box>
           </AppContainer>
@@ -347,6 +327,7 @@ export function HomePage() {
           bgcolor: "background.paper",
           color: "text.light",
           py: { xs: 4, sm: 5, md: 7 },
+          "& .MuiTypography-root": { color: "text.light" },
         }}
       >
         <FadeInOnScroll>
@@ -373,7 +354,7 @@ export function HomePage() {
                 <Typography color="text.light" variant="body1">
                   Imparare ad ascoltare il corpo, riconoscerne i segnali e
                   ritrovare un movimento più consapevole, naturale e presente.
-                </Typography>{" "}
+                </Typography>
                 <Typography color="text.light" variant="body1">
                   Le lezioni e i trattamenti sono pensati per persone diverse:
                   chi vuole muoversi meglio, chi cerca sostegno dopo periodi di

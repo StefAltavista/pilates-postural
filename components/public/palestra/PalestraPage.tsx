@@ -389,10 +389,10 @@ export function PalestraPage() {
                   <FadeInOnScroll delayMs={index * 90} key={item.title}>
                     <AppCard
                       sx={{
-                        bgcolor: "surface.light",
-                        borderColor: "border.light",
+                        bgcolor: "rgba(238, 250, 249, 0.08)",
+                        borderColor: "rgba(238, 250, 249, 0.28)",
                         borderRadius: 2,
-                        color: "text.primary",
+                        color: "text.light",
                         height: "100%",
                         p: { xs: 2.5, md: 3 },
                       }}
@@ -401,7 +401,7 @@ export function PalestraPage() {
                         <Typography component="h3" variant="h4">
                           {item.title}
                         </Typography>
-                        <Typography color="text.secondary">
+                        <Typography color="text.light" sx={{ opacity: 0.82 }}>
                           {item.text}
                         </Typography>
                       </Stack>

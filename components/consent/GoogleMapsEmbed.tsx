@@ -33,14 +33,14 @@ export function GoogleMapsEmbed({ embedUrl, title = "Google Maps" }: GoogleMapsE
     <AppCard sx={{ display: "grid", minHeight: 400, placeItems: "center", p: 3 }}>
       <Stack spacing={2} sx={{ maxWidth: 500, textAlign: "center" }}>
         <Typography component="h2" variant="h5">
-          Google Maps is blocked
+          Google Maps è bloccato
         </Typography>
         <Typography color="text.secondary" variant="body2">
-          The map is provided by Google and may transfer data to Google. It will load only after
-          you allow the optional Google Maps service.
+          La mappa è fornita da Google e può trasferire dati a Google. Verrà caricata solo dopo il
+          consenso al servizio opzionale Google Maps.
         </Typography>
         <Box>
-          <AppButton onClick={acceptAllConsent}>Allow Google Maps</AppButton>
+          <AppButton onClick={acceptAllConsent}>Consenti Google Maps</AppButton>
         </Box>
       </Stack>
     </AppCard>
