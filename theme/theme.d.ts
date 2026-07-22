@@ -40,6 +40,12 @@ declare module "@mui/material/styles" {
   }
 }
 
+declare module "@mui/material/styles/createPalette" {
+  interface TypeText {
+    light: string;
+  }
+}
+
 declare module "@mui/material/Typography" {
   interface TypographyPropsVariantOverrides {
     primaryTitle: true;
