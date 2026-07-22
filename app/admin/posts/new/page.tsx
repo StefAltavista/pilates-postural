@@ -23,7 +23,15 @@ export default async function NewPostPage() {
       {categories.length === 0 ? (
         <Alert severity="info" sx={{ mt: 3 }}>Create a category before writing posts.</Alert>
       ) : (
-        <AppCard component="section" sx={{ mt: 3, p: { xs: 2, sm: 3 } }}>
+        <AppCard
+          component="section"
+          sx={{
+            bgcolor: "surface.light",
+            color: "text.primary",
+            mt: 3,
+            p: { xs: 2, sm: 3 },
+          }}
+        >
           <PostForm categories={categories} csrfToken={csrfToken} />
         </AppCard>
       )}

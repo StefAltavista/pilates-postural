@@ -38,9 +38,21 @@ export default async function AdminPostsPage() {
         <AppButton href="/admin/posts/new">New post</AppButton>
       </Box>
 
-      <TableContainer component={Paper} variant="outlined">
+      <TableContainer
+        component={Paper}
+        variant="outlined"
+        sx={{ bgcolor: "surface.light", color: "text.primary" }}
+      >
         <Table sx={{ minWidth: 720 }}>
-          <TableHead sx={{ bgcolor: "surfaceAlt.main" }}>
+          <TableHead
+            sx={{
+              bgcolor: "background.paper",
+              "& .MuiTableCell-root": {
+                borderColor: "rgba(238, 250, 249, 0.24)",
+                color: "surfaceAlt.light",
+              },
+            }}
+          >
             <TableRow>
               <TableCell>Title</TableCell>
               <TableCell>Category</TableCell>

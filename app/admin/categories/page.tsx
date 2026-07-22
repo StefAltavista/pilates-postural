@@ -37,9 +37,21 @@ export default async function AdminCategoriesPage() {
     <AdminPage>
       <Typography component="h1" variant="h4" sx={{ mb: 3 }}>Categories</Typography>
       <Box sx={{ display: "grid", gap: 3, gridTemplateColumns: { lg: "1fr 320px" } }}>
-        <TableContainer component={Paper} variant="outlined">
+        <TableContainer
+          component={Paper}
+          variant="outlined"
+          sx={{ bgcolor: "surface.light", color: "text.primary" }}
+        >
           <Table sx={{ minWidth: 620 }}>
-            <TableHead sx={{ bgcolor: "surfaceAlt.main" }}>
+            <TableHead
+              sx={{
+                bgcolor: "background.paper",
+                "& .MuiTableCell-root": {
+                  borderColor: "rgba(238, 250, 249, 0.24)",
+                  color: "surfaceAlt.light",
+                },
+              }}
+            >
               <TableRow>
                 <TableCell>Name</TableCell>
                 <TableCell>Slug</TableCell>

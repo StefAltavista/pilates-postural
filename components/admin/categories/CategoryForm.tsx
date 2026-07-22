@@ -51,32 +51,36 @@ export function CategoryForm({ csrfToken }: { csrfToken: string }) {
   }
 
   return (
-    <AppCard component="form" onSubmit={handleSubmit(onSubmit)} sx={{ p: 2 }}>
+    <AppCard
+      component="form"
+      onSubmit={handleSubmit(onSubmit)}
+      sx={{ bgcolor: "surface.light", color: "text.primary", p: 2 }}
+    >
       <Stack spacing={2}>
-      <Typography variant="h6">New category</Typography>
-      <input type="hidden" {...register("csrfToken")} />
-      {serverState.errors?.form ? (
-        <Alert severity="error">{serverState.errors.form[0]}</Alert>
-      ) : null}
-      {serverState.message ? <Alert severity="success">{serverState.message}</Alert> : null}
+        <Typography variant="h6">New category</Typography>
+        <input type="hidden" {...register("csrfToken")} />
+        {serverState.errors?.form ? (
+          <Alert severity="error">{serverState.errors.form[0]}</Alert>
+        ) : null}
+        {serverState.message ? <Alert severity="success">{serverState.message}</Alert> : null}
 
-      <AppTextField
-        label="Name"
-        error={Boolean(errors.name || serverState.errors?.name)}
-        helperText={errors.name?.message ?? serverState.errors?.name?.[0]}
-        {...register("name")}
-      />
+        <AppTextField
+          label="Name"
+          error={Boolean(errors.name || serverState.errors?.name)}
+          helperText={errors.name?.message ?? serverState.errors?.name?.[0]}
+          {...register("name")}
+        />
 
-      <AppTextField
-        label="Slug"
-        error={Boolean(errors.slug || serverState.errors?.slug)}
-        helperText={errors.slug?.message ?? serverState.errors?.slug?.[0]}
-        {...register("slug", { onChange: () => setSlugTouched(true) })}
-      />
+        <AppTextField
+          label="Slug"
+          error={Boolean(errors.slug || serverState.errors?.slug)}
+          helperText={errors.slug?.message ?? serverState.errors?.slug?.[0]}
+          {...register("slug", { onChange: () => setSlugTouched(true) })}
+        />
 
-      <Box>
-        <SubmitButton pending={isSubmitting}>Create category</SubmitButton>
-      </Box>
+        <Box>
+          <SubmitButton pending={isSubmitting}>Create category</SubmitButton>
+        </Box>
       </Stack>
     </AppCard>
   );

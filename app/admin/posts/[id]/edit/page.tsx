@@ -34,7 +34,15 @@ export default async function EditPostPage({
         Posts
       </Link>
       <Typography component="h1" variant="h4" sx={{ mt: 2 }}>Edit post</Typography>
-      <AppCard component="section" sx={{ mt: 3, p: { xs: 2, sm: 3 } }}>
+      <AppCard
+        component="section"
+        sx={{
+          bgcolor: "surface.light",
+          color: "text.primary",
+          mt: 3,
+          p: { xs: 2, sm: 3 },
+        }}
+      >
         <PostForm categories={categories} csrfToken={csrfToken} post={post} />
       </AppCard>
     </AdminPage>
