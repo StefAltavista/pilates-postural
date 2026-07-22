@@ -1,6 +1,5 @@
 import Link from "next/link";
 import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Toolbar from "@mui/material/Toolbar";
 import { AppButton } from "@/components/common/AppButton";
@@ -36,17 +35,23 @@ export async function AdminHeader() {
             component="nav"
             direction="row"
             spacing={{ xs: 1.5, sm: 3 }}
-            sx={{ color: "inherit", typography: "subtitle2" }}
+            sx={{
+              color: "inherit",
+              typography: "subtitle2",
+              "& a": {
+                color: "inherit",
+                textDecoration: "none",
+              },
+              "& a:hover": {
+                textDecoration: "underline",
+              },
+            }}
           >
-            <Box component={Link} href="/admin/posts" sx={{ color: "inherit", textDecoration: "none" }}>
-              Posts
-            </Box>
-            <Box component={Link} href="/admin/categories" sx={{ color: "inherit", textDecoration: "none" }}>
-              Categories
-            </Box>
-            <Box component={Link} href="/" target="_blank" sx={{ color: "inherit", textDecoration: "none" }}>
+            <Link href="/admin/posts">Posts</Link>
+            <Link href="/admin/categories">Categories</Link>
+            <Link href="/" target="_blank">
               View site
-            </Box>
+            </Link>
           </Stack>
           <form action={logoutAction}>
             <input type="hidden" name="csrfToken" value={csrfToken} />
