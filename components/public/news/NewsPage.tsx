@@ -8,7 +8,7 @@ export function NewsPage({ posts }: { posts: NewsPost[] }) {
   return (
     <AppSection>
       <AppContainer maxWidth="lg">
-        <Stack spacing={2} sx={{ mb: 5 }}>
+        <Stack spacing={2} sx={{ mb: 10 }}>
           <Typography color="primary.main" variant="overline">
             Novita
           </Typography>

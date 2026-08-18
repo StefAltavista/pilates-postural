@@ -8,6 +8,7 @@ import { typography } from "./typography";
 export const theme = createTheme({
   cssVariables: true,
   palette,
+
   typography,
   spacing: 8,
   shape: { borderRadius: 8 },
