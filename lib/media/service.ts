@@ -1,21 +1,18 @@
 import "server-only";
 
 import { randomUUID } from "node:crypto";
-import { mkdir, rename, rm, stat } from "node:fs/promises";
-import path from "node:path";
 import sharp from "sharp";
 import { prisma } from "@/lib/prisma";
+import { deleteMediaFiles, saveMediaFiles } from "./storage";
 import type { NormalizedMedia } from "./types";
 
-const MEDIA_ROOT = path.join(process.cwd(), "public", "uploads", "media");
-const MEDIA_URL_ROOT = "/uploads/media";
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 const ALLOWED_TYPES = new Set(["image/jpeg", "image/png", "image/webp", "image/avif"]);
 
 const versions = [
-  { name: "large", width: 1600, quality: 82 },
-  { name: "medium", width: 960, quality: 82 },
-  { name: "thumbnail", width: 320, quality: 78 },
+  { width: 1600, quality: 82 },
+  { width: 960, quality: 82 },
+  { width: 320, quality: 78 },
 ] as const;
 
 export class MediaError extends Error {
@@ -55,48 +52,49 @@ export async function createMediaFromFile(file: File): Promise<NormalizedMedia> 
   }
 
   const mediaId = randomUUID();
-  const temporaryId = `.tmp-${mediaId}-${randomUUID()}`;
-  const temporaryDir = path.join(MEDIA_ROOT, temporaryId);
-  const mediaDir = path.join(MEDIA_ROOT, mediaId);
 
   try {
-    await mkdir(temporaryDir, { recursive: true });
     const input = Buffer.from(await file.arrayBuffer());
-    const originalPath = path.join(temporaryDir, "original.webp");
-
-    await sharp(input).rotate().webp({ quality: 82 }).toFile(originalPath);
-    await Promise.all(
-      versions.map(({ name, width, quality }) =>
-        sharp(originalPath)
+    const original = await sharp(input).rotate().webp({ quality: 82 }).toBuffer();
+    const [large, medium, thumbnail] = await Promise.all(
+      versions.map(({ width, quality }) =>
+        sharp(original)
           .resize({ width, withoutEnlargement: true })
           .webp({ quality })
-          .toFile(path.join(temporaryDir, `${name}.webp`)),
+          .toBuffer(),
       ),
     );
 
-    const [metadata, originalStats] = await Promise.all([
-      sharp(originalPath).metadata(),
-      stat(originalPath),
-    ]);
+    const metadata = await sharp(original).metadata();
     if (!metadata.width || !metadata.height) {
       throw new Error("Processed image dimensions are unavailable.");
     }
 
-    await rename(temporaryDir, mediaDir);
+    let urls;
+    try {
+      urls = await saveMediaFiles(mediaId, {
+        "original.webp": original,
+        "large.webp": large,
+        "medium.webp": medium,
+        "thumbnail.webp": thumbnail,
+      });
+    } catch (error) {
+      console.error(`Failed to write media files ${mediaId}.`, error);
+      throw new MediaError("WRITE_FAILED", "The uploaded image could not be saved.");
+    }
 
-    const baseUrl = `${MEDIA_URL_ROOT}/${mediaId}`;
     try {
       return await prisma.media.create({
         data: {
           id: mediaId,
-          originalUrl: `${baseUrl}/original.webp`,
-          largeUrl: `${baseUrl}/large.webp`,
-          mediumUrl: `${baseUrl}/medium.webp`,
-          thumbnailUrl: `${baseUrl}/thumbnail.webp`,
+          originalUrl: urls["original.webp"],
+          largeUrl: urls["large.webp"],
+          mediumUrl: urls["medium.webp"],
+          thumbnailUrl: urls["thumbnail.webp"],
           width: metadata.width,
           height: metadata.height,
           mimeType: "image/webp",
-          sizeBytes: originalStats.size,
+          sizeBytes: original.byteLength,
         },
       });
     } catch (error) {
@@ -105,7 +103,6 @@ export async function createMediaFromFile(file: File): Promise<NormalizedMedia> 
       throw new MediaError("WRITE_FAILED", "The uploaded image could not be saved.");
     }
   } catch (error) {
-    await cleanupPath(temporaryDir, temporaryId);
     if (error instanceof MediaError) {
       throw error;
     }
@@ -116,15 +113,7 @@ export async function createMediaFromFile(file: File): Promise<NormalizedMedia> 
 
 export async function deleteMediaFolder(mediaId: string): Promise<void> {
   assertSafeMediaId(mediaId);
-  await cleanupPath(path.join(MEDIA_ROOT, mediaId), mediaId);
-}
-
-async function cleanupPath(target: string, mediaId: string) {
-  try {
-    await rm(target, { recursive: true, force: true });
-  } catch (error) {
-    console.error(`Failed to clean up media files for ${mediaId}.`, error);
-  }
+  await deleteMediaFiles(mediaId);
 }
 
 export async function deleteMediaIfUnreferenced(mediaId: string | null | undefined) {
