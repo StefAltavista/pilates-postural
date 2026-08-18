@@ -16,8 +16,8 @@ export function NewsPage({ posts }: { posts: NewsPost[] }) {
             Movimento, Pilates e aggiornamenti dallo studio.
           </Typography>
           <Typography color="text.secondary" variant="secondarySubtitle">
-            Qui trovi comunicazioni, approfondimenti e piccoli spunti dedicati a benessere e
-            pratica.
+            Qui trovi comunicazioni, approfondimenti e piccoli spunti dedicati a
+            benessere e pratica.
           </Typography>
         </Stack>
         <NewsFeed posts={posts} />

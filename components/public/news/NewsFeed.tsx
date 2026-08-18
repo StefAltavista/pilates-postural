@@ -22,7 +22,12 @@ export type NewsPost = {
 
 export function NewsFeed({ posts }: { posts: NewsPost[] }) {
   if (posts.length === 0) {
-    return <EmptyState title="Nessuna novita" description="I prossimi aggiornamenti appariranno qui." />;
+    return (
+      <EmptyState
+        title="Nessuna novita"
+        description="I prossimi aggiornamenti appariranno qui."
+      />
+    );
   }
 
   return (
@@ -36,7 +41,14 @@ export function NewsFeed({ posts }: { posts: NewsPost[] }) {
             key={post.id}
             variant="elevation"
             elevation={0}
-            sx={{ bgcolor: "transparent", border: 0, borderRadius: 0, boxShadow: "none", overflow: "hidden", width: "100%" }}
+            sx={{
+              bgcolor: "transparent",
+              border: 1,
+              borderRadius: 0,
+              boxShadow: "none",
+              overflow: "hidden",
+              width: "100%",
+            }}
           >
             <Box
               sx={{
@@ -47,34 +59,54 @@ export function NewsFeed({ posts }: { posts: NewsPost[] }) {
                   xs: '"info" "media" "excerpt"',
                   lg: '"copy media"',
                 },
-                gridTemplateColumns: { xs: "minmax(0, 1fr)", lg: "minmax(240px, 3fr) minmax(0, 7fr)" },
+                gridTemplateColumns: {
+                  xs: "minmax(0, 1fr)",
+                  lg: "minmax(240px, 3fr) minmax(0, 7fr)",
+                },
                 alignItems: "start",
               }}
             >
-              <Box sx={{ display: { xs: "contents", lg: "block" }, gridArea: { lg: "copy" }, alignSelf: "start" }}>
+              <Box
+                sx={{
+                  display: { xs: "contents", lg: "block" },
+                  gridArea: { lg: "copy" },
+                  alignSelf: "start",
+                }}
+              >
                 <Box sx={{ gridArea: "info" }}>
-                  <Typography component="h2" variant="h3">
+                  <Typography
+                    component="h2"
+                    variant="h3"
+                    sx={{ color: "text.primary" }}
+                  >
                     <Link href={postHref} className="text-inherit no-underline">
                       {post.title}
                     </Link>
                   </Typography>
-                  <Typography color="text.secondary" sx={{ mt: 0.5 }} variant="caption">
+                  <Typography
+                    color="text.secondary"
+                    sx={{ mt: 0.5, color: "text.primary" }}
+                    variant="caption"
+                  >
                     {formatDate(post.postDate)}
                   </Typography>
                 </Box>
-
                 {post.excerpt ? (
                   <Typography
                     component="p"
                     color="text.secondary"
                     variant="subtitle1"
-                    sx={{ gridArea: "excerpt", m: 0, mt: { lg: 2 } }}
+                    sx={{
+                      gridArea: "excerpt",
+                      m: 0,
+                      mt: { lg: 2 },
+                      color: "text.secondary",
+                    }}
                   >
                     {post.excerpt}
                   </Typography>
                 ) : null}
               </Box>
-
               {post.images.length ? (
                 <Box sx={{ gridArea: "media", minWidth: 0 }}>
                   <ImageDotCarousel
@@ -89,9 +121,15 @@ export function NewsFeed({ posts }: { posts: NewsPost[] }) {
                   />
                 </Box>
               ) : (
-                <Box aria-hidden="true" sx={{ aspectRatio: "16 / 9", bgcolor: "surfaceAlt.dark", gridArea: "media" }} />
+                <Box
+                  aria-hidden="true"
+                  sx={{
+                    aspectRatio: "16 / 9",
+                    bgcolor: "surfaceAlt.dark",
+                    gridArea: "media",
+                  }}
+                />
               )}
-
             </Box>
           </AppCard>
         );
