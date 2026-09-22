@@ -29,7 +29,16 @@ const highlights = [
 export function HomePage() {
   return (
     <>
-      <AppSection sx={{ bgcolor: "background.default", pt: { xs: 4, md: 7 } }}>
+      <AppSection
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "90vh",
+          bgcolor: "background.default",
+          pt: { xs: 4, md: 7 },
+        }}
+      >
         <FadeInOnScroll>
           <AppContainer>
             <Box
@@ -49,7 +58,11 @@ export function HomePage() {
               }}
             >
               <Stack spacing={{ xs: 2, md: 3 }} sx={{ maxWidth: 700 }}>
-                <Typography component="h1" variant="primaryTitle">
+                <Typography
+                  component="h1"
+                  sx={{ fontSize: "6rem" }}
+                  variant="primaryTitle"
+                >
                   Pilates Postural Studio
                 </Typography>
                 <Typography color="primary.main" variant="overline">
@@ -57,8 +70,8 @@ export function HomePage() {
                 </Typography>
                 <Typography color="text.secondary" variant="secondarySubtitle">
                   Uno spazio dedicato a Pilates, Gyrotonic, postura e massaggi.
-                  Qui il movimento diventa ascolto, respiro e cura del corpo.
-                  Le proposte si adattano a esigenze diverse, dal lavoro sugli
+                  Qui il movimento diventa ascolto, respiro e cura del corpo. Le
+                  proposte si adattano a esigenze diverse, dal lavoro sugli
                   attrezzi ai trattamenti manuali, per accompagnare ogni persona
                   con attenzione e gradualità.
                 </Typography>
@@ -139,15 +152,15 @@ export function HomePage() {
                 }}
               >
                 {[
-                  "/images/home/7330sdy9721.jpg",
+                  "/images/home/home2.jpg",
+                  "/images/home/home3.jpg",
+                  "/images/home/home1.jpg",
                   "/images/home/4.jpg",
-                  "/images/home/3.jpg",
-                  "/images/home/6778nog9742.jpg",
                 ].map((image, index) => (
                   <Box
                     key={image}
                     sx={{
-                      aspectRatio: index === 0 ? "3 / 4" : "4 / 3",
+                      aspectRatio: index % 3 == 0 ? "3 /3" : "2 / 3",
                       borderRadius: 2,
                       bgcolor: "surfaceAlt.main",
                       overflow: "hidden",
@@ -168,7 +181,7 @@ export function HomePage() {
                 <Typography color="primary.main" variant="overline">
                   Attrezzi e metodo
                 </Typography>
-                <Typography component="h2" variant="h3">
+                <Typography component="h2" variant="h1">
                   Reformer, Barrel, Gyrotonic machine e Cadillac
                 </Typography>
                 <Typography color="primary.main" variant="body1">
@@ -177,6 +190,72 @@ export function HomePage() {
                   mobilita articolare e sulla qualita del gesto.
                 </Typography>
               </Stack>
+            </Box>
+          </AppContainer>
+        </FadeInOnScroll>
+      </AppSection>
+
+      <AppSection
+        sx={{
+          bgcolor: "background.paper",
+          color: "surfaceAlt.light",
+          py: { xs: 4, sm: 5, md: 7 },
+          "& .MuiTypography-root": { color: "surfaceAlt.light" },
+        }}
+      >
+        <FadeInOnScroll>
+          <AppContainer>
+            <Box
+              sx={{
+                display: "grid",
+                gap: { xs: 3, md: 5 },
+                gridTemplateColumns: { md: "0.65fr 1fr" },
+                alignItems: "center",
+              }}
+            >
+              <Stack spacing={{ xs: 2, md: 3 }} sx={{ maxWidth: 700 }}>
+                <Typography
+                  component="h2"
+                  sx={{ color: "surfaceAlt.light" }}
+                  variant="primaryTitle"
+                >
+                  Every body is welcome
+                </Typography>
+                <Typography
+                  sx={{ color: "surfaceAlt.light" }}
+                  variant="overline"
+                >
+                  Consapevolezza del corpo
+                </Typography>
+                <Typography sx={{ color: "surfaceAlt.light" }} variant="body1">
+                  Imparare ad ascoltare il corpo, riconoscerne i segnali e
+                  ritrovare un movimento più consapevole, naturale e presente.
+                </Typography>
+                <Typography sx={{ color: "surfaceAlt.light" }} variant="body1">
+                  Le lezioni e i trattamenti sono pensati per persone diverse:
+                  chi vuole muoversi meglio, chi cerca sostegno dopo periodi di
+                  tensione, chi desidera migliorare tono, equilibrio e
+                  percezione corporea con un approccio rispettoso.
+                </Typography>
+              </Stack>
+
+              <Box
+                sx={{
+                  aspectRatio: { xs: "16 / 10", md: "4 / 3" },
+                  borderRadius: 2,
+                  bgcolor: "surfaceAlt.dark",
+                  overflow: "hidden",
+                  position: "relative",
+                }}
+              >
+                <OptimizedImage
+                  src="/images/home/7330sdy9721.jpg"
+                  alt="Studio Pilates Postural a Rapallo"
+                  fill
+                  sizes="(max-width: 900px) 100vw, 36vw"
+                  style={{ objectFit: "cover" }}
+                />
+              </Box>
             </Box>
           </AppContainer>
         </FadeInOnScroll>
@@ -317,69 +396,6 @@ export function HomePage() {
                   <AppButton href="/palestra">Scopri la palestra</AppButton>
                 </Stack>
               </Stack>
-            </Box>
-          </AppContainer>
-        </FadeInOnScroll>
-      </AppSection>
-
-      <AppSection
-        sx={{
-          bgcolor: "background.paper",
-          color: "surfaceAlt.light",
-          py: { xs: 4, sm: 5, md: 7 },
-          "& .MuiTypography-root": { color: "surfaceAlt.light" },
-        }}
-      >
-        <FadeInOnScroll>
-          <AppContainer>
-            <Box
-              sx={{
-                display: "grid",
-                gap: { xs: 3, md: 5 },
-                gridTemplateColumns: { md: "0.65fr 1fr" },
-                alignItems: "center",
-              }}
-            >
-              <Stack spacing={{ xs: 2, md: 3 }} sx={{ maxWidth: 700 }}>
-                <Typography
-                  component="h2"
-                  sx={{ color: "surfaceAlt.light" }}
-                  variant="primaryTitle"
-                >
-                  Every body is welcome
-                </Typography>
-                <Typography sx={{ color: "surfaceAlt.light" }} variant="overline">
-                  Consapevolezza del corpo
-                </Typography>
-                <Typography sx={{ color: "surfaceAlt.light" }} variant="body1">
-                  Imparare ad ascoltare il corpo, riconoscerne i segnali e
-                  ritrovare un movimento più consapevole, naturale e presente.
-                </Typography>
-                <Typography sx={{ color: "surfaceAlt.light" }} variant="body1">
-                  Le lezioni e i trattamenti sono pensati per persone diverse:
-                  chi vuole muoversi meglio, chi cerca sostegno dopo periodi di
-                  tensione, chi desidera migliorare tono, equilibrio e
-                  percezione corporea con un approccio rispettoso.
-                </Typography>
-              </Stack>
-
-              <Box
-                sx={{
-                  aspectRatio: { xs: "16 / 10", md: "4 / 3" },
-                  borderRadius: 2,
-                  bgcolor: "surfaceAlt.dark",
-                  overflow: "hidden",
-                  position: "relative",
-                }}
-              >
-                <OptimizedImage
-                  src="/images/home/7330sdy9721.jpg"
-                  alt="Studio Pilates Postural a Rapallo"
-                  fill
-                  sizes="(max-width: 900px) 100vw, 36vw"
-                  style={{ objectFit: "cover" }}
-                />
-              </Box>
             </Box>
           </AppContainer>
         </FadeInOnScroll>

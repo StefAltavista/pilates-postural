@@ -1,16 +1,11 @@
 export const typographyFontMap = {
-  // primary: {
-  //   name: "Bubbler One",
-  //   family: '"Bubbler One"',
-  //   googleFontUrl:
-  //     "https://fonts.googleapis.com/css2?family=Bubbler+One&display=swap",
-  // },
   text: {
-    name: "Happy Monkey",
-    family: '"Happy Monkey"',
+    name: "Bubbler One",
+    family: '"Bubbler One"',
     googleFontUrl:
-      "https://fonts.googleapis.com/css2?family=Happy+Monkey&display=swap",
+      "https://fonts.googleapis.com/css2?family=Bubbler+One&display=swap",
   },
+
   secondary: {
     name: "Elms Sans",
     family: '"Elms Sans"',
@@ -21,7 +16,13 @@ export const typographyFontMap = {
     name: "Alata",
     family: '"Alata"',
     googleFontUrl:
-      "https://fonts.googleapis.com/css2?family=Alata&display=swap",
+      "https://fonts.googleapis.com/css2?family=Alata,wght@0,6..96,400..900;1,6..96,400..900&display=swap",
+  },
+  title: {
+    name: "Noto",
+    family: '"Noto Serif Display"',
+    googleFontUrl:
+      "https://fonts.googleapis.com/css2?family=Noto+Serif+Display:ital,wght@0,100..900;1,100..900&display=swap",
   },
 } as const;
 

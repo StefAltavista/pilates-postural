@@ -10,27 +10,28 @@ const fallbackFontFamily = [
   "sans-serif",
 ].join(",");
 
-const buildFontFamily = (fontFamily: string) => [fontFamily, fallbackFontFamily].join(",");
+const buildFontFamily = (fontFamily: string) =>
+  [fontFamily, fallbackFontFamily].join(",");
 
 const textFontFamily = buildFontFamily(typographyFontMap.text.family);
 const secondaryFontFamily = buildFontFamily(typographyFontMap.secondary.family);
 const primaryFontFamily = buildFontFamily(typographyFontMap.primary.family);
-
+const titlteFontFamily = buildFontFamily(typographyFontMap.title.family);
 export const typography: TypographyVariantsOptions = {
   fontFamily: textFontFamily,
   htmlFontSize: 16,
   fontSize: 16,
   h1: {
-    fontFamily: primaryFontFamily,
+    fontFamily: titlteFontFamily,
     fontSize: "3.75rem",
-    fontWeight: 720,
-    lineHeight: 1.04,
+    fontWeight: 500,
+    lineHeight: 1.4,
     letterSpacing: 0,
     "@media (max-width:900px)": { fontSize: "3rem" },
     "@media (max-width:600px)": { fontSize: "2.35rem" },
   },
   h2: {
-    fontFamily: primaryFontFamily,
+    fontFamily: titlteFontFamily,
     fontSize: "2.75rem",
     fontWeight: 680,
     lineHeight: 1.12,
@@ -62,7 +63,12 @@ export const typography: TypographyVariantsOptions = {
     lineHeight: 1.35,
     "@media (max-width:600px)": { fontSize: "1.1rem" },
   },
-  h6: { fontFamily: secondaryFontFamily, fontSize: "1rem", fontWeight: 400, lineHeight: 1.4 },
+  h6: {
+    fontFamily: secondaryFontFamily,
+    fontSize: "1rem",
+    fontWeight: 400,
+    lineHeight: 1.4,
+  },
   subtitle1: {
     fontSize: "1.1rem",
     fontWeight: 400,
@@ -98,26 +104,27 @@ export const typography: TypographyVariantsOptions = {
   caption: { fontSize: "0.75rem", fontWeight: 500, lineHeight: 1.5 },
   overline: {
     fontFamily: secondaryFontFamily,
-    fontSize: "0.75rem",
-    fontWeight: 400,
+    fontSize: "1rem",
+    fontWeight: 200,
     lineHeight: 1.5,
     letterSpacing: "0.06em",
   },
   primaryTitle: {
-    fontFamily: primaryFontFamily,
-    fontSize: "4rem",
-    fontWeight: 720,
-    lineHeight: 1.03,
+    fontFamily: titlteFontFamily,
+    fontSize: "5rem",
+    fontWeight: 500,
+    lineHeight: 1.3,
     letterSpacing: 0,
-    "@media (max-width:900px)": { fontSize: "3rem" },
-    "@media (max-width:600px)": { fontSize: "2.25rem" },
+    "@media (max-width:900px)": { fontSize: "5rem" },
+    "@media (max-width:600px)": { fontSize: "4rem" },
   },
+
   secondarySubtitle: {
-    fontSize: "1.25rem",
-    fontWeight: 400,
+    fontSize: "1.5rem",
+    fontWeight: 100,
     lineHeight: 1.5,
-    "@media (max-width:900px)": { fontSize: "1.12rem" },
-    "@media (max-width:600px)": { fontSize: "1.02rem" },
+    "@media (max-width:900px)": { fontSize: "1.3rem" },
+    "@media (max-width:600px)": { fontSize: "1.1rem" },
   },
   quote: {
     fontSize: "1.35rem",
