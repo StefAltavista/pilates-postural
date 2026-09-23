@@ -169,7 +169,7 @@ export function PalestraPage() {
                 <Typography color="primary.main" variant="overline">
                   Palestra
                 </Typography>
-                <Typography component="h1" variant="h2">
+                <Typography component="h1" variant="primaryTitle">
                   Pilates, attrezzi e Gyrotonic per dare forma al movimento.
                 </Typography>
                 <Typography color="text.secondary" variant="secondarySubtitle">
@@ -193,7 +193,7 @@ export function PalestraPage() {
               <Typography color="primary.main" variant="overline">
                 Gli strumenti della palestra
               </Typography>
-              <Typography component="h2" variant="h3">
+              <Typography component="h2" variant="sectionTitle">
                 Tre gruppi di attrezzi, tre qualita di movimento.
               </Typography>
               <Typography color="text.secondary">
@@ -367,7 +367,7 @@ export function PalestraPage() {
                 <Typography sx={{ color: "surfaceAlt.light" }} variant="overline">
                   Metodo in sala
                 </Typography>
-                <Typography component="h2" variant="h3">
+                <Typography component="h2" variant="sectionTitle">
                   Il lavoro sugli attrezzi resta concreto, progressivo e
                   personale.
                 </Typography>

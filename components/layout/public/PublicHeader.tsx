@@ -101,7 +101,11 @@ export function PublicHeader() {
           <Box sx={{ color: "surfaceAlt.light" }}>
             <Typography
               component="div"
-              sx={{ color: "surfaceAlt.light" }}
+              sx={{
+                color: "surfaceAlt.light",
+                fontSize: { xs: "1.5rem", sm: "2rem", md: "2.75rem" },
+                lineHeight: 1.2,
+              }}
               variant="h4"
             >
               <Link href="/" className="text-inherit no-underline">

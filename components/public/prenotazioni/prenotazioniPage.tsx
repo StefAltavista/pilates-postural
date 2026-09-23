@@ -16,7 +16,7 @@ export function PrenotazioniPage() {
           <Typography color="primary.main" variant="overline">
             Prenotazioni
           </Typography>
-          <Typography component="h1" variant="h2">
+          <Typography component="h1" variant="primaryTitle">
             Prenota la tua lezione di Pilates Reformer.
           </Typography>
           <Typography color="text.secondary" variant="secondarySubtitle">

@@ -48,7 +48,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
           <Link href="/news" className="text-sm font-medium underline">
             Novita
           </Link>
-          <Typography component="h1" variant="h3" sx={{ mt: 2 }}>
+          <Typography component="h1" variant="primaryTitle" sx={{ mt: 2 }}>
             {category.name}
           </Typography>
         </Box>

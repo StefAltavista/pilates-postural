@@ -71,7 +71,7 @@ export default async function PostPage({ params }: PostPageProps) {
         </Link>
         <Box component="article" sx={{ mt: 3 }}>
           <Box component="header" sx={{ mb: 4 }}>
-            <Typography component="h1" variant="h2">
+            <Typography component="h1" variant="primaryTitle">
               {post.title}
             </Typography>
             <Typography color="text.secondary" sx={{ mt: 1 }} variant="body2">

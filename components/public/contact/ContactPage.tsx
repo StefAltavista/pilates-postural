@@ -14,7 +14,7 @@ export function ContactPage() {
           <Typography color="primary.main" variant="overline">
             Contatti
           </Typography>
-          <Typography component="h1" variant="h2">
+          <Typography component="h1" variant="primaryTitle">
             Vieni a trovarci a Rapallo.
           </Typography>
           <Typography color="text.secondary" variant="secondarySubtitle">

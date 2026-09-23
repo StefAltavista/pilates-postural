@@ -72,7 +72,7 @@ export function MassaggiPage() {
                 <Typography color="primary.main" variant="overline">
                   Massaggi e massoterapia
                 </Typography>
-                <Typography component="h1" variant="h2">
+                <Typography component="h1" variant="primaryTitle">
                   Trattamenti manuali per sciogliere tensioni e ritrovare
                   spazio.
                 </Typography>
@@ -136,7 +136,7 @@ export function MassaggiPage() {
                 <Typography sx={{ color: "surfaceAlt.light" }} variant="overline">
                   Percorsi manuali
                 </Typography>
-                <Typography component="h2" variant="h3">
+                <Typography component="h2" variant="sectionTitle">
                   Tre modi diversi di accompagnare rilascio e recupero.
                 </Typography>
                 <Typography sx={{ color: "surfaceAlt.light", opacity: 0.86 }}>
@@ -233,7 +233,7 @@ export function MassaggiPage() {
                   <Typography color="primary.main" variant="overline">
                     Come si svolge
                   </Typography>
-                  <Typography component="h2" variant="h3">
+                  <Typography component="h2" variant="sectionTitle">
                     Una seduta semplice, precisa e rispettosa dei tempi del
                     corpo.
                   </Typography>

@@ -34,7 +34,7 @@ export function HomePage() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          height: "90vh",
+          minHeight: "90svh",
           bgcolor: "background.default",
           pt: { xs: 4, md: 7 },
         }}
@@ -60,7 +60,7 @@ export function HomePage() {
               <Stack spacing={{ xs: 2, md: 3 }} sx={{ maxWidth: 700 }}>
                 <Typography
                   component="h1"
-                  sx={{ fontSize: "6rem" }}
+                  sx={{ fontSize: "clamp(2.75rem, 1.25rem + 5vw, 6rem)" }}
                   variant="primaryTitle"
                 >
                   Pilates Postural Studio
@@ -181,10 +181,10 @@ export function HomePage() {
                 <Typography color="primary.main" variant="overline">
                   Attrezzi e metodo
                 </Typography>
-                <Typography component="h2" variant="h1">
+                <Typography component="h2" variant="sectionTitle">
                   Reformer, Barrel, Gyrotonic machine e Cadillac
                 </Typography>
-                <Typography color="primary.main" variant="body1">
+                <Typography color="primary.main" variant="secondarySubtitle">
                   Gli attrezzi aiutano a modulare intensita e sostegno:
                   permettono un lavoro preciso sulla colonna, sul centro, sulla
                   mobilita articolare e sulla qualita del gesto.
@@ -217,7 +217,7 @@ export function HomePage() {
                 <Typography
                   component="h2"
                   sx={{ color: "surfaceAlt.light" }}
-                  variant="primaryTitle"
+                  variant="sectionTitle"
                 >
                   Every body is welcome
                 </Typography>
@@ -227,7 +227,10 @@ export function HomePage() {
                 >
                   Consapevolezza del corpo
                 </Typography>
-                <Typography sx={{ color: "surfaceAlt.light" }} variant="body1">
+                <Typography
+                  sx={{ color: "surfaceAlt.light" }}
+                  variant="secondarySubtitle"
+                >
                   Imparare ad ascoltare il corpo, riconoscerne i segnali e
                   ritrovare un movimento più consapevole, naturale e presente.
                 </Typography>
@@ -268,7 +271,7 @@ export function HomePage() {
               <Typography color="primary.main" variant="overline">
                 Movimento, Pilates, Gyrotonic
               </Typography>
-              <Typography component="h2" variant="h3">
+              <Typography component="h2" variant="sectionTitle">
                 Percorsi per muoversi con piu liberta
               </Typography>
             </Stack>
@@ -300,7 +303,7 @@ export function HomePage() {
                     />
                   </Box>
                   <Stack spacing={1} sx={{ p: { xs: 2, md: 2.5 } }}>
-                    <Typography component="h3" variant="h5">
+                    <Typography component="h3" variant="h4">
                       {item.title}
                     </Typography>
                     <Typography color="text.secondary" variant="body2">
@@ -375,13 +378,12 @@ export function HomePage() {
                 </Box>
               </Box>
               <Stack spacing={{ xs: 2, md: 3 }} sx={{ maxWidth: 700 }}>
-                <Typography component="h2" variant="primaryTitle">
+                <Typography component="h2" variant="sectionTitle">
                   Movimento guidato, preciso, personalizzato
                 </Typography>
 
                 <Typography color="primary.main" variant="overline">
-                  Reformer, Cadillac, Chair, Barrel e piccoli attrezziReformer,
-                  Cadillac, Chair, Barrel e piccoli attrezzi
+                  Reformer, Cadillac, Chair, Barrel e piccoli attrezzi
                 </Typography>
 
                 <Typography color="text.secondary" variant="secondarySubtitle">
@@ -408,10 +410,10 @@ export function HomePage() {
               spacing={{ xs: 1.5, md: 2 }}
               sx={{ alignItems: "center", textAlign: "center" }}
             >
-              <Typography component="h2" variant="h3">
+              <Typography component="h2" variant="sectionTitle">
                 Vicolo del Ghiaccio 9, Rapallo
               </Typography>
-              <Typography sx={{ maxWidth: 720 }} variant="body1">
+              <Typography sx={{ maxWidth: 720 }} variant="secondarySubtitle">
                 Per informazioni su lezioni, trattamenti e disponibilita puoi
                 contattare lo studio al numero +39 349 174 7713.
               </Typography>

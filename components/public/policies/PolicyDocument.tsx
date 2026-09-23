@@ -11,7 +11,7 @@ export function PolicyDocument({ title, content }: { title: string; content: str
   return (
     <AppSection>
       <AppContainer maxWidth="md">
-        <Typography component="h1" variant="h3" sx={{ mb: 4 }}>
+        <Typography component="h1" variant="sectionTitle" sx={{ mb: 4 }}>
           {title}
         </Typography>
         <Stack component="article" spacing={3}>
@@ -26,7 +26,7 @@ export function PolicyDocument({ title, content }: { title: string; content: str
 
             if (block.startsWith("## ")) {
               return (
-                <Typography component="h2" variant="h5" key={index}>
+                <Typography component="h2" variant="h4" key={index}>
                   {block.slice(3)}
                 </Typography>
               );

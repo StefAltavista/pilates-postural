@@ -27,6 +27,7 @@ declare module "@mui/material/styles" {
 
   interface TypographyVariants {
     primaryTitle: CSSObject;
+    sectionTitle: CSSObject;
     secondarySubtitle: CSSObject;
     quote: CSSObject;
     link: CSSObject;
@@ -34,6 +35,7 @@ declare module "@mui/material/styles" {
 
   interface TypographyVariantsOptions {
     primaryTitle?: CSSObject;
+    sectionTitle?: CSSObject;
     secondarySubtitle?: CSSObject;
     quote?: CSSObject;
     link?: CSSObject;
@@ -43,6 +45,7 @@ declare module "@mui/material/styles" {
 declare module "@mui/material/Typography" {
   interface TypographyPropsVariantOverrides {
     primaryTitle: true;
+    sectionTitle: true;
     secondarySubtitle: true;
     quote: true;
     link: true;

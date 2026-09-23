@@ -15,14 +15,13 @@ const buildFontFamily = (fontFamily: string) =>
 
 const textFontFamily = buildFontFamily(typographyFontMap.text.family);
 const secondaryFontFamily = buildFontFamily(typographyFontMap.secondary.family);
-const primaryFontFamily = buildFontFamily(typographyFontMap.primary.family);
-const titlteFontFamily = buildFontFamily(typographyFontMap.title.family);
+const titleFontFamily = buildFontFamily(typographyFontMap.title.family);
 export const typography: TypographyVariantsOptions = {
   fontFamily: textFontFamily,
   htmlFontSize: 16,
   fontSize: 16,
   h1: {
-    fontFamily: titlteFontFamily,
+    fontFamily: titleFontFamily,
     fontSize: "3.75rem",
     fontWeight: 500,
     lineHeight: 1.4,
@@ -31,7 +30,7 @@ export const typography: TypographyVariantsOptions = {
     "@media (max-width:600px)": { fontSize: "2.35rem" },
   },
   h2: {
-    fontFamily: titlteFontFamily,
+    fontFamily: titleFontFamily,
     fontSize: "2.75rem",
     fontWeight: 680,
     lineHeight: 1.12,
@@ -109,22 +108,28 @@ export const typography: TypographyVariantsOptions = {
     lineHeight: 1.5,
     letterSpacing: "0.06em",
   },
+  // Display titles, editorial section headings, and lead copy share one scale.
   primaryTitle: {
-    fontFamily: titlteFontFamily,
-    fontSize: "5rem",
+    fontFamily: titleFontFamily,
+    fontSize: "clamp(2.5rem, 1.5rem + 3vw, 4rem)",
     fontWeight: 500,
-    lineHeight: 1.3,
+    lineHeight: 1.15,
     letterSpacing: 0,
-    "@media (max-width:900px)": { fontSize: "5rem" },
-    "@media (max-width:600px)": { fontSize: "4rem" },
+    overflowWrap: "anywhere",
   },
-
+  sectionTitle: {
+    fontFamily: titleFontFamily,
+    fontSize: "clamp(2rem, 1.25rem + 2.5vw, 3.75rem)",
+    fontWeight: 500,
+    lineHeight: 1.2,
+    letterSpacing: 0,
+    overflowWrap: "anywhere",
+  },
   secondarySubtitle: {
-    fontSize: "1.5rem",
-    fontWeight: 100,
+    fontFamily: textFontFamily,
+    fontSize: "clamp(1.125rem, 0.95rem + 0.6vw, 1.5rem)",
+    fontWeight: 400,
     lineHeight: 1.5,
-    "@media (max-width:900px)": { fontSize: "1.3rem" },
-    "@media (max-width:600px)": { fontSize: "1.1rem" },
   },
   quote: {
     fontSize: "1.35rem",

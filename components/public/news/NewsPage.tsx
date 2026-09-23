@@ -12,7 +12,7 @@ export function NewsPage({ posts }: { posts: NewsPost[] }) {
           <Typography color="primary.main" variant="overline">
             Novita
           </Typography>
-          <Typography component="h1" variant="h2">
+          <Typography component="h1" variant="primaryTitle">
             Movimento, Pilates e aggiornamenti dallo studio.
           </Typography>
           <Typography color="text.secondary" variant="secondarySubtitle">
