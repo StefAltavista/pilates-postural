@@ -1,21 +1,18 @@
+import { PostHeaderSection } from "@/components/public/posts/PostHeaderSection";
+import { PostContentSection } from "@/components/public/posts/PostContentSection";
+import { PostGallerySection } from "@/components/public/posts/PostGallerySection";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
+
 import { AppContainer } from "@/components/common/AppContainer";
 import { AppSection } from "@/components/common/AppSection";
-import { ImageDotCarousel } from "@/components/public/ImageDotCarousel";
-import {
-  PostModalImage,
-  type PostDisplayImage,
-} from "@/components/public/posts/PostModalImage";
-import { formatDate } from "@/lib/format";
+
+import { type PostDisplayImage } from "@/components/public/posts/PostModalImage";
+
 import { getPublishedPostByPath } from "@/lib/data/posts";
-import {
-  createPostSeoMetadata,
-  createSeoMetadata,
-} from "@/seo/createSeoMetadata";
+import { createPostSeoMetadata, createSeoMetadata } from "@/seo/createSeoMetadata";
 
 export const dynamic = "force-dynamic";
 
@@ -70,69 +67,11 @@ export default async function PostPage({ params }: PostPageProps) {
           Novita
         </Link>
         <Box component="article" sx={{ mt: 3 }}>
-          <Box component="header" sx={{ mb: 4 }}>
-            <Typography component="h1" variant="primaryTitle">
-              {post.title}
-            </Typography>
-            <Typography color="text.secondary" sx={{ mt: 1 }} variant="body2">
-              {formatDate(post.postDate)}
-            </Typography>
-            {post.excerpt ? (
-              <Typography
-                component="p"
-                color="text.secondary"
-                sx={{ mt: 2, mb: 0, maxWidth: 900 }}
-                variant="secondarySubtitle"
-              >
-                {post.excerpt}
-              </Typography>
-            ) : null}
-          </Box>
+          <PostHeaderSection title={post.title} postDate={post.postDate} excerpt={post.excerpt} />
 
-          <Box
-            sx={{
-              display: "grid",
-              gap: { xs: 4, sm: 5 },
-              gridTemplateAreas: {
-                xs: '"image" "content"',
-                lg: '"content image"',
-              },
-              gridTemplateColumns: {
-                xs: "1fr",
-                lg: "minmax(0, 2fr) minmax(0, 3fr)",
-              },
-              alignItems: "start",
-            }}
-          >
-            <Box sx={{ gridArea: "content" }}>
-              <Typography
-                component="div"
-                sx={{ whiteSpace: "pre-wrap" }}
-                variant="body1"
-              >
-                {post.content}
-              </Typography>
-            </Box>
-            <Box sx={{ gridArea: "image", minWidth: 0 }}>
-              {firstImage ? (
-                <PostModalImage image={firstImage} priority />
-              ) : null}
-            </Box>
-          </Box>
+          <PostContentSection content={post.content} firstImage={firstImage} />
 
-          {remainingImages.length ? (
-            <Box
-              component="section"
-              aria-label="Altre immagini dell'articolo"
-              sx={{
-                mt: 5,
-                mx: { lg: "auto" },
-                width: { xs: "100%", lg: "70%" },
-              }}
-            >
-              <ImageDotCarousel images={remainingImages} showActiveTitle />
-            </Box>
-          ) : null}
+          <PostGallerySection remainingImages={remainingImages} />
         </Box>
       </AppContainer>
     </AppSection>

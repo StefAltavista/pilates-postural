@@ -1,8 +1,8 @@
+import { CategoryHeaderSection } from "@/components/public/posts/CategoryHeaderSection";
 import type { Metadata } from "next";
-import Link from "next/link";
+
 import { notFound } from "next/navigation";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
+
 import { AppContainer } from "@/components/common/AppContainer";
 import { AppSection } from "@/components/common/AppSection";
 import { PostList } from "@/components/public/PostList";
@@ -40,18 +40,8 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
   return (
     <AppSection>
-      <AppContainer maxWidth="md">
-        <Box
-          component="header"
-          sx={{ mb: 5, borderBottom: 1, borderColor: "divider", pb: 3 }}
-        >
-          <Link href="/news" className="text-sm font-medium underline">
-            Novita
-          </Link>
-          <Typography component="h1" variant="primaryTitle" sx={{ mt: 2 }}>
-            {category.name}
-          </Typography>
-        </Box>
+      <AppContainer>
+        <CategoryHeaderSection name={category.name} />
         <PostList posts={category.posts} emptyMessage="Nessun articolo pubblicato in questa categoria." />
       </AppContainer>
     </AppSection>

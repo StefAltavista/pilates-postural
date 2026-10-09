@@ -18,6 +18,7 @@ export const typographyFontMap = {
     googleFontUrl:
       "https://fonts.googleapis.com/css2?family=Alata,wght@0,6..96,400..900;1,6..96,400..900&display=swap",
   },
+
   title: {
     name: "Noto",
     family: '"Noto Serif Display"',

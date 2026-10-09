@@ -1,5 +1,4 @@
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
+import { NewsIntroSection } from "./NewsIntroSection";
 import { AppContainer } from "@/components/common/AppContainer";
 import { AppSection } from "@/components/common/AppSection";
 import { NewsFeed, type NewsPost } from "@/components/public/news/NewsFeed";
@@ -8,18 +7,7 @@ export function NewsPage({ posts }: { posts: NewsPost[] }) {
   return (
     <AppSection>
       <AppContainer maxWidth="lg">
-        <Stack spacing={2} sx={{ mb: 10 }}>
-          <Typography color="primary.main" variant="overline">
-            Novita
-          </Typography>
-          <Typography component="h1" variant="primaryTitle">
-            Movimento, Pilates e aggiornamenti dallo studio.
-          </Typography>
-          <Typography color="text.secondary" variant="secondarySubtitle">
-            Qui trovi comunicazioni, approfondimenti e piccoli spunti dedicati a
-            benessere e pratica.
-          </Typography>
-        </Stack>
+        <NewsIntroSection />
         <NewsFeed posts={posts} />
       </AppContainer>
     </AppSection>

@@ -36,8 +36,8 @@ export const components: Components<Theme> = {
           paddingRight: theme.spacing(5),
         },
         [theme.breakpoints.up("lg")]: {
-          paddingLeft: theme.spacing(4),
-          paddingRight: theme.spacing(4),
+          paddingLeft: theme.spacing(5),
+          paddingRight: theme.spacing(5),
         },
       }),
     },

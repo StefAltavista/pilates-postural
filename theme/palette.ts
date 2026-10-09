@@ -7,15 +7,15 @@ import type { PaletteOptions } from "@mui/material/styles";
 export const palette: PaletteOptions = {
   mode: "light",
   primary: {
-    main: "#2c758e",
+    main: "#26585c",
     light: "#86D8CB",
-    dark: "#064B41",
+    dark: "#38b5be",
     contrastText: "#FFFFFF",
   },
   secondary: {
-    main: "#2B7C9B",
+    main: "#4da6a7",
     light: "#A8DCE9",
-    dark: "#0D5068",
+    dark: "#26585c",
     contrastText: "#FFFFFF",
   },
   error: { main: "#DC2626", light: "#F87171", dark: "#991B1B" },
@@ -36,7 +36,7 @@ export const palette: PaletteOptions = {
   brand: {
     main: "#0F6F61",
     light: "#D6F5EF",
-    dark: "#063D35",
+    dark: "#144e59",
     contrastText: "#FFFFFF",
   },
   accent: {
@@ -49,13 +49,13 @@ export const palette: PaletteOptions = {
     main: "#F8FFFC",
     light: "#FFFFFF",
     dark: "#D8EEE8",
-    contrastText: "#173C37",
+    contrastText: "#1c5358",
   },
   surfaceAlt: {
     main: "#DDF6EF",
     light: "#eefaf9",
     dark: "#A9D9D0",
-    contrastText: "#173C37",
+    contrastText: "#1a4b53",
   },
   border: {
     main: "#B9DED7",
@@ -72,7 +72,7 @@ export const palette: PaletteOptions = {
   overlay: {
     main: "rgba(6, 75, 65, 0.48)",
     light: "rgba(6, 75, 65, 0.18)",
-    dark: "rgba(6, 75, 65, 0.68)",
+    dark: "rgba(6, 61, 75, 0.68)",
     contrastText: "#FFFFFF",
   },
 };

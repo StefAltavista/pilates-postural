@@ -8,7 +8,7 @@ import { ErrorState } from "@/components/common/ErrorState";
 export default function ErrorPage({ reset }: { reset: () => void }) {
   return (
     <AppSection>
-      <AppContainer maxWidth="sm">
+      <AppContainer>
         <ErrorState
           description="The page could not be loaded. Please try again."
           action={<AppButton onClick={reset}>Try again</AppButton>}

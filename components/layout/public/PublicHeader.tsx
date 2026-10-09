@@ -11,11 +11,11 @@ import { AppContainer } from "@/components/common/AppContainer";
 import { siteConfig } from "@/seo/site.config";
 
 const navigation = [
-  { href: "/", label: "Studio" },
+  { href: "/", label: "Home" },
   { href: "/palestra", label: "Palestra" },
   { href: "/massaggi", label: "Massaggi" },
   { href: "/prenotazioni", label: "Prenotazioni" },
-  { href: "/news", label: "Novita" },
+  { href: "/news", label: "Novità" },
   { href: "/contact", label: "Contatti" },
 ];
 
@@ -91,28 +91,48 @@ export function PublicHeader() {
             alignItems: "center",
             display: "flex",
             justifyContent: { xs: "flex-start", md: "center" },
-            minHeight: { xs: 72, sm: 78, md: "auto" },
+            minHeight: { xs: 88, sm: 96, md: "auto" },
             position: "relative",
-            pr: { xs: 6, md: 0 },
             py: { xs: 1.5, sm: 2, md: 3.25 },
             textAlign: { xs: "left", md: "center" },
           }}
         >
-          <Box sx={{ color: "surfaceAlt.light" }}>
+          <Box
+            sx={{
+              color: "surfaceAlt.light",
+              maxWidth: {
+                xs: "calc(100% - 112px)",
+                sm: "calc(100% - 132px)",
+                md: "none",
+              },
+            }}
+          >
             <Typography
               component="div"
               sx={{
                 color: "surfaceAlt.light",
-                fontSize: { xs: "1.5rem", sm: "2rem", md: "2.75rem" },
-                lineHeight: 1.2,
+                fontSize: { xs: "1.4rem", sm: "1.55rem", md: "2rem" },
+                fontWeight: 400,
+                lineHeight: 1.15,
               }}
-              variant="h4"
+              variant="h5"
             >
               <Link href="/" className="text-inherit no-underline">
                 {siteConfig.siteName}
               </Link>
             </Typography>
-            <Typography sx={{ color: "surfaceAlt.light" }} variant="caption">
+            <Typography
+              // sx={{ color: "surfaceAlt.light" }}
+              variant="caption"
+              sx={{
+                color: "surfaceAlt.light",
+                display: "block",
+                fontSize: { xs: "0.9rem", sm: "0.9rem", md: "1.3rem" },
+                lineHeight: 1.25,
+                mt: { xs: 0.5, md: 0 },
+                opacity: { xs: 0.88, md: 1 },
+              }}
+            >
               Pilates, Gyrotonic e massaggi a Rapallo
             </Typography>
           </Box>
