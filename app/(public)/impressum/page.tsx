@@ -4,7 +4,8 @@ import { createSeoMetadata } from "@/seo/createSeoMetadata";
 
 export const metadata = createSeoMetadata({
   title: "Impressum",
-  description: "Publisher and business information for this website.",
+  description:
+    "Informazioni legali e dati del responsabile del sito Pilates Postural Studio.",
   path: "/impressum",
 });
 

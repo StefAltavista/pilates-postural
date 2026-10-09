@@ -6,8 +6,54 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.siteUrl),
-  title: siteConfig.defaultTitle,
+  title: {
+    default: siteConfig.defaultTitle,
+    template: `%s | ${siteConfig.siteName}`,
+  },
   description: siteConfig.defaultDescription,
+  applicationName: siteConfig.siteName,
+  authors: [{ name: "Andrea Maresca" }],
+  creator: "Andrea Maresca",
+  publisher: siteConfig.siteName,
+  keywords: [
+    "Pilates Rapallo",
+    "Pilates posturale",
+    "Pilates Reformer",
+    "Gyrotonic Rapallo",
+    "massoterapia Rapallo",
+    "postura",
+    "mobilità",
+    "benessere",
+  ],
+  openGraph: {
+    type: "website",
+    title: siteConfig.defaultTitle,
+    description: siteConfig.defaultDescription,
+    siteName: siteConfig.siteName,
+    locale: siteConfig.locale,
+    url: siteConfig.siteUrl,
+    images: [
+      {
+        url: siteConfig.defaultImage,
+        width: siteConfig.defaultImageWidth,
+        height: siteConfig.defaultImageHeight,
+        alt: siteConfig.defaultImageAlt,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteConfig.defaultTitle,
+    description: siteConfig.defaultDescription,
+    images: [
+      {
+        url: siteConfig.defaultImage,
+        width: siteConfig.defaultImageWidth,
+        height: siteConfig.defaultImageHeight,
+        alt: siteConfig.defaultImageAlt,
+      },
+    ],
+  },
 };
 
 export default function RootLayout({

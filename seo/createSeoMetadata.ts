@@ -18,11 +18,31 @@ export function createSeoMetadata({
 }: SeoMetadataInput): Metadata {
   const resolvedDescription =
     description || excerpt || subtitle || siteConfig.defaultDescription;
+  const usesDefaultImage = !image;
   const resolvedImage = absoluteUrl(image || siteConfig.defaultImage);
+  const resolvedImageAlt =
+    imageAlt || (usesDefaultImage ? siteConfig.defaultImageAlt : title);
   const canonicalUrl = path ? absoluteUrl(path) : undefined;
+  const socialTitle =
+    title === siteConfig.siteName
+      ? siteConfig.defaultTitle
+      : `${title} | ${siteConfig.siteName}`;
+  const socialImage = {
+    url: resolvedImage,
+    alt: resolvedImageAlt,
+    ...(usesDefaultImage
+      ? {
+          width: siteConfig.defaultImageWidth,
+          height: siteConfig.defaultImageHeight,
+        }
+      : {}),
+  };
 
   return {
-    title,
+    title:
+      title === siteConfig.siteName
+        ? { absolute: siteConfig.defaultTitle }
+        : title,
     description: resolvedDescription,
     alternates: canonicalUrl ? { canonical: canonicalUrl } : undefined,
     robots: {
@@ -31,29 +51,26 @@ export function createSeoMetadata({
     },
     openGraph: {
       type: "website",
-      title,
+      title: socialTitle,
       description: resolvedDescription,
       siteName: siteConfig.siteName,
       locale: siteConfig.locale,
       url: canonicalUrl,
-      images: [{ url: resolvedImage, alt: imageAlt || title }],
+      images: [socialImage],
     },
     twitter: {
       card: "summary_large_image",
-      title,
+      title: socialTitle,
       description: resolvedDescription,
-      images: [{ url: resolvedImage, alt: imageAlt || title }],
+      images: [socialImage],
     },
   };
 }
 
 export function createPostSeoMetadata(post: PostSeoInput): Metadata {
-  const firstImage = post.images?.[0];
   const metadata = createSeoMetadata({
     title: post.title,
     excerpt: post.excerpt,
-    image: firstImage?.media.largeUrl,
-    imageAlt: firstImage?.title,
     path: `/${post.category.slug}/${post.slug}`,
   });
 

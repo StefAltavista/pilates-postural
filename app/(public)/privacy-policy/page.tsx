@@ -4,7 +4,8 @@ import { createSeoMetadata } from "@/seo/createSeoMetadata";
 
 export const metadata = createSeoMetadata({
   title: "Privacy Policy",
-  description: "Learn how this website handles personal information and protects your privacy.",
+  description:
+    "Informazioni sul trattamento dei dati personali e sulla tutela della privacy nel sito di Pilates Postural Studio.",
   path: "/privacy-policy",
 });
 

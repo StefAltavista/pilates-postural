@@ -4,7 +4,8 @@ import { createSeoMetadata } from "@/seo/createSeoMetadata";
 
 export const metadata = createSeoMetadata({
   title: "Cookie Policy",
-  description: "Learn which essential and optional cookies this website uses.",
+  description:
+    "Informazioni sui cookie essenziali e facoltativi utilizzati dal sito di Pilates Postural Studio.",
   path: "/cookie-policy",
 });
 

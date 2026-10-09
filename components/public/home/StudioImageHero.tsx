@@ -64,12 +64,12 @@ export function StudioImageHero() {
           }}
         />
         <Typography
-          color="common.white"
           variant="overline"
           sx={{
+            color: "white",
             letterSpacing: "0.12em",
             mt: { xs: 1.5, md: 2 },
-            textShadow: "0 2px 18px rgba(0,0,0,0.42)",
+            // textShadow: "0 2px 18px rgba(0,0,0,0.42)",
           }}
         >
           di Andrea Maresca
