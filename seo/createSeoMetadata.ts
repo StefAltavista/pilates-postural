@@ -11,17 +11,12 @@ export function createSeoMetadata({
   subtitle,
   excerpt,
   description,
-  image,
-  imageAlt,
   path,
   noIndex = false,
 }: SeoMetadataInput): Metadata {
   const resolvedDescription =
     description || excerpt || subtitle || siteConfig.defaultDescription;
-  const usesDefaultImage = !image;
-  const resolvedImage = absoluteUrl(image || siteConfig.defaultImage);
-  const resolvedImageAlt =
-    imageAlt || (usesDefaultImage ? siteConfig.defaultImageAlt : title);
+  const resolvedImage = absoluteUrl(siteConfig.defaultImage);
   const canonicalUrl = path ? absoluteUrl(path) : undefined;
   const socialTitle =
     title === siteConfig.siteName
@@ -29,13 +24,9 @@ export function createSeoMetadata({
       : `${title} | ${siteConfig.siteName}`;
   const socialImage = {
     url: resolvedImage,
-    alt: resolvedImageAlt,
-    ...(usesDefaultImage
-      ? {
-          width: siteConfig.defaultImageWidth,
-          height: siteConfig.defaultImageHeight,
-        }
-      : {}),
+    alt: siteConfig.defaultImageAlt,
+    width: siteConfig.defaultImageWidth,
+    height: siteConfig.defaultImageHeight,
   };
 
   return {

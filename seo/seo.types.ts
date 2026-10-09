@@ -3,8 +3,6 @@ export type SeoMetadataInput = {
   subtitle?: string | null;
   excerpt?: string | null;
   description?: string | null;
-  image?: string | null;
-  imageAlt?: string | null;
   path?: string;
   noIndex?: boolean;
 };
