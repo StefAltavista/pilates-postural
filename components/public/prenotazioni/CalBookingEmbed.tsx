@@ -135,7 +135,7 @@ export function CalBookingEmbed({ eventUrl }: CalBookingEmbedProps) {
           Calendario non configurato
         </Typography>
         <Typography color="text.secondary">
-          Aggiungi NEXT_PUBLIC_CALCOM_EVENT_URL al file .env per mostrare le disponibilita.
+          Aggiungi NEXT_PUBLIC_CALCOM_EVENT_URL al file .env per mostrare le disponibilità.
         </Typography>
       </Stack>
     );

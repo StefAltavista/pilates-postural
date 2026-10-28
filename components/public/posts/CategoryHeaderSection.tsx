@@ -9,7 +9,7 @@ export function CategoryHeaderSection({ name }: { name: string }) {
       sx={{ mb: 5, borderBottom: 1, borderColor: "divider", pb: 3 }}
     >
       <Link href="/news" className="text-sm font-medium underline">
-        Novita
+        Novità
       </Link>
       <Typography component="h1" variant="primaryTitle" sx={{ mt: 2 }}>
         {name}

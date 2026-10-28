@@ -8,8 +8,8 @@ export function ContactIntroSection() {
         Vieni a trovarci a Rapallo.
       </Typography>
       <Typography color="text.secondary" variant="secondarySubtitle">
-        Per informazioni su Pilates, Gyrotonic, massaggi e disponibilita puoi chiamare lo
-        studio o raggiungerci in Vicolo del Ghiaccio.
+        Per informazioni su Pilates, Gyrotonic, massaggi e disponibilità, puoi
+        chiamare lo studio o raggiungerci in Vicolo del Ghiaccio.
       </Typography>
     </Stack>
   );

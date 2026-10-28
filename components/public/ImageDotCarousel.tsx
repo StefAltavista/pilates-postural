@@ -71,7 +71,7 @@ export function ImageDotCarousel({ images, href, showActiveTitle = false }: Imag
 
       <Box
         ref={trackRef}
-        aria-label="Post images"
+        aria-label="Immagini dell’articolo"
         onScroll={(event) => {
           const track = event.currentTarget;
           if (track.clientWidth) {
@@ -112,7 +112,7 @@ export function ImageDotCarousel({ images, href, showActiveTitle = false }: Imag
               <Box
                 component={Link}
                 href={href}
-                aria-label={`Open post from image ${index + 1} of ${images.length}: ${image.title}`}
+                aria-label={`Apri l’articolo dall’immagine ${index + 1} di ${images.length}: ${image.title}`}
                 sx={{
                   display: "grid",
                   height: "100%",
@@ -152,13 +152,13 @@ export function ImageDotCarousel({ images, href, showActiveTitle = false }: Imag
       </Box>
 
       {images.length > 1 ? (
-        <Box aria-label={`Image ${activeIndex + 1} of ${images.length}`} sx={{ display: "flex", justifyContent: "center", gap: 1, pt: 1.25 }}>
+        <Box aria-label={`Immagine ${activeIndex + 1} di ${images.length}`} sx={{ display: "flex", justifyContent: "center", gap: 1, pt: 1.25 }}>
           {images.map((image, index) => (
             <Box
               component="button"
               type="button"
               key={image.id}
-              aria-label={`Show image ${index + 1}`}
+              aria-label={`Mostra immagine ${index + 1}`}
               aria-current={index === activeIndex ? "true" : undefined}
               onClick={() => showSlide(index)}
               sx={{

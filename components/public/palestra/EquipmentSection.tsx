@@ -19,7 +19,7 @@ const equipment = [
   },
   {
     number: "02",
-    title: "Gyrotonic machine",
+    title: "Macchina Gyrotonic",
     quality: "Fluidità e respiro",
     description:
       "Pulegge e maniglie disegnano traiettorie circolari, per un movimento continuo che lascia spazio alla colonna.",

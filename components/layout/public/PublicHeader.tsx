@@ -203,7 +203,7 @@ export function PublicHeader() {
 
         <Box
           component="nav"
-          aria-label="Primary navigation"
+          aria-label="Navigazione principale"
           sx={{
             borderTop: 1,
             borderColor: "rgba(238, 250, 249, 0.24)",
@@ -226,7 +226,7 @@ export function PublicHeader() {
         >
           <Box
             component="nav"
-            aria-label="Mobile primary navigation"
+            aria-label="Navigazione principale mobile"
             sx={{
               borderTop: 1,
               borderColor: "rgba(238, 250, 249, 0.24)",

@@ -15,11 +15,11 @@ const sessionSteps = [
   {
     label: "02",
     title: "Trattamento mirato",
-    text: "Il ritmo viene modulato sul corpo: piu profondo dove serve, piu leggero dove occorre ascolto.",
+    text: "Il ritmo viene modulato sul corpo: più profondo dove serve, più leggero dove occorre ascolto.",
   },
   {
     label: "03",
-    title: "Chiusura e continuita",
+    title: "Chiusura e continuità",
     text: "Quando utile, il trattamento viene collegato a piccoli suggerimenti di movimento e postura.",
   },
 ];

@@ -31,9 +31,9 @@ export function MassaggiHeroSection() {
                 spazio.
               </Typography>
               <Typography color="text.secondary" variant="secondarySubtitle">
-                Una parte dello studio e dedicata al lavoro manuale: massaggi
-                mirati, ascolto del corpo e trattamenti pensati per sostenere
-                recupero, benessere e percezione corporea.
+                Una parte dello studio è dedicata al lavoro manuale: massaggi
+                mirati, ascolto del corpo e trattamenti pensati per sostenere il
+                recupero, il benessere e la percezione corporea.
               </Typography>
               <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5}>
                 <AppButton href="/contact">

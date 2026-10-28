@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
 
   return createSeoMetadata({
     title: category.name,
-    excerpt: `Leggi gli articoli pubblicati in ${category.name}.`,
+    excerpt: `Leggi gli articoli pubblicati nella categoria ${category.name}.`,
     path: `/category/${slug}`,
   });
 }

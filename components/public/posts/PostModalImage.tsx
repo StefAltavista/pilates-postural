@@ -54,7 +54,7 @@ export function PostModalImage({
       <Box
         component="button"
         type="button"
-        aria-label={`Open image: ${image.title}`}
+        aria-label={`Apri immagine: ${image.title}`}
         onClick={() => setOpen(true)}
         sx={{
           appearance: "none",
@@ -89,7 +89,7 @@ export function PostModalImage({
         onClose={() => setOpen(false)}
         fullWidth
         maxWidth="lg"
-        aria-label="Image preview"
+        aria-label="Anteprima immagine"
         slotProps={{ paper: { sx: { bgcolor: "common.black", color: "common.white", m: { xs: 1, sm: 3 } } } }}
       >
         <Stack>
@@ -102,7 +102,7 @@ export function PostModalImage({
               sizes="100vw"
               style={{ width: "auto", height: "auto", maxWidth: "100%", maxHeight: "72vh", objectFit: "contain" }}
             />
-            <IconButton aria-label="Close image preview" onClick={() => setOpen(false)} sx={{ position: "absolute", right: 8, top: 8, bgcolor: "rgba(0,0,0,.55)", color: "common.white", "&:hover": { bgcolor: "rgba(0,0,0,.75)" } }}>
+            <IconButton aria-label="Chiudi anteprima immagine" onClick={() => setOpen(false)} sx={{ position: "absolute", right: 8, top: 8, bgcolor: "rgba(0,0,0,.55)", color: "common.white", "&:hover": { bgcolor: "rgba(0,0,0,.75)" } }}>
               <Typography component="span" aria-hidden="true" sx={{ fontSize: 26, lineHeight: 1 }}>×</Typography>
             </IconButton>
           </Box>

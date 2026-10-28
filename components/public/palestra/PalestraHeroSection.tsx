@@ -47,9 +47,9 @@ export function PalestraHeroSection() {
                 Pilates, attrezzi e Gyrotonic per dare forma al movimento.
               </Typography>
               <Typography color="text.secondary" variant="secondarySubtitle">
-                Uno spazio raccolto dove Reformer, Barrel, Cadillac e Gyrotonic
-                machine aiutano il corpo a ritrovare forza gentile, mobilita e
-                presenza.
+                Uno spazio raccolto dove Reformer, Barrel, Cadillac e la
+                macchina Gyrotonic aiutano il corpo a ritrovare forza gentile,
+                mobilità e presenza.
               </Typography>
               <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5}>
                 <AppButton href="/prenotazioni">Prenota una lezione</AppButton>

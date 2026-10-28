@@ -63,15 +63,31 @@ export function CookieBanner() {
             width: { sm: 480 },
           }}
         >
-          <AppCard sx={{ p: { xs: 2.5, sm: 3 }, boxShadow: 6 }}>
+          <AppCard
+            style={{ backgroundColor: "#FFFFFF", color: "#26585C" }}
+            sx={{
+              borderColor: "border.main",
+              boxShadow: 6,
+              p: { xs: 2.5, sm: 3 },
+            }}
+          >
             <Typography variant="h5">Servizi esterni opzionali</Typography>
             <Typography color="text.secondary" sx={{ mt: 1 }} variant="body2">
-              Questo sito usa la memoria locale solo per ricordare la tua scelta. Google Maps e
-              opzionale e resta bloccato finche non dai il consenso.
+              Questo sito usa la memoria locale solo per ricordare la tua
+              scelta. Google Maps è opzionale e resta bloccato finché non dai il
+              consenso.
             </Typography>
-            <Stack direction={{ xs: "column", sm: "row" }} spacing={1} sx={{ mt: 2.5 }}>
+            <Stack
+              direction={{ xs: "column", sm: "row" }}
+              spacing={1}
+              sx={{ mt: 2.5 }}
+            >
               <AppButton onClick={acceptAllConsent}>Accetta tutto</AppButton>
-              <AppButton variant="outlined" color="inherit" onClick={rejectOptionalConsent}>
+              <AppButton
+                variant="outlined"
+                color="inherit"
+                onClick={rejectOptionalConsent}
+              >
                 Rifiuta opzionali
               </AppButton>
               <AppButton variant="text" color="inherit" onClick={openSettings}>
@@ -87,12 +103,12 @@ export function CookieBanner() {
           aria-label="Apri preferenze cookie"
           onClick={openSettings}
           sx={{
-            bgcolor: "background.paper",
+            bgcolor: "surface.light",
             border: "1px solid",
             borderColor: "divider",
             bottom: { xs: 16, sm: 24 },
             boxShadow: 3,
-            color: "surfaceAlt.light",
+            color: "background.paper",
             fontSize: 20,
             height: 44,
             position: "fixed",
@@ -108,12 +124,23 @@ export function CookieBanner() {
         </IconButton>
       ) : null}
 
-      <Dialog open={managing} onClose={() => setManaging(false)} fullWidth maxWidth="xs">
+      <Dialog
+        open={managing}
+        onClose={() => setManaging(false)}
+        fullWidth
+        maxWidth="xs"
+        slotProps={{
+          paper: {
+            style: { backgroundColor: "#FFFFFF", color: "#26585C" },
+          },
+        }}
+      >
         <DialogTitle>Gestisci servizi esterni</DialogTitle>
         <DialogContent>
           <Typography color="text.secondary" sx={{ mb: 2 }} variant="body2">
-            La memoria necessaria e sempre attiva per ricordare questa scelta. Non sono usate
-            categorie analytics, marketing, profilazione o pubblicita.
+            La memoria necessaria è sempre attiva per ricordare questa scelta.
+            Non sono usate categorie analytics, marketing, profilazione o
+            pubblicità.
           </Typography>
           <AppCheckbox checked disabled label="Necessari (sempre attivi)" />
           <AppCheckbox
@@ -123,15 +150,31 @@ export function CookieBanner() {
             onChange={(event) => setGoogleMapsEnabled(event.target.checked)}
           />
           {showDevControls ? (
-            <Box sx={{ borderTop: "1px solid", borderColor: "divider", mt: 2.5, pt: 2 }}>
-              <AppButton color="warning" size="small" variant="outlined" onClick={clearSavedChoice}>
+            <Box
+              sx={{
+                borderTop: "1px solid",
+                borderColor: "divider",
+                mt: 2.5,
+                pt: 2,
+              }}
+            >
+              <AppButton
+                color="warning"
+                size="small"
+                variant="outlined"
+                onClick={clearSavedChoice}
+              >
                 SOLO DEV: cancella scelta
               </AppButton>
             </Box>
           ) : null}
         </DialogContent>
         <DialogActions sx={{ px: 3, pb: 2.5 }}>
-          <AppButton variant="text" color="inherit" onClick={() => setManaging(false)}>
+          <AppButton
+            variant="text"
+            color="inherit"
+            onClick={() => setManaging(false)}
+          >
             Annulla
           </AppButton>
           <AppButton onClick={saveSettings}>Salva scelte</AppButton>

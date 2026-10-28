@@ -10,8 +10,8 @@ export default function ErrorPage({ reset }: { reset: () => void }) {
     <AppSection>
       <AppContainer>
         <ErrorState
-          description="The page could not be loaded. Please try again."
-          action={<AppButton onClick={reset}>Try again</AppButton>}
+          description="Non è stato possibile caricare la pagina. Riprova."
+          action={<AppButton onClick={reset}>Riprova</AppButton>}
         />
       </AppContainer>
     </AppSection>

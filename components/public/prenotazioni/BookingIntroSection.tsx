@@ -25,9 +25,9 @@ export function BookingIntroSection() {
         </Stack>
       </Stack>
       <Typography color="text.secondary" variant="secondarySubtitle">
-        Scegli il giorno e l&apos;orario piu comodi per la tua lezione. Il
-        calendario e aggiornato con le disponibilita dello studio: sentiti
-        libera di prenotare direttamente online.
+        Scegli il giorno e l&apos;orario più comodi per la tua lezione. Il
+        calendario è aggiornato con le disponibilità dello studio: puoi
+        prenotare direttamente online.
       </Typography>{" "}
     </Stack>
   );

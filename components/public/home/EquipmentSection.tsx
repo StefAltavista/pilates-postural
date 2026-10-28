@@ -32,7 +32,7 @@ export function EquipmentSection() {
               },
 
               {
-                title: "Lezioni in gruppo",
+                title: "Lezioni di gruppo",
                 subtitle:
                   "Lezioni guidate per migliorare postura, forza e mobilità",
                 buttonLabel: "Prenota",

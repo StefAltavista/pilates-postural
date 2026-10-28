@@ -20,7 +20,7 @@ const highlights = [
   },
   {
     title: "Gyrotonic",
-    text: "Movimenti circolari e fluidi per dare spazio alla colonna e migliorare mobilita e coordinazione.",
+    text: "Movimenti circolari e fluidi per dare spazio alla colonna e migliorare mobilità e coordinazione.",
     image: "/icons/massage.png",
   },
 ];
@@ -38,7 +38,7 @@ export function MovementSection() {
               Movimento, Pilates, Gyrotonic
             </Typography>
             <Typography component="h2" variant="sectionTitle">
-              Percorsi per muoversi con piu liberta
+              Percorsi per muoversi con più libertà
             </Typography>
           </Stack>
           <Box

@@ -64,7 +64,7 @@ export default async function PostPage({ params }: PostPageProps) {
     <AppSection>
       <AppContainer maxWidth="lg">
         <Link href="/news" className="text-sm font-medium underline">
-          Novita
+          Novità
         </Link>
         <Box component="article" sx={{ mt: 3 }}>
           <PostHeaderSection title={post.title} postDate={post.postDate} excerpt={post.excerpt} />

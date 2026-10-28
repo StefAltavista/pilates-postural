@@ -1,7 +1,6 @@
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { AppButton } from "@/components/common/AppButton";
 import { AppContainer } from "@/components/common/AppContainer";
 import { AppSection } from "@/components/common/AppSection";
 import { GoogleMapsEmbed } from "@/components/consent/GoogleMapsEmbed";
@@ -45,14 +44,6 @@ export function StudioContactSection() {
                 Scopri lo studio e trova il percorso più adatto al tuo corpo e
                 ai tuoi obiettivi.
               </Typography>
-              <Box>
-                <AppButton
-                  href="/contact"
-                  sx={{ fontSize: "1rem", px: 3, py: 1.25 }}
-                >
-                  Contattaci
-                </AppButton>
-              </Box>
             </Stack>
           </FadeInOnScroll>
         </Box>

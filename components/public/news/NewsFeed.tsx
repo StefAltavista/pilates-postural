@@ -24,7 +24,7 @@ export function NewsFeed({ posts }: { posts: NewsPost[] }) {
   if (posts.length === 0) {
     return (
       <EmptyState
-        title="Nessuna novita"
+        title="Nessuna novità"
         description="I prossimi aggiornamenti appariranno qui."
       />
     );
