@@ -1,15 +1,13 @@
-import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { AppButton } from "@/components/common/AppButton";
 import { AppContainer } from "@/components/common/AppContainer";
 import { AppSection } from "@/components/common/AppSection";
 import { FadeInOnScroll } from "@/components/common/FadeInOnScroll";
-import { OptimizedImage } from "@/components/common/OptimizedImage";
 
 export function GuidedMovementSection() {
   return (
-    <AppSection sx={{ bgcolor: "background.default" }}>
+    <AppSection sx={{ bgcolor: "surface.light" }}>
       <FadeInOnScroll>
         <AppContainer>
           <Stack spacing={{ xs: 4, md: 6 }}>
@@ -34,34 +32,6 @@ export function GuidedMovementSection() {
                 <AppButton href="/palestra">Scopri la palestra</AppButton>
               </Stack>
             </Stack>
-
-            <Box
-              aria-hidden
-              sx={{
-                aspectRatio: "1026 / 713",
-                maskImage: "url('/images/teaser1.png')",
-                maskPosition: "center",
-                maskRepeat: "no-repeat",
-                maskSize: "contain",
-                maxWidth: 1040,
-                mx: "auto",
-                overflow: "hidden",
-                position: "relative",
-                WebkitMaskImage: "url('/images/teaser1.png')",
-                WebkitMaskPosition: "center",
-                WebkitMaskRepeat: "no-repeat",
-                WebkitMaskSize: "contain",
-                width: "100%",
-              }}
-            >
-              <OptimizedImage
-                src="/images/palestra/1.jpg"
-                alt=""
-                fill
-                sizes="(max-width: 899px) calc(100vw - 48px), 1040px"
-                style={{ objectFit: "cover", objectPosition: "center" }}
-              />
-            </Box>
           </Stack>
         </AppContainer>
       </FadeInOnScroll>

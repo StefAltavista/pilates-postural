@@ -27,11 +27,14 @@ const highlights = [
 
 export function MovementSection() {
   return (
-    <AppSection id="movimento">
+    <AppSection
+      id="movimento"
+      sx={{ bgcolor: "background.paper", color: "surfaceAlt.light" }}
+    >
       <FadeInOnScroll>
         <AppContainer>
           <Stack spacing={1} sx={{ mb: 4 }}>
-            <Typography color="text.secondary" variant="overline">
+            <Typography color="surfaceAlt.light" variant="overline">
               Movimento, Pilates, Gyrotonic
             </Typography>
             <Typography component="h2" variant="sectionTitle">
@@ -52,17 +55,16 @@ export function MovementSection() {
               <AppCard
                 key={item.title}
                 sx={{
+                  bgcolor: "surfaceAlt.main",
                   overflow: "hidden",
-                  bgcolor: "background.paper",
-                  color: "surfaceAlt.light",
+                  color: "text.primary",
                   border: "none",
                 }}
               >
                 <Box
                   sx={{
                     aspectRatio: "4 / 3",
-                    // bgcolor: "surfaceAlt.light",
-                    bgcolor: "white",
+                    bgcolor: "surface.light",
 
                     border: "none",
                     position: "relative",
@@ -76,11 +78,14 @@ export function MovementSection() {
                     style={{ objectFit: "contain" }}
                   />
                 </Box>
-                <Stack spacing={1} sx={{ p: { xs: 2, md: 2.5 } }}>
+                <Stack
+                  spacing={1}
+                  sx={{ bgcolor: "surfaceAlt.main", p: { xs: 2, md: 2.5 } }}
+                >
                   <Typography component="h3" variant="h4">
                     {item.title}
                   </Typography>
-                  <Typography color="surfaceAlt.light" variant="body2">
+                  <Typography color="text.secondary" variant="body2">
                     {item.text}
                   </Typography>
                 </Stack>

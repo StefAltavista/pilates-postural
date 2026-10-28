@@ -44,6 +44,37 @@ export function EquipmentSection() {
     <AppSection sx={{ bgcolor: "surface.light" }}>
       <AppContainer>
         <FadeInOnScroll>
+          <Box
+            aria-hidden
+            sx={{
+              aspectRatio: "1026 / 713",
+              maskImage: "url('/images/teaser1.png')",
+              maskPosition: "center",
+              maskRepeat: "no-repeat",
+              maskSize: "contain",
+              maxWidth: 520,
+              mb: { xs: 6, md: 9 },
+              mx: "auto",
+              overflow: "hidden",
+              position: "relative",
+              WebkitMaskImage: "url('/images/teaser1.png')",
+              WebkitMaskPosition: "center",
+              WebkitMaskRepeat: "no-repeat",
+              WebkitMaskSize: "contain",
+              width: { xs: "80%", sm: "50%" },
+            }}
+          >
+            <OptimizedImage
+              src="/images/palestra/1.jpg"
+              alt=""
+              fill
+              sizes="(max-width: 599px) 80vw, 520px"
+              style={{ objectFit: "cover", objectPosition: "center" }}
+            />
+          </Box>
+        </FadeInOnScroll>
+
+        <FadeInOnScroll>
           <Stack spacing={1.5} sx={{ maxWidth: 760, mb: { xs: 4, md: 6 } }}>
             <Typography color="primary.main" variant="overline">
               Gli attrezzi della sala

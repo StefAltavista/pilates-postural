@@ -5,6 +5,7 @@ import { EquipmentSection } from "./EquipmentSection";
 import { WelcomeSection } from "./WelcomeSection";
 import { MovementSection } from "./MovementSection";
 import { GuidedMovementSection } from "./GuidedMovementSection";
+import { AboutMeSection } from "./AboutMeSection";
 import { StudioContactSection } from "./StudioContactSection";
 
 export function HomePage() {
@@ -12,13 +13,11 @@ export function HomePage() {
     <Box sx={{ color: "text.primary" }}>
       <StudioImageHero />
       <Hero />
-
       <EquipmentSection />
-
-      <WelcomeSection />
       <MovementSection />
-
       <GuidedMovementSection />
+      <AboutMeSection />
+      <WelcomeSection />
 
       <StudioContactSection />
     </Box>

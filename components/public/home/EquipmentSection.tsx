@@ -1,23 +1,24 @@
 import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
+import { AppButton } from "@/components/common/AppButton";
 import { AppContainer } from "@/components/common/AppContainer";
 import { AppSection } from "@/components/common/AppSection";
 import { FadeInOnScroll } from "@/components/common/FadeInOnScroll";
 import { OptimizedImage } from "@/components/common/OptimizedImage";
-import Stack from "@mui/material/Stack";
 
 export function EquipmentSection() {
   return (
     <AppSection
       aria-label="Lo studio e gli attrezzi"
-      sx={{ bgcolor: "background.default", color: "text.primary" }}
+      sx={{ bgcolor: "surface.light", color: "text.primary" }}
     >
       <FadeInOnScroll>
         <AppContainer>
           <Box
             sx={{
               display: "grid",
-              gap: { xs: 2, sm: 2.5, md: 3 },
+              gap: { xs: 0.8, sm: 1, md: 1.5 },
               gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
               maxWidth: 1040,
               mx: "auto",
@@ -26,59 +27,74 @@ export function EquipmentSection() {
           >
             {[
               {
-                // src: "/images/home/home1.jpg",
                 src: "/images/palestra/PHOTO-2026-07-29-17-28-20(4).jpg",
                 alt: "Attrezzi Pilates nello studio",
               },
 
-              { label: "Reformer & Cadillac", subtitle: "Lezioni in gruppo" },
-              { label: "Barrel & Gyrotonic", subtitle: "Lezioni private" },
+              {
+                title: "Lezioni in gruppo",
+                subtitle:
+                  "Lezioni guidate per migliorare postura, forza e mobilità",
+                buttonLabel: "Prenota",
+                href: "/prenotazioni",
+              },
+              {
+                title: "Lezioni private",
+                subtitle: "Esercizi personalizzati in base alle tue esigenze.",
+                buttonLabel: "Contattaci",
+                href: "/contact",
+              },
               {
                 src: "/images/home/home3.jpg",
                 alt: "Sala attrezzi dello studio",
               },
             ].map((item) => (
               <Box
-                key={"label" in item ? item.label : item.src}
+                key={"subtitle" in item ? item.subtitle : item.src}
                 sx={{
                   alignItems: "center",
-                  aspectRatio: "1 / 1",
+                  aspectRatio: "2 / 1.5",
                   bgcolor:
-                    "label" in item ? "surfaceAlt.light" : "surfaceAlt.dark",
+                    "subtitle" in item ? "surfaceAlt.light" : "surfaceAlt.dark",
                   borderRadius: 2,
                   display: "flex",
                   justifyContent: "center",
                   overflow: "hidden",
-                  p: "label" in item ? { xs: 2.5, sm: 4, md: 6 } : 0,
+                  p: "subtitle" in item ? { xs: 2.5, sm: 4, md: 6 } : 0,
                   position: "relative",
                   textAlign: "center",
                 }}
               >
-                {"label" in item ? (
-                  <Stack>
-                    {" "}
+                {"subtitle" in item ? (
+                  <Stack
+                    spacing={{ xs: 1.5, sm: 2.5 }}
+                    sx={{ alignItems: "center" }}
+                  >
                     <Typography
                       color="text.primary"
-                      component="h2"
+                      component="h4"
                       sx={{
-                        fontSize: "clamp(1.45rem, 1rem + 2.5vw, 3.5rem)",
-                        lineHeight: 1.08,
+                        fontSize: "clamp(1rem, 0.72rem + 1.1vw, 1.55rem)",
+                        lineHeight: 1.2,
                       }}
-                      variant="sectionTitle"
+                      variant="h5"
                     >
-                      {item.label}
-                    </Typography>{" "}
+                      {item.title}
+                    </Typography>
                     <Typography
                       color="text.primary"
-                      component="aside"
-                      // sx={{
-                      //   fontSize: "clamp(1.45rem, 1rem + 2.5vw, 3.5rem)",
-                      //   lineHeight: 1.08,
-                      // }}
-                      variant="body1"
+                      component="p"
+                      sx={{
+                        fontSize: "clamp(1rem, 0.7rem + 1vw, 1.2rem)",
+                        lineHeight: 1.2,
+                      }}
+                      variant="caption"
                     >
                       {item.subtitle}
                     </Typography>
+                    <AppButton href={item.href} size="small" variant="outlined">
+                      {item.buttonLabel}
+                    </AppButton>
                   </Stack>
                 ) : (
                   <OptimizedImage

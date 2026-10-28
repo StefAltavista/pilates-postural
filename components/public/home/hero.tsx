@@ -20,7 +20,7 @@ export function Hero() {
         isolation: "isolate",
         overflow: "hidden",
         color: "text.primary",
-        bgcolor: "background.default",
+        bgcolor: "surface.light",
       }}
     >
       <Box
@@ -53,37 +53,29 @@ export function Hero() {
       </Box>
       <AppContainer>
         <Stack spacing={{ xs: 2, md: 3 }} sx={{ maxWidth: 850 }}>
-            <Typography
-              color="text.secondary"
-              variant="overline"
-              sx={{ fontSize: { xs: "0.75rem", sm: "0.85rem" } }}
-            >
-              MOVIMENTO · POSTURA · CONSAPEVOLEZZA
-            </Typography>
-            <Typography
-              component="h1"
-              variant="primaryTitle"
-              color="text.primary"
-            >
-              Muoversi bene, sentirsi meglio.
-            </Typography>
-            <Typography color="text.primary" variant="secondarySubtitle">
-              Uno spazio dedicato a Pilates, Gyrotonic, postura e massaggi. Qui
-              il movimento diventa ascolto, respiro e cura del corpo. Le
-              proposte si adattano a esigenze diverse, dal lavoro sugli attrezzi
-              ai trattamenti manuali, per accompagnare ogni persona con
-              attenzione e gradualità.
-            </Typography>
-            <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5}>
-              <AppButton href="/news">Leggi le novità</AppButton>
-              <AppButton
-                href="/prenotazioni"
-                color="inherit"
-                variant="outlined"
-              >
-                Prenotazioni
-              </AppButton>
-            </Stack>
+          <Typography
+            color="text.secondary"
+            variant="overline"
+            sx={{ fontSize: { xs: "0.75rem", sm: "0.85rem" } }}
+          >
+            MOVIMENTO · POSTURA · CONSAPEVOLEZZA
+          </Typography>
+          <Typography
+            component="h1"
+            variant="primaryTitle"
+            color="text.primary"
+          >
+            Uno spazio dedicato a Pilates, Gyrotonic, postura e massaggi.
+          </Typography>
+          <Typography color="text.primary" variant="secondarySubtitle">
+            Qui il movimento diventa ascolto, respiro e cura del corpo. Le
+            proposte si adattano a esigenze diverse, dal lavoro sugli attrezzi
+            ai trattamenti manuali, per accompagnare ogni persona con attenzione
+            e gradualità.
+          </Typography>
+          <Stack direction={{ xs: "column", sm: "row" }} spacing={1.5}>
+            <AppButton href="/news">Leggi le novità</AppButton>
+          </Stack>
         </Stack>
       </AppContainer>
     </AppSection>

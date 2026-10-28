@@ -9,15 +9,7 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { AppContainer } from "@/components/common/AppContainer";
 import { siteConfig } from "@/seo/site.config";
-
-const navigation = [
-  { href: "/", label: "Home" },
-  { href: "/palestra", label: "Palestra" },
-  { href: "/massaggi", label: "Massaggi" },
-  { href: "/prenotazioni", label: "Prenotazioni" },
-  { href: "/news", label: "Novità" },
-  { href: "/contact", label: "Contatti" },
-];
+import { publicNavigation } from "./navigation";
 
 function isActiveRoute(href: string, pathname: string) {
   if (href === "/") {
@@ -31,7 +23,7 @@ export function PublicHeader() {
   const pathname = usePathname() ?? "/";
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const renderNavigationItem = (item: (typeof navigation)[number]) => {
+  const renderNavigationItem = (item: (typeof publicNavigation)[number]) => {
     const isActive = isActiveRoute(item.href, pathname);
 
     return (
@@ -223,7 +215,7 @@ export function PublicHeader() {
             py: { xs: 1.25, sm: 1.5 },
           }}
         >
-          {navigation.map(renderNavigationItem)}
+          {publicNavigation.map(renderNavigationItem)}
         </Box>
         <Collapse
           in={menuOpen}
@@ -250,7 +242,7 @@ export function PublicHeader() {
                 justifyItems: "start",
               }}
             >
-              {navigation.map(renderNavigationItem)}
+              {publicNavigation.map(renderNavigationItem)}
             </Box>
           </Box>
         </Collapse>
